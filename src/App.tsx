@@ -7,8 +7,7 @@ import { SkillsSection } from './components/skills/SkillSelection';
 import { ProjectsSection } from './components/ProjectSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { Stars } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+
 
 export interface NavLink {
     id: string;

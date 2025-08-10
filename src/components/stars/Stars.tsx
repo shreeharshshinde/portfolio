@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import type { RootState } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import { inSphere } from 'maath/random';
 import type { Points as PointsType } from 'three';
@@ -12,7 +11,7 @@ export const Stars: React.FC = (props) => {
         return result instanceof Float32Array ? result : new Float32Array(result);
     });
 
-    useFrame((state: RootState, delta: number) => {
+    useFrame((_, delta: number) => {
         if (ref.current) {
             ref.current.rotation.x -= delta / 10;
             ref.current.rotation.y -= delta / 25;

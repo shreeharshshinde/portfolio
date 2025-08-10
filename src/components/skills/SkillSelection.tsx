@@ -1,8 +1,7 @@
-import React, { Suspense, useState, useEffect, useRef } from 'react';
+import React, { Suspense, useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Text, Float, Html, Environment, useTexture } from '@react-three/drei';
+import { OrbitControls, Float, Html, Environment, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-import { useGLTF } from '@react-three/drei'
 import { Stars } from '@react-three/drei';
 import { Nebula } from '../stars/Nebula';
 import { CosmicParticles } from '../stars/CosmicParticles';
@@ -369,11 +368,6 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
 
 export const SkillsSection: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>("Languages");
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
 
     return (
         <div className="relative w-full h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-black overflow-hidden">

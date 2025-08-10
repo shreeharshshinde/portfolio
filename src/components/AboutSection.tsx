@@ -1,4 +1,3 @@
-import React from "react";
 import image from '../assets/self.jpg'
 // AboutSection.tsx
 // Completely restructured and enhanced About section with professional cosmic theme
@@ -29,27 +28,6 @@ export function AboutSection() {
     }
   ];
 
-  // Skills data
-  const skills = [
-    { name: "Python", proficiency: 95 },
-    { name: "JavaScript/TypeScript", proficiency: 90 },
-    { name: "React", proficiency: 85 },
-    { name: "Node.js", proficiency: 80 },
-    { name: "PostgreSQL", proficiency: 75 },
-    { name: "Docker", proficiency: 70 },
-    { name: "AWS", proficiency: 65 },
-    { name: "Machine Learning", proficiency: 60 }
-  ];
-
-  // Education data
-  const education = [
-    {
-      degree: "B.Tech in Computer Science",
-      institution: "Indian Institute of Technology",
-      period: "2022 - 2026",
-      description: "Specialized in Software Engineering and Artificial Intelligence"
-    }
-  ];
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-[#0a0a1a] via-[#121225] to-[#000000] overflow-hidden text-white py-20">

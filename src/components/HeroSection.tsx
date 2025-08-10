@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Stars } from './stars/Stars';
 import { Nebula } from './stars/Nebula';
-import { Text } from '@react-three/drei';
 
 
 export const HeroSection: React.FC = () => (
