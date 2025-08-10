@@ -7,15 +7,17 @@ export const Nebula: React.FC = () => {
     const particlesRef = useRef<THREE.Points>(null);
     
     // Create a large sphere for the nebula
-    const geometry = new THREE.SphereGeometry(10, 64, 64);
+    const geometry = new THREE.SphereGeometry(20, 64, 64);
     
     // Create a custom shader material for the nebula
     const nebulaMaterial = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: 0 },
-            color1: { value: new THREE.Color(0x4a00e0) },
-            color2: { value: new THREE.Color(0x8e2de2) },
-            color3: { value: new THREE.Color(0x00c9ff) },
+            color1: { value: new THREE.Color(0x4a00e0) }, // Deep purple
+            color2: { value: new THREE.Color(0x8e2de2) }, // Purple
+            color3: { value: new THREE.Color(0x00c9ff) }, // Cyan
+            color4: { value: new THREE.Color(0xff00c8) }, // Magenta
+            color5: { value: new THREE.Color(0x00ff9d) }, // Teal
         },
         vertexShader: `
             varying vec2 vUv;
@@ -34,22 +36,73 @@ export const Nebula: React.FC = () => {
             uniform vec3 color1;
             uniform vec3 color2;
             uniform vec3 color3;
+            uniform vec3 color4;
+            uniform vec3 color5;
             varying vec2 vUv;
             varying vec3 vNormal;
             varying vec3 vPosition;
             
+            // 2D Random function
+            float random (in vec2 st) {
+                return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+            }
+
+            // 2D Noise function
+            float noise (in vec2 st) {
+                vec2 i = floor(st);
+                vec2 f = fract(st);
+                
+                // Four corners in 2D of a tile
+                float a = random(i);
+                float b = random(i + vec2(1.0, 0.0));
+                float c = random(i + vec2(0.0, 1.0));
+                float d = random(i + vec2(1.0, 1.0));
+                
+                // Smooth interpolation
+                vec2 u = f*f*(3.0-2.0*f);
+                
+                return mix(a, b, u.x) +
+                        (c - a)* u.y * (1.0 - u.x) +
+                        (d - b) * u.x * u.y;
+            }
+            
             void main() {
-                // Create swirling patterns
-                float noise = sin(vUv.x * 10.0 + time) * cos(vUv.y * 8.0 + time * 0.7);
-                noise += sin(vUv.x * 15.0 - time * 1.2) * cos(vUv.y * 12.0 + time * 0.9);
+                // Create more complex swirling patterns with multiple noise layers
+                float noise1 = sin(vUv.x * 8.0 + time * 0.3) * cos(vUv.y * 6.0 + time * 0.5);
+                float noise2 = sin(vUv.x * 12.0 - time * 0.7) * cos(vUv.y * 10.0 + time * 0.4);
+                float noise3 = sin(vUv.x * 16.0 + time * 0.9) * cos(vUv.y * 14.0 - time * 0.6);
                 
-                // Create layers of color based on noise
-                vec3 color = mix(color1, color2, noise * 0.5 + 0.5);
-                color = mix(color, color3, sin(time * 0.5) * 0.5 + 0.5);
+                // Combine noise layers with different weights
+                float combinedNoise = noise1 * 0.5 + noise2 * 0.3 + noise3 * 0.2;
                 
-                // Add some transparency and glow
-                float alpha = 0.1 + abs(noise) * 0.2;
+                // Add some animated turbulence
+                float turbulence = noise(vec2(vUv.x * 3.0 + time * 0.2, vUv.y * 3.0));
+                combinedNoise += turbulence * 0.3;
+                
+                // Create dynamic color transitions
+                float timeMod1 = sin(time * 0.2) * 0.5 + 0.5;
+                float timeMod2 = cos(time * 0.3) * 0.5 + 0.5;
+                float timeMod3 = sin(time * 0.4 + 1.0) * 0.5 + 0.5;
+                
+                // Mix colors in a more complex way for vibrant transitions
+                vec3 colorA = mix(color1, color2, timeMod1);
+                vec3 colorB = mix(color3, color4, timeMod2);
+                vec3 colorC = mix(color2, color5, timeMod3);
+                
+                // Final color mixing based on noise and position
+                vec3 color = mix(colorA, colorB, combinedNoise * 0.5 + 0.5);
+                color = mix(color, colorC, sin(time * 0.6) * 0.5 + 0.5);
+                
+                // Add some position-based variation
+                float positionFactor = (vPosition.x + vPosition.y + vPosition.z) / 60.0;
+                color = mix(color, mix(color1, color5, positionFactor), 0.2);
+                
+                // Add some transparency and glow with enhanced effects
+                float alpha = 0.15 + abs(combinedNoise) * 0.25;
                 alpha *= smoothstep(0.0, 1.0, vNormal.z * 0.5 + 0.5);
+                
+                // Add pulsing effect for more dynamic appearance
+                alpha *= 0.8 + 0.2 * sin(time * 1.5);
                 
                 gl_FragColor = vec4(color, alpha);
             }

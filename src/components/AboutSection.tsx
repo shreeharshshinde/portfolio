@@ -1,183 +1,204 @@
 import React from "react";
-
+import image from '../assets/self.jpg'
 // AboutSection.tsx
-// Dark-cosmos themed About section built with TailwindCSS
-// Default export React component (TypeScript JSX)
+// Completely restructured and enhanced About section with professional cosmic theme
 
 export function AboutSection() {
+  // Professional experience data
+  const experiences = [
+    {
+      role: "Data Analysis of Real World Data",
+      company: "",
+      period: "",
+      description: "",
+      technologies: ["Kaggle", "Python", "Numpy", "Pandas", "Plotly", "Matplotlib"]
+    },
+    {
+      role: "Open Source Contribution",
+      company: "",
+      period: "",
+      description: "",
+      technologies: ["Maplibre GL JS", "Astropy", "OpenStreetMap"]
+    },
+    {
+      role: "Full Stack Develoment",
+      company: "",
+      period: "",
+      description: "",
+      technologies: ["Spring Boot", "Next js", "FastAPI", "AWS"]
+    }
+  ];
+
+  // Skills data
+  const skills = [
+    { name: "Python", proficiency: 95 },
+    { name: "JavaScript/TypeScript", proficiency: 90 },
+    { name: "React", proficiency: 85 },
+    { name: "Node.js", proficiency: 80 },
+    { name: "PostgreSQL", proficiency: 75 },
+    { name: "Docker", proficiency: 70 },
+    { name: "AWS", proficiency: 65 },
+    { name: "Machine Learning", proficiency: 60 }
+  ];
+
+  // Education data
+  const education = [
+    {
+      degree: "B.Tech in Computer Science",
+      institution: "Indian Institute of Technology",
+      period: "2022 - 2026",
+      description: "Specialized in Software Engineering and Artificial Intelligence"
+    }
+  ];
+
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-[#0a0a1a] via-[#121225] to-[#000000] overflow-hidden text-white">
-
-      {/* Background gradient blobs */}
+    <section className="relative min-h-screen bg-gradient-to-br from-[#0a0a1a] via-[#121225] to-[#000000] overflow-hidden text-white py-20">
+      {/* Enhanced cosmic background */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        {/* Nebula-like background elements */}
-        <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-radial from-purple-900/20 via-indigo-900/10 to-transparent rounded-full"></div>
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-gradient-to-tr from-[#0ea5e9]/30 to-[#7c3aed]/20 blur-[120px] animate-blob" />
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-gradient-to-tr from-[#06b6d4]/20 to-[#ef4444]/15 blur-[120px] animate-blob animation-delay-2000" />
-        <div className="absolute top-1/4 right-1/4 w-80 h-80 rounded-full bg-gradient-to-tr from-[#8b5cf6]/20 to-[#06b6d4]/10 blur-[100px] animate-blob animation-delay-4000" />
-
-        {/* Enhanced starfield (decorative) */}
+        {/* Nebula background */}
+        <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,_rgba(125,80,220,0.1)_0%,_rgba(15,15,35,0.8)_100%)]"></div>
+        
+        {/* Floating particles */}
         <div className="absolute inset-0">
-          {Array.from({ length: 120 }).map((_, i) => (
-            <span
+          {Array.from({ length: 150 }).map((_, i) => (
+            <div
               key={i}
-              className="absolute block bg-white rounded-full"
+              className="absolute rounded-full bg-white animate-pulse"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
                 width: `${Math.random() * 3 + 1}px`,
                 height: `${Math.random() * 3 + 1}px`,
-                opacity: Math.random() * 0.9 + 0.1,
-                animation: `twinkle ${2 + Math.random() * 3}s infinite ease-in-out`
+                opacity: Math.random() * 0.7 + 0.3,
+                animationDuration: `${Math.random() * 4 + 2}s`,
+                animationDelay: `${Math.random() * 2}s`
               }}
             />
           ))}
         </div>
-
-        {/* Enhanced grid overlay */}
-        <div
-          className="absolute inset-0 opacity-10"
+        
+        {/* Grid overlay */}
+        <div 
+          className="absolute inset-0 opacity-5"
           style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a78bfa' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/svg%3E\")"
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234f46e5' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
           }}
         />
       </div>
 
-      <div className="relative z-10 container mx-auto px-6 py-24">
-        {/* Header */}
-        <header className="max-w-4xl mx-auto text-center mb-16">
-          <h2 className="text-4xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 drop-shadow-2xl mb-6">
-            Exploring My Universe
-          </h2>
-          <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            A cosmic wanderer in the realm of code — I build clean, reliable software and contribute to open source. I blend curiosity with craft to turn ideas into reliable products.
+      <div className="relative z-10 container mx-auto px-6">
+        {/* Header section */}
+        <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-200 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-4 drop-shadow-lg">
+                About Me
+            </h2>
+          <div className="w-48 h-1 bg-gradient-to-r from-white via-blue-600 to-white mx-auto rounded-full mb-8"></div>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            I'm a passionate software engineer crafting innovative solutions at the intersection of technology and creativity.
           </p>
-        </header>
+        </div>
 
-        {/* Main content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start max-w-6xl mx-auto">
+        {/* Main content grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+          {/* Left column - Profile and introduction */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Profile card */}
+            <div className="bg-gradient-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-lg rounded-3xl p-8 border border-cyan-400/20 shadow-2xl hover:shadow-cyan-500/10 transition-all duration-300">
+              <div className="flex flex-col items-center text-center">
+                <div className="relative mb-6">
+                  <div className="w-40 h-40 rounded-full overflow-hidden ring-4 ring-cyan-400/30 shadow-2xl bg-gradient-to-tr from-[#051029] to-[#0e1224] relative">
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400/20 to-purple-500/20 blur-xl animate-pulse"></div>
+                    <img
+                      src={image}
+                      alt="Shreeharsh Shinde"
+                      className="w-full h-full object-cover relative z-10 transform scale-175"
+                    />
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.8)] animate-pulse ring-4 ring-cyan-400/30"></div>
+                </div>
+                
+                <h2 className="text-3xl font-bold text-white mb-2">Shreeharsh Shinde</h2>
+                <p className="text-cyan-400 font-medium mb-4">Student | Tech Enthusiast | Open Source</p>
+                <p className="text-gray-300 mb-6">
+                  I am a Computer Science undergraduate passionate about diverse software technologies,
+                  building scalable web applications for high user reach, and solving complex problems
+                  with the power of software. Experienced with multiple languages for various purposes:
+                  Java for multithreading and object-oriented programming, Python for data science and
+                  machine learning, TypeScript for web applications, and Go or C++ for backend and server
+                  applications, as well as problem-solving and DSA.
+                  <br /><br />
+                  Currently deep diving into the vast ocean of open source, starting with MapLibre GL JS —
+                  a TypeScript library that uses WebGL to render interactive maps from vector tiles in a
+                  browser — and Astropy, a community effort to develop a common core package for Astronomy
+                  in Python. Always excited to explore, learn, and contribute more to these domains.
+                </p>
 
-          {/* Left column: portrait + CTA */}
-          <div className="flex flex-col items-center lg:items-start space-y-6">
-            <div className="relative">
-              <div className="w-48 h-48 rounded-full overflow-hidden ring-2 ring-cyan-400/30 shadow-2xl bg-gradient-to-tr from-[#051029] to-[#0e1224] relative">
-                {/* Glow effect */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400/20 to-purple-500/20 blur-xl animate-pulse"></div>
-                {/* replace src with your photo path */}
-                <img
-                  src="/avatar.png"
-                  alt="Shreeharsh Shinde"
-                  className="w-full h-full object-cover relative z-10"
-                />
+                
+                <div className="flex space-x-4">
+                  <a 
+                    href="../assets/Shreeharsh_Shinde_CV.pdf" 
+                    download
+                    className="px-6 py-3 bg-gradient-to-r from-cyan-500/40 to-blue-600/40 text-white font-semibold rounded-xl hover:from-cyan-400/60 hover:to-blue-500/60 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/20"
+                  >
+                    Download Resume
+                  </a>
+                  <a 
+                    href="#contact" 
+                    className="px-6 py-3 border-2 border-cyan-400 text-cyan-400 font-semibold rounded-xl hover:bg-cyan-400/20 hover:text-gray-900 transition-all duration-300 transform hover:scale-105"
+                  >
+                    Contact Me
+                  </a>
+                </div>
               </div>
-              <div className="absolute -bottom-2 -right-2 w-6 h-6 rounded-full bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.8)] animate-pulse ring-4 ring-cyan-400/30" />
-            </div>
-
-            <div className="text-center lg:text-left">
-              <h3 className="text-2xl font-bold">Hi, I’m Shreeharsh</h3>
-              <p className="mt-2 text-gray-300 max-w-sm">
-                I craft backend systems, build full-stack apps, and contribute to open-source — always learning, always iterating. Currently aiming for research and opportunities in Japan.
-              </p>
-            </div>
-
-            <div className="flex space-x-4 mt-2">
-              <a
-                href="/resume.pdf"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-cyan-400/20 text-cyan-300 hover:bg-cyan-400/8 transition-shadow shadow-sm"
-                download
-              >
-                Download Resume
-              </a>
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-400 text-black font-semibold hover:scale-[1.02] transition-transform"
-              >
-                Let’s Connect
-              </a>
             </div>
           </div>
-
-          {/* Right column: mission + stats + timeline */}
-          <div className="space-y-6">
-
-            {/* Mission card */}
-            <article className="bg-gradient-to-br from-indigo-900/30 to-purple-900/20 border border-cyan-400/20 backdrop-blur-md rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
-              <h4 className="text-xl font-bold mb-2 text-cyan-300">My Mission</h4>
-              <blockquote className="text-gray-200 italic">
-                “To create technology that feels alive — blending precision with imagination to build products that help people and spark curiosity.”
-              </blockquote>
-            </article>
-
-            {/* Stats cards */}
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { value: "3+", label: "Years Experience", icon: "🪐", color: "from-[#06b6d4] to-[#7c3aed]" },
-                { value: "20+", label: "Projects", icon: "🚀", color: "from-[#34d399] to-[#06b6d4]" },
-                { value: "10+", label: "Technologies", icon: "🌌", color: "from-[#f97316] to-[#f43f5e]" },
-                { value: "5+", label: "Open Source", icon: "🌍", color: "from-[#60a5fa] to-[#7c3aed]" }
-              ].map((s, idx) => (
-                <div
-                  key={idx}
-                  className={`relative overflow-hidden rounded-2xl p-6 shadow-xl border border-cyan-400/20 bg-gradient-to-br ${s.color} bg-opacity-10 hover:scale-[1.025] transition-all duration-300 hover:shadow-2xl`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="text-3xl">{s.icon}</div>
-                    <div>
-                      <div className="text-2xl font-extrabold text-white">{s.value}</div>
-                      <div className="text-sm text-gray-200">{s.label}</div>
+          
+          {/* Right column - Experience and education */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Experience section */}
+            <div className="bg-gradient-to-br from-gray-800/40 to-gray-900/40 backdrop-blur-lg rounded-3xl p-8 border border-cyan-400/20 shadow-2xl">
+              <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
+                <span className="text-cyan-400 mr-3">💼</span>
+                What I love to do ?
+              </h3>
+              
+              <div className="space-y-8">
+                {experiences.map((exp, index) => (
+                  <div key={index} className="relative pl-8 pb-8 border-l-2 border-cyan-400/30 group">
+                    <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-cyan-400 border-4 border-gray-900"></div>
+                    <div className="bg-gray-800/30 p-6 rounded-2xl border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300">
+                      <div className="flex flex-wrap justify-between items-start mb-3">
+                        <h4 className="text-xl font-bold text-white">{exp.role}</h4>
+                        {/* <span className="text-cyan-400 font-medium text-sm bg-cyan-400/10 px-3 py-1 rounded-full">
+                          {exp.period}
+                        </span> */}
+                      </div>
+                      <p className="text-lg text-cyan-300 mb-4">{exp.company}</p>
+                      <p className="text-gray-300 mb-4">{exp.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {exp.technologies.map((tech, techIndex) => (
+                          <span 
+                            key={techIndex} 
+                            className="px-3 py-1 text-xs font-medium bg-gray-700/50 text-cyan-300 rounded-full border border-gray-600/50"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                  {/* subtle glow */}
-                  <div className="absolute -right-20 -top-10 w-56 h-56 rounded-full opacity-30 blur-3xl bg-white/20" />
-                </div>
-              ))}
-            </div>
-
-            {/* Timeline */}
-            {/* <div className="mt-2">
-              <h4 className="text-lg font-semibold mb-4 text-cyan-300">My Journey</h4>
-              <ol className="relative border-l border-cyan-400/30 ml-4">
-                {[
-                  { year: "2022", title: "Started B.Tech in CS", desc: "Laid the foundation: data-structures, algorithms, and systems." },
-                  { year: "2023", title: "First Open Source Contribution", desc: "Contributed to MapLibre — began open-source journey." },
-                  { year: "2024", title: "Built ML & Web Projects", desc: "Projects combining ML and web — handwriting recognition prototypes." },
-                  { year: "2025", title: "Preparing for MEXT & GSoC", desc: "Focused on research alignment and open-source impact." }
-                ].map((item, idx) => (
-                  <li key={idx} className="mb-6 ml-6 group">
-                    <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-bold text-xs shadow-lg"> </span>
-                    <div className="mb-1 text-sm text-cyan-400 font-medium">{item.year}</div>
-                    <h5 className="font-semibold text-white group-hover:text-cyan-300 transition-colors duration-300">{item.title}</h5>
-                    <p className="text-gray-300 text-sm mt-1">{item.desc}</p>
-                  </li>
                 ))}
-              </ol>
-            </div> */}
-
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* small floating decorations */}
-      <div className="absolute right-10 top-24 w-2 h-2 bg-cyan-400 rounded-full animate-ping" />
-      <div className="absolute left-12 bottom-36 w-3 h-3 bg-purple-400 rounded-full animate-pulse" />
-
-      {/* animations */}
-      <style>{`
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.2; }
-          50% { opacity: 1; }
-        }
-        .animate-blob { animation: blob 8s infinite; }
-        @keyframes blob {
-          0% { transform: translate(0px, 0px) scale(1); }
-          33% { transform: translate(30px, -20px) scale(1.05); }
-          66% { transform: translate(-20px, 20px) scale(0.95); }
-          100% { transform: translate(0px, 0px) scale(1); }
-        }
-        .animation-delay-2000 { animation-delay: 2s; }
-        .animation-delay-4000 { animation-delay: 4s; }
-      `}</style>
+      
+      {/* Floating elements for visual interest */}
+      <div className="absolute top-20 left-10 w-3 h-3 bg-cyan-400 rounded-full animate-ping"></div>
+      <div className="absolute bottom-20 right-10 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+      <div className="absolute top-1/3 right-20 w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
     </section>
   );
 }
+

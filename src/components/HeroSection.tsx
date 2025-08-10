@@ -18,11 +18,11 @@ export const HeroSection: React.FC = () => (
                 Shreeharsh Shinde
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 font-light mb-8 drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">
-                Aspiring Software Developer | Nagpur, India
+                Aspiring Software Developer | Nanded, India
             </p>
             <a
                 href="#contact"
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold py-3 px-8 rounded-full text-lg hover:from-cyan-600 hover:to-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/30"
+                className="bg-gradient-to-r from-cyan-500/40 to-blue-500/40 text-white font-bold py-3 px-8 rounded-full text-lg hover:from-cyan-600/60 hover:to-blue-600/60 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/30"
             >
                 Get In Touch
             </a>

@@ -4,7 +4,7 @@ export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-gradient-to-br from-[#0a0a1a] via-[#121225] to-black overflow-hidden">
+    <footer className="relative bg-gradient-to-t from-[#0a0a1a]/20 via-[#121225]/20 backdrop-blur-xl to-black overflow-hidden">
       {/* Background Glow Effects */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-radial from-purple-900/20 via-indigo-900/10 to-transparent rounded-full" />
@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand Info */}
           <div>
-            <h3 className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-600 bg-clip-text text-transparent mb-4">
+            <h3 className="text-2xl font-bold bg-white/80 bg-clip-text text-transparent mb-4">
               Shreeharsh Shinde
             </h3>
             <p className="text-gray-400 leading-relaxed max-w-sm">
@@ -72,8 +72,8 @@ export const Footer: React.FC = () => {
               {[
                 { name: "React", color: "cyan" },
                 { name: "TypeScript", color: "blue" },
-                { name: "Three.js", color: "purple" },
-                { name: "Tailwind CSS", color: "emerald" },
+                { name: "Three.js", color: "gray" },
+                { name: "Tailwind CSS", color: "cyan" },
               ].map((tech) => (
                 <span
                   key={tech.name}

@@ -21,19 +21,19 @@ export const ContactSection: React.FC = () => {
   const socialLinks = [
     {
       name: "LinkedIn",
-      url: "#",
+      url: "https://www.linkedin.com/in/shreeharsh-shinde-467501278/",
       icon: <Linkedin className="w-8 h-8" />,
       color: "from-blue-500 to-blue-600",
     },
     {
       name: "GitHub",
-      url: "#",
+      url: "https://www.github.com/shreeharshshinde",
       icon: <Github className="w-8 h-8" />,
       color: "from-gray-700 to-gray-800",
     },
     {
       name: "Twitter",
-      url: "#",
+      url: "https://x.com/Shreeharsh157",
       icon: <Twitter className="w-8 h-8" />,
       color: "from-sky-500 to-sky-600",
     },
@@ -46,7 +46,7 @@ export const ContactSection: React.FC = () => {
   ];
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-[#0a0a1a] via-[#121225] to-[#000000] overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-br from-[#0c0c1a] via-[#07070e] to-[#000000] overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-radial from-purple-900/20 via-indigo-900/10 to-transparent rounded-full"></div>
@@ -65,10 +65,10 @@ export const ContactSection: React.FC = () => {
       <div className="relative z-10 container mx-auto px-6 py-20">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-6 drop-shadow-2xl">
+          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-200 bg-clip-text text-transparent mb-6 drop-shadow-2xl">
             Get In Touch
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 mx-auto rounded-full mb-8 shadow-lg shadow-cyan-500/30"></div>
+          <div className="w-48 h-1 bg-gradient-to-r from-white via-cyan-400 to-white mx-auto rounded-full mb-8 shadow-lg shadow-cyan-500/30"></div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             I'm currently seeking internship opportunities and am excited to
             connect with fellow developers, recruiters, and tech enthusiasts.
@@ -136,7 +136,7 @@ export const ContactSection: React.FC = () => {
             <div className="text-center">
               <a
                 href="mailto:shindeshreeharsh157@gmail.com"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-full text-xl hover:from-cyan-400 hover:to-blue-500 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-lg shadow-cyan-500/30 ring-2 ring-cyan-500/30 hover:ring-cyan-500/50"
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-white font-bold rounded-full text-xl hover:from-cyan-400/30 hover:to-blue-500/30 transition-all duration-200 transform hover:scale-105 hover:shadow-lg shadow-md shadow-cyan-500/30 ring-2 ring-cyan-500/30 hover:ring-cyan-500/50"
               >
                 Say Hello
                 <Rocket className="ml-3 w-5 h-5" />
@@ -146,7 +146,7 @@ export const ContactSection: React.FC = () => {
 
           {/* Social Links */}
           <div
-            className={`transition-all duration-1000 delay-300 ${
+            className={`transition-all duration-100 delay-300 ${
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
@@ -196,12 +196,12 @@ export const ContactSection: React.FC = () => {
                 </h4>
                 <ul className="text-gray-300 space-y-2 text-sm">
                   <li className="flex items-center">
-                    <span className="text-cyan-400 mr-2">•</span> Backend
-                    Development Internships
+                    <span className="text-cyan-400 mr-2">•</span>
+                    Software Development Internships
                   </li>
                   <li className="flex items-center">
-                    <span className="text-cyan-400 mr-2">•</span> Full-Stack
-                    Development Opportunities
+                    <span className="text-cyan-400 mr-2">•</span>
+                    Data Analyst Opportunities
                   </li>
                   <li className="flex items-center">
                     <span className="text-cyan-400 mr-2">•</span> Open Source

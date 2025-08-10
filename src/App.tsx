@@ -56,19 +56,19 @@ const App: React.FC = () => {
     }, []);
 
     return (
-        <div className="bg-gray-900 text-white font-sans antialiased">
+        <div className="bg-gray-950 text-white font-sans antialiased">
             <Header navLinks={navLinks} activeSection={activeSection} setActiveSection={setActiveSection} onScroll={handleScroll} />
             <main>
                 <section id="home" ref={homeRef} className="h-screen w-full relative">
                     <HeroSection />
                 </section>
-                <section id="about" ref={aboutRef} className="bg-gray-800">
+                <section id="about" ref={aboutRef}>
                     <AboutSection />
                 </section>
-                <section id="skills" ref={skillsRef} className="h-screen relative">
+                <section id="skills" ref={skillsRef} className="min-h-screen relative">
                     <SkillsSection />
                 </section>
-                <section id="projects" ref={projectsRef} className="bg-gray-800">
+                <section id="projects" ref={projectsRef}>
                     <ProjectsSection />
                 </section>
                 <section id="contact" ref={contactRef}>

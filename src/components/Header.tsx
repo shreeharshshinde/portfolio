@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { RefObject } from 'react';
 import type { NavLink } from '../App';
+import logo from '../assets/articuno.png'
 
 interface HeaderProps {
     navLinks: NavLink[];
@@ -41,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ navLinks, activeSection, setActi
                     <div className="relative">
                         <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg flex items-center justify-center border-cyan-300 border-1">
                             <img 
-                                src="src\assets\articuno.png"
+                                src={logo}
                                 alt="Logo"
                                 className="w-full h-full object-cover"
                             />

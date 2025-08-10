@@ -1,51 +1,54 @@
-import React from 'react';
+import { useGLTF } from '@react-three/drei'
+import { useEffect, useRef, useState } from 'react'
+import { useFrame } from '@react-three/fiber'
+import * as THREE from 'three'
 
-const SketchfabModel = () => {
+export function DeepSpace9() {
+  const [modelLoaded, setModelLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const groupRef = useRef<THREE.Group>(null);
+  const gltf = useGLTF('src/assets/deep_space_9.glb');
+  const scene = gltf.scene;
+
+  useEffect(() => {
+    try {
+      scene.traverse((child: THREE.Object3D) => {
+        if (child instanceof THREE.Mesh) {
+          (child.material as THREE.MeshStandardMaterial).color.set('#374151')
+        }
+      })
+      setModelLoaded(true);
+    } catch (err) {
+      console.error('Error processing 3D model:', err);
+      setError(true);
+    }
+  }, [scene])
+
+  // Rotate continuously
+  useFrame((_, delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.5 // speed multiplier
+    }
+  })
+
+  // If there's an error loading the model, return null to prevent rendering issues
+  if (error) {
+    console.error('Failed to load 3D model, skipping rendering');
+    return null;
+  }
+
+  // If the model isn't loaded yet, return null
+  if (!modelLoaded) {
+    return null;
+  }
+
   return (
-    <div className="sketchfab-embed-wrapper">
-      <iframe
-        title="Scifi tower"
-        frameBorder="0"
-        allow="autoplay; fullscreen; xr-spatial-tracking"
-        allowFullScreen
-        xr-spatial-tracking="true"
-        execution-while-out-of-viewport="true"
-        execution-while-not-rendered="true"
-        web-share="true"
-        src="https://sketchfab.com/models/4d60616e3d6a4d9487c0b44cfeeae45a/embed"
-        style={{ width: '100%', height: '480px' }}
-      ></iframe>
-
-      <p style={{ fontSize: '13px', fontWeight: 'normal', margin: '5px', color: '#4A4A4A' }}>
-        <a
-          href="https://sketchfab.com/3d-models/scifi-tower-4d60616e3d6a4d9487c0b44cfeeae45a?utm_medium=embed&utm_campaign=share-popup&utm_content=4d60616e3d6a4d9487c0b44cfeeae45a"
-          target="_blank"
-          rel="noreferrer"
-          style={{ fontWeight: 'bold', color: '#1CAAD9' }}
-        >
-          Scifi tower
-        </a>{' '}
-        by{' '}
-        <a
-          href="https://sketchfab.com/Anima-Z?utm_medium=embed&utm_campaign=share-popup&utm_content=4d60616e3d6a4d9487c0b44cfeeae45a"
-          target="_blank"
-          rel="noreferrer"
-          style={{ fontWeight: 'bold', color: '#1CAAD9' }}
-        >
-          Anima Z
-        </a>{' '}
-        on{' '}
-        <a
-          href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=4d60616e3d6a4d9487c0b44cfeeae45a"
-          target="_blank"
-          rel="noreferrer"
-          style={{ fontWeight: 'bold', color: '#1CAAD9' }}
-        >
-          Sketchfab
-        </a>
-      </p>
-    </div>
-  );
-};
-
-export default SketchfabModel;
+    <group
+      ref={groupRef}
+      position={[0, 4, 0]}
+      scale={[0.07, 0.07, 0.07]}
+    >
+      <primitive object={scene} />
+    </group>
+  )
+}
