@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { RefObject } from 'react';
 import type { NavLink } from '../App';
-import logo from '../assets/articuno.png'
+import logo from '/assets/articuno.png'
 
 interface HeaderProps {
     navLinks: NavLink[];

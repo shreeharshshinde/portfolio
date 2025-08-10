@@ -1,4 +1,4 @@
-import image from '../assets/self.jpg'
+import image from '/assets/self.jpg'
 // AboutSection.tsx
 // Completely restructured and enhanced About section with professional cosmic theme
 

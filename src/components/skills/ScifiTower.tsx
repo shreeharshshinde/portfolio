@@ -7,7 +7,7 @@ export function DeepSpace9() {
   const [modelLoaded, setModelLoaded] = useState(false);
   const [error, setError] = useState(false);
   const groupRef = useRef<THREE.Group>(null);
-  const gltf = useGLTF('src/assets/deep_space_9.glb');
+  const gltf = useGLTF('/assets/deep_space_9.glb');
   const scene = gltf.scene;
 
   useEffect(() => {
