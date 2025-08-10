@@ -15,7 +15,7 @@ export const Stars: React.FC = (props) => {
     useFrame((state: RootState, delta: number) => {
         if (ref.current) {
             ref.current.rotation.x -= delta / 10;
-            ref.current.rotation.y -= delta / 15;
+            ref.current.rotation.y -= delta / 25;
         }
     });
 

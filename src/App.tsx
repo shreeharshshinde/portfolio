@@ -7,6 +7,8 @@ import { SkillsSection } from './components/skills/SkillSelection';
 import { ProjectsSection } from './components/ProjectSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { Stars } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
 
 export interface NavLink {
     id: string;
@@ -31,7 +33,7 @@ const App: React.FC = () => {
         { id: 'contact', title: 'Contact', ref: contactRef },
     ];
 
-    const handleScroll = (ref: RefObject<HTMLDivElement>) => {
+    const handleScroll = (ref: RefObject<HTMLDivElement | null>) => {
         ref.current?.scrollIntoView({ behavior: 'smooth' });
     };
     
@@ -56,7 +58,6 @@ const App: React.FC = () => {
     return (
         <div className="bg-gray-900 text-white font-sans antialiased">
             <Header navLinks={navLinks} activeSection={activeSection} setActiveSection={setActiveSection} onScroll={handleScroll} />
-            
             <main>
                 <section id="home" ref={homeRef} className="h-screen w-full relative">
                     <HeroSection />

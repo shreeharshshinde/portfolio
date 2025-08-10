@@ -48,26 +48,28 @@ export const ProjectsSection: React.FC = () => {
     ];
 
     return (
-        <div className="relative min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
+        <div className="relative min-h-screen bg-gradient-to-br from-[#0a0a1a] via-[#121225] to-[#000000] overflow-hidden">
             {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
-                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
-                <div className="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse" style={{ animationDelay: '4s' }}></div>
+                {/* Nebula-like background elements */}
+                <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-radial from-purple-900/20 via-indigo-900/10 to-transparent rounded-full"></div>
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse"></div>
+                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse" style={{ animationDelay: '4s' }}></div>
             </div>
 
-            {/* Grid Pattern Overlay */}
-            <div className="absolute inset-0 opacity-30" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+            {/* Enhanced Grid Pattern Overlay */}
+            <div className="absolute inset-0 opacity-20" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a78bfa' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/svg%3E")`
             }}></div>
 
             <div className="relative z-10 container mx-auto px-6 py-20">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-6">
+                    <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent mb-6 drop-shadow-2xl">
                         My Projects
                     </h2>
-                    <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                    <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
                         Explore my latest work and creations, showcasing innovative solutions and cutting-edge technologies
                     </p>
                 </div>
@@ -77,8 +79,8 @@ export const ProjectsSection: React.FC = () => {
                 {projects.map((project, index) => (
                         <div
                             key={index}
-                            className={`group relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 ${
-                                hoveredIndex === index ? 'ring-2 ring-cyan-500/50 shadow-2xl shadow-cyan-500/20' : ''
+                            className={`group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 ${
+                                hoveredIndex === index ? 'ring-2 ring-cyan-500/50 shadow-2xl shadow-cyan-500/30' : 'shadow-xl'
                             }`}
                             onMouseEnter={() => setHoveredIndex(index)}
                             onMouseLeave={() => setHoveredIndex(null)}
@@ -91,8 +93,8 @@ export const ProjectsSection: React.FC = () => {
                                 {/* Header */}
                                 <div className="flex items-center justify-between mb-6">
                                     <div className="text-4xl">{project.icon}</div>
-                                    <span 
-                                        className="px-3 py-1 text-xs font-semibold rounded-full text-white"
+                                    <span
+                                        className="px-3 py-1 text-xs font-semibold rounded-full text-white shadow-md"
                                         style={{ backgroundColor: project.color }}
                                     >
                                         {project.category}
@@ -118,7 +120,7 @@ export const ProjectsSection: React.FC = () => {
                                         {project.technologies.map((tech, techIndex) => (
                                             <span
                                                 key={techIndex}
-                                                className="px-3 py-1 text-xs font-medium bg-gray-700/50 text-gray-300 rounded-full border border-gray-600/50 hover:border-cyan-500/50 transition-colors duration-300"
+                                                className="px-3 py-1 text-xs font-medium bg-gray-700/50 text-gray-300 rounded-full border border-gray-600/50 hover:border-cyan-500/50 transition-all duration-300 hover:bg-cyan-500/10"
                                             >
                                                 {tech}
                                             </span>
@@ -132,8 +134,8 @@ export const ProjectsSection: React.FC = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg ${
-                                        hoveredIndex === index 
-                                            ? 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25' 
+                                        hoveredIndex === index
+                                            ? 'bg-gradient-to-r from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/25'
                                             : 'bg-gradient-to-r from-gray-700 to-gray-600 hover:from-gray-600 hover:to-gray-500'
                                     }`}
                                 >
