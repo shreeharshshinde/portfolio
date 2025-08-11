@@ -1,6 +1,7 @@
 # Shreeharsh Shinde - Personal Portfolio
 
 <img width="2838" height="1586" alt="image" src="https://github.com/user-attachments/assets/cd0b7a46-0472-4805-9620-c17751422808" />
+<img width="2793" height="1555" alt="image" src="https://github.com/user-attachments/assets/fc66758a-963a-43e5-8e62-5e37664ce2ab" />
 
 
 Welcome to the source code for my personal portfolio website. This project is a showcase of my skills in modern front-end development, featuring a clean design, smooth animations, and interactive 3D elements.
