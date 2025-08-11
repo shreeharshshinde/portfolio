@@ -1,69 +1,48 @@
-# React + TypeScript + Vite
+# Shreeharsh Shinde - Personal Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="2838" height="1586" alt="image" src="https://github.com/user-attachments/assets/cd0b7a46-0472-4805-9620-c17751422808" />
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Welcome to the source code for my personal portfolio website. This project is a showcase of my skills in modern front-end development, featuring a clean design, smooth animations, and interactive 3D elements.
 
-## Expanding the ESLint configuration
+**Live Site:** [https://shreeharsh-shinde-portfolio.vercel.app/](https://shreeharsh-shinde-portfolio.vercel.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 About This Project
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+This portfolio was built from the ground up to be more than just a static resume. It's an interactive experience designed to demonstrate my passion for creating beautiful, functional, and engaging web applications. The goal was to combine a professional aesthetic with unique, memorable features like the physics-based skills section.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## ✨ Key Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Interactive 3D Hero:** An animated starfield background built with `react-three-fiber` to create an immersive first impression.
+- **Physics-Based Skills Showcase:** A dynamic and interactive display of my technical skills using the `react-three/cannon` physics engine.
+- **Professional Project Cards:** A clean, modern layout to showcase my key projects with elegant hover effects and SVG icons.
+- **Fully Responsive Design:** The entire site is built with a mobile-first approach using Tailwind CSS to ensure a seamless experience on all devices.
+- **Component-Based Architecture:** The project is structured into logical, reusable components for better maintainability and scalability.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Tech Stack
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+This project is built with a modern, type-safe, and performant tech stack:
+
+- **Framework:** [React.js](https://reactjs.org/) (with [Vite](https://vitejs.dev/))
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **3D Graphics & Physics:**
+  - [Three.js](https://threejs.org/)
+  - [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/)
+  - [React Three Drei](https://github.com/pmndrs/drei)
+  - [React Three Cannon](https://github.com/pmndrs/use-cannon)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Deployment:** [Vercel](https://vercel.com/)
+
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Three.js](https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+
+---
+
+## 🚀 Deployment
+
+This project is deployed on **Vercel** with a continuous deployment pipeline connected to the `main` branch of this repository. Any push to the `main` branch will automatically trigger a new build and deployment.
