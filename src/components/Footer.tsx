@@ -99,7 +99,7 @@ export const Footer: React.FC = () => {
           <div className="flex space-x-6">
             {[
               {
-                href: "#",
+                href: "https://www.linkedin.com/in/shreeharsh-shinde-467501278/",
                 title: "LinkedIn",
                 icon: (
                   <svg
@@ -112,7 +112,7 @@ export const Footer: React.FC = () => {
                 ),
               },
               {
-                href: "#",
+                href: "https://github.com/shreeharshshinde",
                 title: "GitHub",
                 icon: (
                   <svg
@@ -125,7 +125,7 @@ export const Footer: React.FC = () => {
                 ),
               },
               {
-                href: "#",
+                href: "https://x.com/Shreeharsh157",
                 title: "Twitter",
                 icon: (
                   <svg
