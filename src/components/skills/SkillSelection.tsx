@@ -120,7 +120,7 @@ const MiniHexPlate: React.FC<{
     useFrame((state) => {
         if (meshRef.current) {
             const time = state.clock.elapsedTime;
-            meshRef.current.position.y = position[1] + Math.sin(time * 0.8 + index) * 0.3;
+            meshRef.current.position.y = position[1] + Math.sin(time * 0.8 + index) * 0.7;
             // Subtle rotation for visual interest
             meshRef.current.rotation.y = Math.sin(time * 0.3 + index) * 0.1;
         }
@@ -214,7 +214,7 @@ const TechCoin: React.FC<{
                 <meshStandardMaterial
                     map={texture}
                     color={hovered ? skill.color : "#374151"}
-                    metalness={0.9}
+                    metalness={0.6}
                     roughness={0.5}
                     emissive={hovered ? skill.color : "#000000"}
                     emissiveIntensity={hovered ? 0.5 : 0.2}
@@ -292,7 +292,7 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
         <>
             {/* Environment and Lighting */}
             <Environment preset="city"/>
-            <ambientLight intensity={0.4} />
+            <ambientLight intensity={0.2} />
             <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
             <pointLight position={[-10, -10, -10]} intensity={0.5} color="#4a00e0" />
             <pointLight position={[10, 10, 10]} intensity={0.5} color="#00c9ff" />
@@ -358,7 +358,7 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
             {/* Perfect Camera Controls - Zoomed out */}
             <OrbitControls
                 enablePan={true}
-                enableZoom={false}
+                enableZoom={true}
                 enableRotate={true}
                 target={[0, 0, 0]}
             />
