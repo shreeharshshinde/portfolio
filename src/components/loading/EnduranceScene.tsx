@@ -43,7 +43,7 @@ export const EnduranceScene: React.FC = () => {
         // Passing from bottom-left to right with Gravity Assist Curve
         if (enduranceRef.current) {
             // Speed (Synced with audio)
-            const speed = 3.2;
+            const speed = 3.0;
             const startX = -18;
             const endX = 35;
             const totalDistance = endX - startX;
@@ -92,7 +92,7 @@ export const EnduranceScene: React.FC = () => {
             </group>
 
             {/* Endurance - Foreground */}
-            <group ref={enduranceRef} position={[-20, -5, 0]} scale={[0.07, 0.07, 0.07]} rotation={[0, Math.PI / 2, 0]}>
+            <group ref={enduranceRef} position={[-20, -5, 10]} scale={[0.07, 0.07, 0.07]} rotation={[0, Math.PI / 2, 0]}>
                 <primitive object={endurance.scene} />
             </group>
         </>

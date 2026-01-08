@@ -55,8 +55,30 @@ const App: React.FC = () => {
         return () => window.removeEventListener('scroll', handleManualScroll);
     }, []);
 
+    const handleLoadingComplete = (audio: HTMLAudioElement | null) => {
+        setIsLoading(false);
+        // "After some given seconds slowly fades away"
+        if (audio) {
+            // Keep playing for 5 seconds to overlap with Hero section
+            setTimeout(() => {
+                // Start fade out
+                const fadeInterval = setInterval(() => {
+                    if (audio.volume > 0.05) {
+                        // Decrease volume gradually
+                        audio.volume = Math.max(0, audio.volume - 0.05);
+                    } else {
+                        // Cleanup
+                        audio.volume = 0;
+                        audio.pause();
+                        clearInterval(fadeInterval);
+                    }
+                }, 1000); // 200ms * 16 steps (0.8 -> 0) is approx 3.2 seconds fade
+            }, 5000);
+        }
+    };
+
     if (isLoading) {
-        return <LoadingScreen onComplete={() => setIsLoading(false)} />;
+        return <LoadingScreen onComplete={handleLoadingComplete} />;
     }
 
     return (

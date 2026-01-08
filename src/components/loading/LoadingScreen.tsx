@@ -4,7 +4,7 @@ import { EnduranceScene } from './EnduranceScene';
 import { Volume2, VolumeX, Play } from 'lucide-react';
 
 interface LoadingScreenProps {
-    onComplete: () => void;
+    onComplete: (audio: HTMLAudioElement | null) => void;
 }
 
 export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
@@ -12,15 +12,21 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
     const [progress, setProgress] = useState(0);
     const [muted, setMuted] = useState(false);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    const isCompletedRef = useRef(false);
 
     // Initialize Audio
     useEffect(() => {
         audioRef.current = new Audio('/assets/Hanz_Zimmer_-_No_Time_for_Caution_Interstellar_O.S.T._(mp3.pm).mp3');
         audioRef.current.loop = true;
-        audioRef.current.volume = 0.5;
+        audioRef.current.volume = 0.2; // Default to low volume
+        audioRef.current.currentTime = 30; // Start at 30s as requested
+
+        // Attempt autoplay immediately
+        audioRef.current.play().catch(e => console.log("Autoplay blocked (will start on interaction):", e));
 
         return () => {
-            if (audioRef.current) {
+            // Only cleanup if we are NOT completing successfully (e.g. unmount)
+            if (audioRef.current && !isCompletedRef.current) {
                 audioRef.current.pause();
                 audioRef.current = null;
             }
@@ -40,8 +46,13 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
 
     const handleStart = () => {
         setStarted(true);
-        if (audioRef.current && !muted) {
-            audioRef.current.play().catch(e => console.error("Audio play failed", e));
+        // Cinematic Transition
+        if (audioRef.current) {
+            audioRef.current.currentTime = 0; // Jump to climax/docking moment
+            audioRef.current.volume = 0.8; // Full cinematic volume for visuals
+            if (audioRef.current.paused && !muted) {
+                audioRef.current.play().catch(console.error);
+            }
         }
 
         // Simulate loading process
@@ -51,7 +62,9 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
             if (currentProgress >= 100) {
                 currentProgress = 100;
                 clearInterval(interval);
-                setTimeout(onComplete, 1000); // Wait a bit at 100%
+                // Hand over audio to parent
+                isCompletedRef.current = true;
+                setTimeout(() => onComplete(audioRef.current), 1000);
             }
             setProgress(currentProgress);
         }, 100);
