@@ -425,8 +425,26 @@ export const SkillsSection: React.FC = () => {
                 </p>
             </div>
 
-            {/* Category Filter Buttons - Left Side */}
-            <div className="absolute left-6 top-1/2 transform -translate-y-1/2 z-10">
+            {/* Category Filter Buttons - Mobile (Bottom Horizontal Scroll) */}
+            <div className="absolute bottom-8 left-0 right-0 z-20 md:hidden px-4">
+                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide no-scrollbar text-sm">
+                    {categories.map((category) => (
+                        <button
+                            key={category.name}
+                            onClick={() => setSelectedCategory(category.name)}
+                            className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition-all duration-300 ${selectedCategory === category.name
+                                    ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
+                                    : 'bg-gray-800/80 text-gray-300 border border-gray-700/50'
+                                }`}
+                        >
+                            {category.name}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {/* Category Filter Buttons - Desktop Left */}
+            <div className="hidden md:block absolute left-6 top-1/2 transform -translate-y-1/2 z-10">
                 <div className="flex flex-col gap-3">
                     {categories.slice(0, Math.ceil(categories.length / 2)).map((category) => (
                         <button
@@ -443,8 +461,8 @@ export const SkillsSection: React.FC = () => {
                 </div>
             </div>
 
-            {/* Category Filter Buttons - Right Side */}
-            <div className="absolute right-6 top-1/2 transform -translate-y-1/2 z-10">
+            {/* Category Filter Buttons - Desktop Right */}
+            <div className="hidden md:block absolute right-6 top-1/2 transform -translate-y-1/2 z-10">
                 <div className="flex flex-col gap-3">
                     {categories.slice(Math.ceil(categories.length / 2)).map((category) => (
                         <button

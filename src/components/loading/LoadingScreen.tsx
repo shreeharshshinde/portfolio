@@ -48,7 +48,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         setStarted(true);
         // Cinematic Transition
         if (audioRef.current) {
-            audioRef.current.currentTime = 0; // Jump to climax/docking moment
+            audioRef.current.currentTime = 10; // Jump to climax/docking moment
             audioRef.current.volume = 0.8; // Full cinematic volume for visuals
             if (audioRef.current.paused && !muted) {
                 audioRef.current.play().catch(console.error);
