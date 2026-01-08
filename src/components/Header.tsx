@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { RefObject } from 'react';
 import type { NavLink } from '../App';
 import logo from '/assets/articuno.png'
+import { Menu, X } from 'lucide-react';
 
 interface HeaderProps {
     navLinks: NavLink[];
@@ -30,122 +31,114 @@ export const Header: React.FC<HeaderProps> = ({ navLinks, activeSection, setActi
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all border-cyan-100 border-1 border-b-0 rounded-xl m-1 duration-500 ${
-                isScrolled
-                    ? 'bg-transparent backdrop-blur-md shadow-lg'
-                    : 'bg-transparent backdrop-blur-md'
-            }`}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 font-mono ${isScrolled
+                    ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-3'
+                    : 'bg-transparent border-b border-transparent py-5'
+                }`}
         >
-            <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-                {/* Logo/Brand */}
-                <div className="flex items-center space-x-3">
-                    <div className="relative">
-                        <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg flex items-center justify-center border-cyan-300 border-1">
-                            <img 
-                                src={logo}
-                                alt="Logo"
-                                className="w-full h-full object-cover"
-                            />
-                        </div>
+            <div className="container mx-auto px-6 flex justify-between items-center relative">
+
+                {/* HUD Decoration Lines (Top Corners) */}
+                <div className="absolute top-0 left-0 w-8 h-px bg-white/30"></div>
+                <div className="absolute top-0 right-0 w-8 h-px bg-white/30"></div>
+
+                {/* Logo/Brand - Sci-Fi Designation style */}
+                <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <div className="relative w-10 h-10 overflow-hidden border border-white/20 rounded-sm group-hover:border-orange-500/50 transition-colors duration-300">
+                        <div className="absolute inset-0 bg-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
+                        />
+                        {/* Corner accents */}
+                        <div className="absolute top-0 left-0 w-1 h-1 bg-white/50"></div>
+                        <div className="absolute bottom-0 right-0 w-1 h-1 bg-white/50"></div>
                     </div>
-                    <div className="text-2xl font-extrabold tracking-tight bg-blue-200 bg-clip-text text-transparent">
-                        Shreeharsh Shinde
+                    <div className="flex flex-col">
+                        <span className="text-xl font-bold tracking-[0.1em] text-white group-hover:text-orange-100 transition-colors" style={{ fontFamily: '"Orbitron", sans-serif' }}>
+                            SHREEHARSH
+                        </span>
+                        <span className="text-[10px] tracking-[0.3em] text-white/40 uppercase group-hover:text-orange-500/80 transition-colors">
+                            System Portfolio // V2.0
+                        </span>
                     </div>
                 </div>
 
-                {/* Desktop Navigation */}
-                <ul className="hidden md:flex space-x-8">
-                    {navLinks.map((link, index) => (
-                        <li key={link.id}>
-                            <button
-                                onClick={() => handleNavClick(link)}
-                                className={`relative text-lg font-medium tracking-wide transition-all duration-300 group ${
-                                    activeSection === link.id
-                                        ? 'text-blue-400'
-                                        : 'text-gray-300 hover:text-blue-300'
+                {/* Desktop Navigation - HUD Style */}
+                <nav className="hidden md:flex items-center gap-1">
+                    {navLinks.map((link) => (
+                        <button
+                            key={link.id}
+                            onClick={() => handleNavClick(link)}
+                            className={`relative px-5 py-2 text-xs font-medium tracking-[0.2em] uppercase transition-all duration-300 group overflow-hidden ${activeSection === link.id
+                                    ? 'text-orange-400'
+                                    : 'text-white/60 hover:text-white'
                                 }`}
-                                style={{ animationDelay: `${index * 100}ms` }}
-                            >
+                        >
+                            <span className="relative z-10 flex items-center gap-2">
+                                {activeSection === link.id && <span className="text-[10px] animate-pulse">►</span>}
                                 {link.title}
-                                {/* Underline Effect */}
-                                <span
-                                    className={`absolute -bottom-1 left-0 h-0.5 rounded-full bg-gradient-to-r from-blue-600 via-orange-400 to-red-500 transition-all duration-300 group-hover:w-full ${
-                                        activeSection === link.id ? 'w-full' : 'w-0'
-                                    }`}
-                                ></span>
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                            </span>
 
-                {/* Mobile Menu Button */}
+                            {/* Hover/Active Background Effect */}
+                            <div className={`absolute inset-0 bg-white/5 transform transition-transform duration-300 origin-left ${activeSection === link.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                                }`}></div>
+
+                            {/* Bottom Border Accent */}
+                            <div className={`absolute bottom-0 left-0 h-[1px] bg-orange-500/50 transition-all duration-300 ${activeSection === link.id ? 'w-full' : 'w-0 group-hover:w-full'
+                                }`}></div>
+                        </button>
+                    ))}
+
+                    {/* Trailing Decoration */}
+                    <div className="w-12 h-px bg-gradient-to-r from-white/20 to-transparent ml-4"></div>
+                </nav>
+
+                {/* Mobile Menu Button - Sci-Fi Trigger */}
                 <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="md:hidden relative w-10 h-10 flex flex-col justify-center items-center space-y-1.5 group"
+                    className="md:hidden relative w-10 h-10 flex items-center justify-center border border-white/20 rounded-sm hover:bg-white/5 transition-colors"
                 >
-                    <span
-                        className={`w-6 h-0.5 bg-gray-300 transition-all duration-300 ${
-                            isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''
-                        }`}
-                    ></span>
-                    <span
-                        className={`w-6 h-0.5 bg-gray-300 transition-all duration-300 ${
-                            isMobileMenuOpen ? 'opacity-0' : ''
-                        }`}
-                    ></span>
-                    <span
-                        className={`w-6 h-0.5 bg-gray-300 transition-all duration-300 ${
-                            isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''
-                        }`}
-                    ></span>
+                    {isMobileMenuOpen ? <X size={20} className="text-orange-400" /> : <Menu size={20} className="text-white/80" />}
+                    {/* Corner ticks */}
+                    <div className="absolute top-0 left-0 w-0.5 h-0.5 bg-white/50"></div>
+                    <div className="absolute top-0 right-0 w-0.5 h-0.5 bg-white/50"></div>
+                    <div className="absolute bottom-0 left-0 w-0.5 h-0.5 bg-white/50"></div>
+                    <div className="absolute bottom-0 right-0 w-0.5 h-0.5 bg-white/50"></div>
                 </button>
-            </nav>
+            </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu - Data Panel Slide Down */}
             <div
-                className={`md:hidden transition-all duration-500 overflow-hidden ${
-                    isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                }`}
+                className={`md:hidden absolute top-full left-0 w-full bg-black/90 backdrop-blur-xl border-b border-white/10 transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                    }`}
             >
-                <div className="bg-gray-800/90 backdrop-blur-md border-t border-gray-700/50">
-                    <ul className="container mx-auto px-6 py-4 space-y-4">
-                        {navLinks.map((link, index) => (
-                            <li key={link.id}>
-                                <button
-                                    onClick={() => handleNavClick(link)}
-                                    className={`w-full text-left text-lg font-semibold transition-all duration-300 py-3 px-4 rounded-xl ${
-                                        activeSection === link.id
-                                            ? 'bg-gradient-to-r from-blue-400/20 to-pink-400/20 text-blue-300 border border-blue-400/30'
-                                            : 'text-gray-300 hover:bg-gray-700/50 hover:text-blue-300'
-                                    }`}
-                                    style={{ animationDelay: `${index * 100}ms` }}
-                                >
-                                    <div className="flex items-center space-x-3">
-                                        <div
-                                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                                activeSection === link.id ? 'bg-blue-400' : 'bg-gray-500'
-                                            }`}
-                                        ></div>
-                                        {link.title}
-                                    </div>
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
+                <div className="container mx-auto px-6 py-6 flex flex-col gap-2">
+                    <div className="text-[10px] tracking-widest text-white/30 mb-2">// NAVIGATION TARGETS</div>
+                    {navLinks.map((link) => (
+                        <button
+                            key={link.id}
+                            onClick={() => handleNavClick(link)}
+                            className={`flex items-center gap-4 p-4 border border-transparent hover:border-white/10 hover:bg-white/5 transition-all text-left group ${activeSection === link.id ? 'bg-white/5 border-orange-500/20' : ''
+                                }`}
+                        >
+                            <span className={`text-xs font-mono transition-colors ${activeSection === link.id ? 'text-orange-400' : 'text-white/40 group-hover:text-orange-400'
+                                }`}>0{navLinks.indexOf(link) + 1}</span>
+
+                            <span className={`text-sm tracking-[0.2em] uppercase font-mono ${activeSection === link.id ? 'text-white' : 'text-white/70 group-hover:text-white'
+                                }`}>
+                                {link.title}
+                            </span>
+
+                            {activeSection === link.id && <span className="ml-auto text-orange-400 animate-pulse text-xs">&lt;ACTIVE&gt;</span>}
+                        </button>
+                    ))}
                 </div>
             </div>
 
-            {/* Thin Progress Bar */}
-            <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gray-800/30">
-                <div
-                    className="h-full bg-gradient-to-r from-blue-400 via-yellow-300 to-red-400 transition-all duration-300"
-                    style={{
-                        width: `${
-                            ((navLinks.findIndex(link => link.id === activeSection) + 1) / navLinks.length) * 100
-                        }%`,
-                    }}
-                ></div>
-            </div>
+            {/* Scanline overlay for pure aesthetics */}
+            <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.02)_50%),linear-gradient(90deg,rgba(255,0,0,0.01),rgba(0,255,0,0.01),rgba(0,0,255,0.01))] bg-[length:100%_4px,3px_100%] opacity-20"></div>
         </header>
     );
 };
