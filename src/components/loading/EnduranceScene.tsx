@@ -9,13 +9,34 @@ export const EnduranceScene: React.FC = () => {
 
     const enduranceRef = useRef<THREE.Group>(null);
     const planetRef = useRef<THREE.Group>(null);
+    const starsRef = useRef<THREE.Group>(null);
+
+    // Fix Neptune Material to prevent shiny reflections
+    if (planet) {
+        planet.scene.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+                const mesh = child as THREE.Mesh;
+                // Make it matte to absorb light naturally rather than reflect it
+                if (mesh.material) {
+                    (mesh.material as THREE.MeshStandardMaterial).roughness = 1.0;
+                    (mesh.material as THREE.MeshStandardMaterial).metalness = 0.0;
+                }
+            }
+        });
+    }
 
     useFrame((state) => {
         const time = state.clock.getElapsedTime();
 
         // Planet rotation - very slow
         if (planetRef.current) {
-            planetRef.current.rotation.y = time * 1.25;
+            planetRef.current.rotation.y = time * 2.25;
+        }
+
+        // Stars rotation - slow majestic background movement
+        if (starsRef.current) {
+            starsRef.current.rotation.y = time * 0.05; // Rotate stars slowly
+            starsRef.current.rotation.x = time * 0.02; // Slight tilt rotation
         }
 
         // Endurance movement
@@ -34,7 +55,6 @@ export const EnduranceScene: React.FC = () => {
             const progress = (currentX - startX) / totalDistance;
 
             // Y Position: Diagonal rise
-            // Starts low (-4) and rises to top (+2)
             const currentY = -4 + (progress * 6);
 
             // Z Position: GRAVITY CURVE / SLINGSHOT
@@ -44,11 +64,11 @@ export const EnduranceScene: React.FC = () => {
 
             enduranceRef.current.position.set(currentX, currentY, currentZ);
 
-            // ROTATION
-            // 1. Self-Axis Spin (The Ring) - Constant rotation
+            // ROTATION (User's preferred axes)
+            // 1. Self-Axis Spin (The Ring) - on Y as requested
             enduranceRef.current.rotation.y += 0.01;
 
-            // 2. Banking / Orientation to curve
+            // 2. Banking / Orientation to curve - on Z as requested
             // Face slightly towards the direction of travel + gravity pull
             enduranceRef.current.rotation.z = Math.PI / 2 - (progress * 0.5);
             enduranceRef.current.rotation.x = Math.sin(time * 0.5) * 0.1; // Gentle sway
@@ -57,11 +77,14 @@ export const EnduranceScene: React.FC = () => {
 
     return (
         <>
-            <ambientLight intensity={0.2} />
+            <ambientLight intensity={0.4} />
             <directionalLight position={[10, 10, 5]} intensity={2} color="#ffaa88" />
             <directionalLight position={[-10, 0, -5]} intensity={0.5} color="#4455ff" />
 
-            <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+            {/* Rotating Starfield */}
+            <group ref={starsRef}>
+                <Stars radius={100} depth={50} count={6000} factor={4} saturation={0} fade speed={1} />
+            </group>
 
             {/* Planet - Background */}
             <group ref={planetRef} position={[0, 2, -15]} scale={[0.7, 0.7, 0.7]}>
