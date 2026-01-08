@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import {
   Mail,
-  MapPin,
-  Clock,
   Linkedin,
   Github,
   Twitter,
-  Briefcase,
-  Rocket,
+  Wifi
 } from "lucide-react";
 
 export const ContactSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null);
 
   useEffect(() => {
     setIsVisible(true);
@@ -20,208 +16,141 @@ export const ContactSection: React.FC = () => {
 
   const socialLinks = [
     {
-      name: "LinkedIn",
+      name: "LINKEDIN",
       url: "https://www.linkedin.com/in/shreeharsh-shinde-467501278/",
-      icon: <Linkedin className="w-8 h-8" />,
-      color: "from-blue-500 to-blue-600",
+      icon: <Linkedin className="w-6 h-6" />,
+      status: "ACTIVE"
     },
     {
-      name: "GitHub",
+      name: "GITHUB",
       url: "https://www.github.com/shreeharshshinde",
-      icon: <Github className="w-8 h-8" />,
-      color: "from-gray-700 to-gray-800",
+      icon: <Github className="w-6 h-6" />,
+      status: "CONNECTED"
     },
     {
-      name: "Twitter",
+      name: "TWITTER",
       url: "https://x.com/Shreeharsh157",
-      icon: <Twitter className="w-8 h-8" />,
-      color: "from-sky-500 to-sky-600",
-    },
-    {
-      name: "Email",
-      url: "mailto:shindeshreeharsh157@gmail.com",
-      icon: <Mail className="w-8 h-8" />,
-      color: "from-red-500 to-red-600",
+      icon: <Twitter className="w-6 h-6" />,
+      status: "ONLINE"
     },
   ];
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-[#0c0c1a] via-[#07070e] to-[#000000] overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-radial from-purple-900/20 via-indigo-900/10 to-transparent rounded-full"></div>
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500 rounded-full mix-blend-soft-light blur-3xl opacity-10 animate-pulse"></div>
-        <div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-soft-light blur-3xl opacity-10 animate-pulse"
-          style={{ animationDelay: "2s" }}
-        ></div>
-        <div
-          className="absolute top-40 left-40 w-80 h-80 bg-pink-500 rounded-full mix-blend-soft-light blur-3xl opacity-10 animate-pulse"
-          style={{ animationDelay: "4s" }}
-        ></div>
-      </div>
+    <div className="relative min-h-screen bg-black text-cyan-50 font-mono py-20 overflow-hidden">
 
+      {/* Background Grid */}
+      <div
+        className="absolute inset-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)`,
+          backgroundSize: '30px 30px'
+        }}
+      />
 
-      <div className="relative z-10 container mx-auto px-6 py-20">
+      <div className="relative z-10 container mx-auto px-6 max-w-5xl">
+
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-200 bg-clip-text text-transparent mb-6 drop-shadow-2xl">
-            Get In Touch
+        <div className="text-center mb-16 relative">
+          <div className="inline-flex items-center gap-2 border border-cyan-500/30 px-4 py-1 rounded-full mb-6 bg-cyan-900/10">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+            </span>
+            <span className="text-cyan-400 text-xs tracking-[0.2em]">SIGNAL STABLE</span>
+          </div>
+
+          <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-4 mix-blend-screen">
+            TRANSMISSION
           </h2>
-          <div className="w-48 h-1 bg-gradient-to-r from-white via-cyan-400 to-white mx-auto rounded-full mb-8 shadow-lg shadow-cyan-500/30"></div>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            I'm currently seeking internship opportunities and am excited to
-            connect with fellow developers, recruiters, and tech enthusiasts.
-            Whether you have a question or just want to say hi, feel free to
-            reach out!
+          <p className="text-cyan-400/60 tracking-widest uppercase text-sm">
+            INITIALIZE COMMUNICATION PROTOCOLS
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
-          {/* Contact Info */}
-          <div
-            className={`space-y-8 transition-all duration-1000 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
-          >
-            <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-500 shadow-xl hover:shadow-2xl">
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
-                <Briefcase className="w-7 h-7 text-cyan-400 mr-3" />
-                Let's Connect
-              </h3>
-              <p className="text-gray-300 leading-relaxed mb-6">
-                I'm always open to discussing new opportunities, interesting
-                projects, or just having a chat about technology and
-                development.
-              </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-              <div className="space-y-4">
-                <div className="flex items-center space-x-4 group">
-                  <div className="w-12 h-12 bg-cyan-500/20 rounded-full flex items-center justify-center group-hover:bg-cyan-500/30 transition-colors duration-300">
-                    <Mail className="w-6 h-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold">Email</div>
-                    <div className="text-gray-400">
-                      shindeshreeharsh157@gmail.com
-                    </div>
-                  </div>
+          {/* Direct Link (Email) */}
+          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="h-full bg-gray-900/80 border border-white/10 p-8 rounded-sm relative group overflow-hidden hover:border-cyan-500/50 transition-colors">
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500"></div>
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500"></div>
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500"></div>
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500"></div>
+
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-12 h-12 bg-cyan-500/10 flex items-center justify-center border border-cyan-500/30 text-cyan-400">
+                  <Mail />
                 </div>
-                <div className="flex items-center space-x-4 group">
-                  <div className="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center group-hover:bg-purple-500/30 transition-colors duration-300">
-                    <MapPin className="w-6 h-6 text-purple-400" />
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold">Location</div>
-                    <div className="text-gray-400">
-                      Available for remote work worldwide
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-4 group">
-                  <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center group-hover:bg-blue-500/30 transition-colors duration-300">
-                    <Clock className="w-6 h-6 text-blue-400" />
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold">Availability</div>
-                    <div className="text-gray-400">Open to new opportunities</div>
-                  </div>
+                <div>
+                  <h3 className="text-xl text-white font-bold tracking-wider">DIRECT FEED</h3>
+                  <p className="text-xs text-gray-500 tracking-widest uppercase">PRIORITY CHANNEL</p>
                 </div>
               </div>
-            </div>
 
-            {/* Call to Action */}
-            <div className="text-center">
+              <p className="text-gray-400 mb-8 leading-relaxed text-sm">
+                Ready to engage in new mission parameters. Available for internships and collaborative research data exchange.
+              </p>
+
               <a
                 href="mailto:shindeshreeharsh157@gmail.com"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 text-white font-bold rounded-full text-xl hover:from-cyan-400/30 hover:to-blue-500/30 transition-all duration-200 transform hover:scale-105 hover:shadow-lg shadow-md shadow-cyan-500/30 ring-2 ring-cyan-500/30 hover:ring-cyan-500/50"
+                className="w-full block py-4 bg-cyan-500/10 border border-cyan-500/50 text-cyan-400 text-center font-bold tracking-[0.2em] hover:bg-cyan-500 hover:text-black transition-all duration-300 uppercase text-sm group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
               >
-                Say Hello
-                <Rocket className="ml-3 w-5 h-5" />
+                Send Transmission
               </a>
             </div>
           </div>
 
-          {/* Social Links */}
-          <div
-            className={`transition-all duration-100 delay-300 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
-          >
-            <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl p-8 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-500 shadow-xl hover:shadow-2xl">
-              <h3 className="text-2xl font-bold text-white mb-8 flex items-center">
-                <Rocket className="w-7 h-7 text-cyan-400 mr-3" />
-                Connect With Me
-              </h3>
+          {/* Social Frequencies */}
+          <div className={`transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <div className="h-full bg-gray-900/80 border border-white/10 p-8 rounded-sm relative">
+              <div className="flex items-center gap-4 mb-8">
+                <Wifi className="text-cyan-500 animate-pulse" />
+                <h3 className="text-xl text-white font-bold tracking-wider">FREQUENCIES</h3>
+              </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                {socialLinks.map((social, index) => (
+              <div className="space-y-4">
+                {socialLinks.map((social) => (
                   <a
-                    key={index}
+                    key={social.name}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group relative p-6 rounded-xl border border-gray-700/50 hover:border-cyan-400/50 transition-all duration-300 transform hover:scale-105 ${
-                      hoveredSocial === social.name
-                        ? "ring-2 ring-cyan-500/50 shadow-lg shadow-cyan-500/30"
-                        : ""
-                    }`}
-                    onMouseEnter={() => setHoveredSocial(social.name)}
-                    onMouseLeave={() => setHoveredSocial(null)}
+                    className="flex items-center justify-between p-4 border border-white/5 bg-black/20 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all group"
                   >
-                    <div
-                      className={`absolute inset-0 rounded-xl bg-gradient-to-r ${social.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
-                    ></div>
-                    <div className="relative z-10 text-center">
-                      <div className="flex justify-center mb-3 text-cyan-400">
+                    <div className="flex items-center gap-4">
+                      <div className="text-gray-400 group-hover:text-cyan-400 transition-colors">
                         {social.icon}
                       </div>
-                      <div className="text-white font-semibold">
-                        {social.name}
-                      </div>
+                      <span className="text-white font-bold tracking-widest">{social.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]"></div>
+                      <span className="text-[10px] text-green-500 tracking-widest opacity-60">{social.status}</span>
                     </div>
                   </a>
                 ))}
               </div>
 
-              {/* Additional Info */}
-              <div className="mt-8 p-6 bg-gradient-to-br from-gray-700/30 to-gray-800/30 rounded-xl border border-cyan-400/20 hover:border-cyan-400/30 transition-all duration-300">
-                <h4 className="text-lg font-semibold text-white mb-3 flex items-center">
-                  <Rocket className="w-6 h-6 text-cyan-400 mr-2" />
-                  What I'm Looking For
-                </h4>
-                <ul className="text-gray-300 space-y-2 text-sm">
-                  <li className="flex items-center">
-                    <span className="text-cyan-400 mr-2">•</span>
-                    Software Development Internships
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-cyan-400 mr-2">•</span>
-                    Data Analyst Opportunities
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-cyan-400 mr-2">•</span> Open Source
-                    Project Collaborations
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-cyan-400 mr-2">•</span> Tech Community
-                    Engagement
-                  </li>
-                </ul>
+              <div className="mt-8 pt-6 border-t border-white/10">
+                <div className="flex items-center justify-between text-xs text-gray-500 tracking-widest">
+                  <span>ENCRYPTION: NONE</span>
+                  <span>LAT: {Math.random().toFixed(4)}</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Floating Dots */}
-      <div className="absolute top-20 left-10 w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
-      <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
-      <div className="absolute bottom-20 left-20 w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+        </div>
+
+        {/* Footer Transmission */}
+        <div className="mt-20 text-center border-t border-white/10 pt-8">
+          <p className="text-cyan-500/40 text-xs tracking-[0.5em] animate-pulse">
+            END OF TRANSMISSION
+          </p>
+        </div>
+
+      </div>
     </div>
   );
 };
