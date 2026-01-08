@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import type { RefObject } from 'react';
+import React, { useState, useRef, useEffect, type RefObject } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { AboutSection } from './components/AboutSection';
@@ -35,7 +34,7 @@ const App: React.FC = () => {
     const handleScroll = (ref: RefObject<HTMLDivElement | null>) => {
         ref.current?.scrollIntoView({ behavior: 'smooth' });
     };
-    
+
     useEffect(() => {
         const handleManualScroll = () => {
             const sections = [homeRef, aboutRef, skillsRef, projectsRef, contactRef];
@@ -74,7 +73,7 @@ const App: React.FC = () => {
                     <ContactSection />
                 </section>
             </main>
-            
+
             <Footer />
         </div>
     );

@@ -25,19 +25,19 @@ const techSkills: TechSkill[] = [
     { name: "Go", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg", category: "Languages", color: "#00ADD8", proficiency: 70 },
     { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", category: "Languages", color: "#F7DF1E", proficiency: 95 },
     { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", category: "Languages", color: "#3178C6", proficiency: 90 },
-    
+
     // Databases
     { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", category: "Databases", color: "#4479A1", proficiency: 80 },
     { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", category: "Databases", color: "#336791", proficiency: 75 },
     { name: "Drizzle ORM", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", category: "Databases", color: "#C5F74F", proficiency: 70 },
-    
+
     // Frameworks
     { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", category: "Frameworks", color: "#FFFFFF", proficiency: 85 },
     { name: "Spring Boot", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg", category: "Frameworks", color: "#6DB33F", proficiency: 80 },
     { name: "Flask", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg", category: "Frameworks", color: "#FFFFFF", proficiency: 82 },
     { name: "FastAPI", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg", category: "Frameworks", color: "#009688", proficiency: 75 },
     { name: "Streamlit", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/streamlit/streamlit-original.svg", category: "Frameworks", color: "#FF4B4B", proficiency: 70 },
-    
+
     // DevOps
     { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", category: "DevOps", color: "#2496ED", proficiency: 78 },
     { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", category: "DevOps", color: "#F05032", proficiency: 90 },
@@ -45,21 +45,21 @@ const techSkills: TechSkill[] = [
     { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg", category: "DevOps", color: "#232F3E", proficiency: 70 },
     { name: "Jenkins", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg", category: "DevOps", color: "#D24939", proficiency: 65 },
     { name: "Kubernetes", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original.svg", category: "DevOps", color: "#326CE5", proficiency: 60 },
-    
+
     // Libraries
     { name: "NumPy", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg", category: "Libraries", color: "#013243", proficiency: 85 },
     { name: "Pandas", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg", category: "Libraries", color: "#150458", proficiency: 80 },
     { name: "Scikit-learn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg", category: "Libraries", color: "#F7931E", proficiency: 75 },
     { name: "OpenCV", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg", category: "Libraries", color: "#5C3EE8", proficiency: 70 },
     { name: "TensorFlow", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg", category: "Libraries", color: "#FF8F00", proficiency: 65 },
-    
+
     // Frontend (additional)
     { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "Frontend", color: "#61DAFB", proficiency: 95 },
     { name: "Three.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg", category: "Frontend", color: "#FFFFFF", proficiency: 85 },
     { name: "Tailwind", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", category: "Frontend", color: "#06B6D4", proficiency: 92 },
     { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", category: "Frontend", color: "#F24E1E", proficiency: 80 },
     { name: "Shadcn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "Frontend", color: "#FFFFFF", proficiency: 75 },
-    
+
     // Backend (additional)
     { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", category: "Backend", color: "#339933", proficiency: 85 },
 ];
@@ -166,6 +166,24 @@ const MiniHexPlate: React.FC<{
     );
 };
 
+// Proficiency Ring Component
+// const ProficiencyRing: React.FC<{ proficiency: number; color: string }> = ({ proficiency, color }) => {
+//     const arc = (proficiency / 100) * Math.PI * 2;
+
+//     return (
+//         <mesh rotation={[Math.PI / 2, 0, 0]}>
+//             <torusGeometry args={[1.3, 0.05, 16, 100, arc]} />
+//             <meshStandardMaterial
+//                 color={color}
+//                 emissive={color}
+//                 emissiveIntensity={2}
+//                 transparent
+//                 opacity={0.8}
+//             />
+//         </mesh>
+//     );
+// };
+
 // Tech Coin Component - Revolving around itself with logos on both sides
 const TechCoin: React.FC<{
     skill: TechSkill;
@@ -174,52 +192,63 @@ const TechCoin: React.FC<{
     onHover?: (isHovered: boolean) => void;
 }> = ({ skill, position, index, onHover }) => {
     const meshRef = useRef<THREE.Mesh>(null);
+    const groupRef = useRef<THREE.Group>(null);
     const [hovered, setHovered] = useState(false);
-    
+
     // Load the logo as a texture
     const texture = useTexture(skill.logo);
 
     useFrame((state) => {
-        if (meshRef.current) {
+        if (groupRef.current) {
             const time = state.clock.elapsedTime;
-            meshRef.current.position.y = position[1] * 2 + Math.sin(time * 0.8 + index) * 0.4;
-            // Coin revolves around itself (X-axis rotation like a spinning coin)
-            meshRef.current.rotation.x = time * 1.5 + index;
-            // meshRef.current.rotation.z = - time * 0.5 + index;
-            
-            if (hovered) {
-                meshRef.current.scale.setScalar(1.2);
-            } else {
-                meshRef.current.scale.setScalar(1);
+            // Float animation
+            groupRef.current.position.y = position[1] * 2 + Math.sin(time * 0.8 + index) * 0.4;
+
+            if (meshRef.current) {
+                // Coin revolves around itself (X-axis rotation like a spinning coin)
+                meshRef.current.rotation.x = time * 1.5 + index;
             }
         }
     });
 
     return (
-        <group position={[position[0], position[1], position[2]]}>
+        <group ref={groupRef} position={[position[0], 0, position[2]]}>
             {/* Coin Base */}
             <mesh
                 ref={meshRef}
-                onPointerOver={() => {
+                onPointerOver={(e) => {
+                    e.stopPropagation();
                     setHovered(true);
                     onHover && onHover(true);
                 }}
-                onPointerOut={() => {
+                onPointerOut={(e) => {
+                    e.stopPropagation();
                     setHovered(false);
                     onHover && onHover(false);
                 }}
                 castShadow
+                scale={hovered ? 1.2 : 1}
             >
                 <cylinderGeometry args={[1.1, 1.1, 0.1, 32]} />
                 <meshStandardMaterial
                     map={texture}
-                    color={hovered ? skill.color : "#374151"}
+                    color={hovered ? skill.color : "#FFFFFF"}
                     metalness={0.6}
                     roughness={0.5}
                     emissive={hovered ? skill.color : "#000000"}
-                    emissiveIntensity={hovered ? 0.5 : 0.2}
+                    emissiveIntensity={hovered ? 0.5 : 0.0}
                 />
             </mesh>
+
+            {/* Proficiency Ring - Only visible on hover or always? Let's show on hover for cleaner look, or maybe always for info?
+                Let's show it always but glow more on hover.
+             */}
+            <group rotation={[0, 0, 0]}> {/* Adjust rotation if needed relative to coin, but coin spins. 
+                Wait, if the coin spins, the ring should probably NOT spin with it, or it looks weird if the ring is unfinished.
+                Better to keep the ring separate from the spinning mesh.
+            */}
+                {/* <ProficiencyRing proficiency={skill.proficiency} color={skill.color} /> */}
+            </group>
 
             {/* Glow Effect */}
             {hovered && (
@@ -228,9 +257,10 @@ const TechCoin: React.FC<{
                     <meshStandardMaterial
                         color={skill.color}
                         transparent
-                        opacity={0.6}
+                        opacity={0.3}
                         emissive={skill.color}
-                        emissiveIntensity={0.8}
+                        emissiveIntensity={1}
+                        depthWrite={false}
                     />
                 </mesh>
             )}
@@ -248,7 +278,7 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
         if (buildingRef.current) {
             buildingRef.current.rotation.y = state.clock.elapsedTime * 0.2;
         }
-        
+
         if (groupRef.current) {
             // Very subtle rotation for the entire group
             groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.02) * 0.05;
@@ -261,19 +291,19 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
     const getMiniPlatePositions = (count: number) => {
         // Handle edge case where count is 0
         if (count <= 0) return [];
-        
+
         const positions: [number, number, number][] = [];
         const layers = Math.ceil(count / 6); // Number of layers needed
-        
+
         for (let layer = 0; layer < layers; layer++) {
             const layerCount = Math.min(6, count - layer * 6); // Number of plates in this layer
             // Handle edge case where layerCount is 0
             if (layerCount <= 0) break;
-            
+
             const radius = 12 + layer * 10; // Increase radius for each layer
             const y = 2.0 + layer * 3; // Increase height for each layer
             const angleOffset = layer * Math.PI / 6; // Rotate each layer slightly
-            
+
             for (let i = 0; i < layerCount; i++) {
                 const angle = i * (2 * Math.PI / layerCount) + angleOffset;
                 const x = Math.cos(angle) * radius;
@@ -282,7 +312,7 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
                 positions.push([x || 0, y || 0, z || 0]);
             }
         }
-        
+
         return positions;
     };
 
@@ -291,7 +321,7 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
     return (
         <>
             {/* Environment and Lighting */}
-            <Environment preset="city"/>
+            <Environment preset="city" />
             <ambientLight intensity={0.2} />
             <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
             <pointLight position={[-10, -10, -10]} intensity={0.5} color="#4a00e0" />
@@ -303,19 +333,19 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
                 intensity={0.8}
                 castShadow
             />
-            
+
             {/* Nebula background for the 3D scene */}
-            <Nebula/>
-            
+            <Nebula />
+
             {/* Cosmic particles */}
             <CosmicParticles />
 
 
             {/* Base Hexagonal Plate */}
             <BaseHexPlate />
-            
+
             {/* Central Building Model */}
-            <DeepSpace9/>
+            <DeepSpace9 />
 
             {/* Mini Hexagonal Plates */}
             <group ref={groupRef}>
@@ -323,7 +353,7 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
                     const skill = filteredSkills[index];
                     // Check if position is valid
                     if (!skill || !position || !Array.isArray(position) || position.length < 3) return null;
-                    
+
                     const isGlowing = hoveredSkill === skill.name;
                     return (
                         <MiniHexPlate
@@ -342,7 +372,7 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
                     const position = miniPlatePositions[index];
                     // Check if position is valid
                     if (!position || !Array.isArray(position) || position.length < 3) return null;
-                    
+
                     return (
                         <TechCoin
                             key={skill.name}
@@ -387,14 +417,14 @@ export const SkillsSection: React.FC = () => {
 
             {/* Header Section */}
             <div className="absolute top-5 left-1/2 -translate-x-1/2 text-center z-10">
-                    <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-slate-400 to-slate-200 bg-clip-text text-transparent mb-4 drop-shadow-lg">
-                        Technical Skills
-                    </h2>
+                <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-slate-400 to-slate-200 bg-clip-text text-transparent mb-4 drop-shadow-lg">
+                    Technical Skills
+                </h2>
                 <p className="text-lg text-gray-300 mb-6">
                     Explore my expertise through interactive Space Base
                 </p>
             </div>
-            
+
             {/* Category Filter Buttons - Left Side */}
             <div className="absolute left-6 top-1/2 transform -translate-y-1/2 z-10">
                 <div className="flex flex-col gap-3">
@@ -402,18 +432,17 @@ export const SkillsSection: React.FC = () => {
                         <button
                             key={category.name}
                             onClick={() => setSelectedCategory(category.name)}
-                            className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
-                                selectedCategory === category.name
+                            className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${selectedCategory === category.name
                                     ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
                                     : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50'
-                            }`}
+                                }`}
                         >
                             {category.name}
                         </button>
                     ))}
                 </div>
             </div>
-            
+
             {/* Category Filter Buttons - Right Side */}
             <div className="absolute right-6 top-1/2 transform -translate-y-1/2 z-10">
                 <div className="flex flex-col gap-3">
@@ -421,11 +450,10 @@ export const SkillsSection: React.FC = () => {
                         <button
                             key={category.name}
                             onClick={() => setSelectedCategory(category.name)}
-                            className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
-                                selectedCategory === category.name
+                            className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${selectedCategory === category.name
                                     ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
                                     : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50'
-                            }`}
+                                }`}
                         >
                             {category.name}
                         </button>
