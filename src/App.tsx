@@ -6,6 +6,7 @@ import { SkillsSection } from './components/skills/SkillSelection';
 import { ProjectsSection } from './components/ProjectSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { LoadingScreen } from './components/loading/LoadingScreen';
 
 
 export interface NavLink {
@@ -16,6 +17,7 @@ export interface NavLink {
 
 const App: React.FC = () => {
     const [activeSection, setActiveSection] = useState<string>('home');
+    const [isLoading, setIsLoading] = useState(true);
 
     const homeRef = useRef<HTMLDivElement>(null);
     const aboutRef = useRef<HTMLDivElement>(null);
@@ -52,6 +54,10 @@ const App: React.FC = () => {
         window.addEventListener('scroll', handleManualScroll);
         return () => window.removeEventListener('scroll', handleManualScroll);
     }, []);
+
+    if (isLoading) {
+        return <LoadingScreen onComplete={() => setIsLoading(false)} />;
+    }
 
     return (
         <div className="bg-gray-950 text-white font-sans antialiased">
