@@ -87,9 +87,9 @@ export const EnduranceScene: React.FC = () => {
             </group>
 
             {/* Planet - Background */}
-            {/* <group ref={planetRef} position={[0, 2, -15]} scale={[0.7, 0.7, 0.7]}>
+            <group ref={planetRef} position={[0, 2, -15]} scale={[0.7, 0.7, 0.7]}>
                 <primitive object={planet.scene} />
-            </group> */}
+            </group>
 
             {/* Endurance - Foreground */}
             <group ref={enduranceRef} position={[-20, -5, 10]} scale={[0.07, 0.07, 0.07]} rotation={[0, Math.PI / 2, 0]}>
