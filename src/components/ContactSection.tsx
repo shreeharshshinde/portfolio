@@ -6,6 +6,10 @@ import {
   Twitter,
   Wifi
 } from "lucide-react";
+import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
+import { BlackHoleGLB } from "./stars/BlackHoleGLB";
+import { OrbitControls } from "@react-three/drei";
 
 export const ContactSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -47,7 +51,21 @@ export const ContactSection: React.FC = () => {
         }}
       />
 
+      {/* Blackhole Background */}
+      <div className="absolute inset-0 z-0 opacity-60">
+        <Canvas camera={{ position: [0, 2, 12], fov: 40 }}>
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1} />
+          <Suspense fallback={null}>
+            <BlackHoleGLB />
+          </Suspense>
+          <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.8} />
+        </Canvas>
+      </div>
+
       <div className="relative z-10 container mx-auto px-6 max-w-5xl">
+
+
 
         {/* Header */}
         <div className="text-center mb-16 relative">
@@ -58,6 +76,8 @@ export const ContactSection: React.FC = () => {
             </span>
             <span className="text-orange-400 text-xs tracking-[0.2em]">SIGNAL STABLE</span>
           </div>
+
+
 
           <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-4 mix-blend-screen">
             TRANSMISSION
