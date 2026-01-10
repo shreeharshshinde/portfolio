@@ -36,13 +36,13 @@ export const ContactSection: React.FC = () => {
   ];
 
   return (
-    <div className="relative min-h-screen bg-black text-cyan-50 font-mono py-20 overflow-hidden">
+    <div className="relative min-h-screen bg-black text-orange-50 font-mono py-20 overflow-hidden">
 
       {/* Background Grid */}
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(249, 115, 22, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(249, 115, 22, 0.1) 1px, transparent 1px)`,
           backgroundSize: '30px 30px'
         }}
       />
@@ -51,18 +51,18 @@ export const ContactSection: React.FC = () => {
 
         {/* Header */}
         <div className="text-center mb-16 relative">
-          <div className="inline-flex items-center gap-2 border border-cyan-500/30 px-4 py-1 rounded-full mb-6 bg-cyan-900/10">
+          <div className="inline-flex items-center gap-2 border border-orange-500/30 px-4 py-1 rounded-full mb-6 bg-orange-900/10">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
             </span>
-            <span className="text-cyan-400 text-xs tracking-[0.2em]">SIGNAL STABLE</span>
+            <span className="text-orange-400 text-xs tracking-[0.2em]">SIGNAL STABLE</span>
           </div>
 
           <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-4 mix-blend-screen">
             TRANSMISSION
           </h2>
-          <p className="text-cyan-400/60 tracking-widest uppercase text-sm">
+          <p className="text-orange-400/60 tracking-widest uppercase text-sm">
             INITIALIZE COMMUNICATION PROTOCOLS
           </p>
         </div>
@@ -71,15 +71,15 @@ export const ContactSection: React.FC = () => {
 
           {/* Direct Link (Email) */}
           <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="h-full bg-gray-900/80 border border-white/10 p-8 rounded-sm relative group overflow-hidden hover:border-cyan-500/50 transition-colors">
+            <div className="h-full bg-black/40 backdrop-blur-sm border border-white/10 p-8 rounded-sm relative group overflow-hidden hover:border-orange-500/50 transition-colors">
               {/* Corner accents */}
-              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-cyan-500"></div>
-              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-cyan-500"></div>
-              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-cyan-500"></div>
-              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-cyan-500"></div>
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-orange-500"></div>
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-orange-500"></div>
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-orange-500"></div>
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-orange-500"></div>
 
               <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 bg-cyan-500/10 flex items-center justify-center border border-cyan-500/30 text-cyan-400">
+                <div className="w-12 h-12 bg-orange-500/10 flex items-center justify-center border border-orange-500/30 text-orange-400">
                   <Mail />
                 </div>
                 <div>
@@ -94,7 +94,7 @@ export const ContactSection: React.FC = () => {
 
               <a
                 href="mailto:shindeshreeharsh157@gmail.com"
-                className="w-full block py-4 bg-cyan-500/10 border border-cyan-500/50 text-cyan-400 text-center font-bold tracking-[0.2em] hover:bg-cyan-500 hover:text-black transition-all duration-300 uppercase text-sm group-hover:shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+                className="w-full block py-4 bg-orange-500/10 border border-orange-500/50 text-orange-400 text-center font-bold tracking-[0.2em] hover:bg-orange-500 hover:text-black transition-all duration-300 uppercase text-sm group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)]"
               >
                 Send Transmission
               </a>
@@ -103,9 +103,9 @@ export const ContactSection: React.FC = () => {
 
           {/* Social Frequencies */}
           <div className={`transition-all duration-1000 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="h-full bg-gray-900/80 border border-white/10 p-8 rounded-sm relative">
+            <div className="h-full bg-black/40 backdrop-blur-sm border border-white/10 p-8 rounded-sm relative">
               <div className="flex items-center gap-4 mb-8">
-                <Wifi className="text-cyan-500 animate-pulse" />
+                <Wifi className="text-orange-500 animate-pulse" />
                 <h3 className="text-xl text-white font-bold tracking-wider">FREQUENCIES</h3>
               </div>
 
@@ -116,10 +116,10 @@ export const ContactSection: React.FC = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between p-4 border border-white/5 bg-black/20 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all group"
+                    className="flex items-center justify-between p-4 border border-white/5 bg-black/20 hover:border-orange-500/50 hover:bg-orange-500/5 transition-all group"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="text-gray-400 group-hover:text-cyan-400 transition-colors">
+                      <div className="text-gray-400 group-hover:text-orange-400 transition-colors">
                         {social.icon}
                       </div>
                       <span className="text-white font-bold tracking-widest">{social.name}</span>
@@ -145,7 +145,7 @@ export const ContactSection: React.FC = () => {
 
         {/* Footer Transmission */}
         <div className="mt-20 text-center border-t border-white/10 pt-8">
-          <p className="text-cyan-500/40 text-xs tracking-[0.5em] animate-pulse">
+          <p className="text-orange-500/40 text-xs tracking-[0.5em] animate-pulse">
             END OF TRANSMISSION
           </p>
         </div>

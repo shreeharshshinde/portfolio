@@ -65,13 +65,13 @@ const techSkills: TechSkill[] = [
 ];
 
 const categories = [
-    // { name: "All", color: "from-cyan-400 to-blue-500" },
-    { name: "Languages", color: "from-purple-400 to-pink-500" },
-    { name: "Frameworks", color: "from-blue-400 to-cyan-500" },
-    { name: "Databases", color: "from-green-400 to-emerald-500" },
-    { name: "DevOps", color: "from-orange-400 to-red-500" },
-    { name: "Libraries", color: "from-yellow-400 to-amber-500" },
-    { name: "Frontend", color: "from-indigo-400 to-purple-500" },
+    // { name: "All", color: "from-orange-400 to-amber-500" },
+    { name: "Languages", color: "from-orange-400 to-red-500" },
+    { name: "Frameworks", color: "from-amber-400 to-orange-500" },
+    { name: "Databases", color: "from-yellow-400 to-amber-500" },
+    { name: "DevOps", color: "from-red-400 to-orange-500" },
+    { name: "Libraries", color: "from-white to-gray-400" },
+    { name: "Frontend", color: "from-orange-300 to-amber-400" },
     // { name: "Backend", color: "from-teal-400 to-cyan-500" }
 ];
 
@@ -324,8 +324,8 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
             <Environment preset="city" />
             <ambientLight intensity={0.2} />
             <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
-            <pointLight position={[-10, -10, -10]} intensity={0.5} color="#4a00e0" />
-            <pointLight position={[10, 10, 10]} intensity={0.5} color="#00c9ff" />
+            <pointLight position={[-10, -10, -10]} intensity={0.5} color="#d97706" />
+            <pointLight position={[10, 10, 10]} intensity={0.5} color="#f59e0b" />
             <spotLight
                 position={[0, 15, 0]}
                 angle={0.3}
@@ -400,14 +400,14 @@ export const SkillsSection: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>("Languages");
 
     return (
-        <div className="relative w-full h-screen bg-gradient-to-br from-gray-900 via-indigo-900 to-black overflow-hidden">
+        <div className="relative w-full h-screen bg-black overflow-hidden">
             {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden">
                 {/* Nebula-like background elements */}
-                <div className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-gradient-radial from-purple-900/20 via-indigo-900/10 to-transparent rounded-full animate-pulse"></div>
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-10 animate-pulse" style={{ animationDelay: '2s' }}></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-5 animate-pulse" style={{ animationDelay: '4s' }}></div>
+                <div className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-gradient-radial from-orange-900/10 via-black to-transparent rounded-full animate-pulse"></div>
+                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-5 animate-pulse"></div>
+                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-5 animate-pulse" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-5 animate-pulse" style={{ animationDelay: '4s' }}></div>
             </div>
 
             {/* Grid Pattern Overlay */}
@@ -433,8 +433,8 @@ export const SkillsSection: React.FC = () => {
                             key={category.name}
                             onClick={() => setSelectedCategory(category.name)}
                             className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition-all duration-300 ${selectedCategory === category.name
-                                    ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
-                                    : 'bg-gray-800/80 text-gray-300 border border-gray-700/50'
+                                ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
+                                : 'bg-gray-800/80 text-gray-300 border border-gray-700/50'
                                 }`}
                         >
                             {category.name}
@@ -451,8 +451,8 @@ export const SkillsSection: React.FC = () => {
                             key={category.name}
                             onClick={() => setSelectedCategory(category.name)}
                             className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${selectedCategory === category.name
-                                    ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
-                                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50'
+                                ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
+                                : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50'
                                 }`}
                         >
                             {category.name}
@@ -469,8 +469,8 @@ export const SkillsSection: React.FC = () => {
                             key={category.name}
                             onClick={() => setSelectedCategory(category.name)}
                             className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${selectedCategory === category.name
-                                    ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
-                                    : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50'
+                                ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
+                                : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50'
                                 }`}
                         >
                             {category.name}
@@ -499,9 +499,9 @@ export const SkillsSection: React.FC = () => {
             </Canvas>
 
             {/* Floating Elements */}
-            <div className="absolute top-20 left-10 w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
-            <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
-            <div className="absolute bottom-20 left-20 w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+            <div className="absolute top-20 left-10 w-2 h-2 bg-orange-400 rounded-full animate-ping"></div>
+            <div className="absolute top-40 right-20 w-3 h-3 bg-amber-400 rounded-full animate-pulse"></div>
+            <div className="absolute bottom-20 left-20 w-2 h-2 bg-white rounded-full animate-bounce"></div>
         </div>
     );
 };

@@ -43,7 +43,7 @@ export const EnduranceScene: React.FC = () => {
         // Passing from bottom-left to right with Gravity Assist Curve
         if (enduranceRef.current) {
             // Speed (Synced with audio)
-            const speed = 3.0;
+            const speed = 2.8;
             const startX = -18;
             const endX = 35;
             const totalDistance = endX - startX;
