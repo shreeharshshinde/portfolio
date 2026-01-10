@@ -102,7 +102,7 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
                 ) : (
                     <div className="w-full max-w-3xl px-8 flex flex-col items-center gap-6">
                         {/* Loading Text */}
-                        <div className="text-4xl md:text-6xl font-light tracking-[0.1em] text-white/90 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" style={{ fontFamily: '"Orbitron", sans-serif' }}>
+                        <div className="text-4xl md:text-6xl font-light tracking-[0.1em] text-white/90 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" style={{ fontFamily: '"Dune Rise", sans-serif' }}>
                             LOADING<span className="w-24 inline-block text-left">{loadingDots}</span>
                         </div>
 
