@@ -52,7 +52,7 @@ export const ContactSection: React.FC = () => {
       />
 
       {/* Blackhole Background */}
-      <div className="absolute inset-0 z-0 opacity-60">
+      <div className="absolute inset-0 z-0 opacity-40">
         <Canvas camera={{ position: [0, 2, 12], fov: 40 }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
