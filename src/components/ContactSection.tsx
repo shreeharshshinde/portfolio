@@ -77,8 +77,6 @@ export const ContactSection: React.FC = () => {
             <span className="text-orange-400 text-xs tracking-[0.2em]">SIGNAL STABLE</span>
           </div>
 
-
-
           <h2 className="text-5xl md:text-7xl font-bold text-white tracking-tighter mb-4 mix-blend-screen">
             TRANSMISSION
           </h2>
