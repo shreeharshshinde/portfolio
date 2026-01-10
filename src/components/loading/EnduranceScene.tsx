@@ -35,8 +35,8 @@ export const EnduranceScene: React.FC = () => {
 
         // Stars rotation - slow majestic background movement
         if (starsRef.current) {
-            starsRef.current.rotation.y = time * 0.05; // Rotate stars slowly
-            starsRef.current.rotation.x = time * 0.02; // Slight tilt rotation
+            starsRef.current.rotation.y = time * 0.2; // Rotate stars slowly
+            starsRef.current.rotation.x = time * 0.06; // Slight tilt rotation
         }
 
         // Endurance movement
@@ -66,7 +66,7 @@ export const EnduranceScene: React.FC = () => {
 
             // ROTATION (User's preferred axes)
             // 1. Self-Axis Spin (The Ring) - on Y as requested
-            enduranceRef.current.rotation.y += 0.01;
+            enduranceRef.current.rotation.y += 0.02;
 
             // 2. Banking / Orientation to curve - on Z as requested
             // Face slightly towards the direction of travel + gravity pull
@@ -83,7 +83,7 @@ export const EnduranceScene: React.FC = () => {
 
             {/* Rotating Starfield */}
             <group ref={starsRef}>
-                <Stars radius={100} depth={50} count={6000} factor={4} saturation={0} fade speed={1} />
+                <Stars radius={100} depth={50} count={10000} factor={4} saturation={0} fade speed={1} />
             </group>
 
             {/* Planet - Background */}

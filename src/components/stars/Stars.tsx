@@ -24,7 +24,7 @@ export const Stars: React.FC = (props) => {
                 <PointMaterial
                     transparent
                     color="#4dd0e1"
-                    size={0.005}
+                    size={0.009}
                     sizeAttenuation={true}
                     depthWrite={false}
                 />
