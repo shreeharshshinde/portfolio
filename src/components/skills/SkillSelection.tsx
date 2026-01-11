@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Float, Html, Environment, useTexture } from '@react-three/drei';
+import { OrbitControls, Html, Environment, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
 import { Stars } from '@react-three/drei';
 import { Nebula } from '../stars/Nebula';
@@ -81,33 +81,77 @@ const createHexagonGeometry = (radius: number, height: number) => {
     return geometry;
 };
 
-// Base Hexagonal Plate Component - Clockwise Rotation
+// Base Hexagonal Plate Component - Spacebase Platform
 const BaseHexPlate: React.FC = () => {
-    const meshRef = useRef<THREE.Mesh>(null);
+    const meshRef = useRef<THREE.Group>(null);
 
     useFrame((state) => {
         if (meshRef.current) {
-            // Clockwise rotation (negative value)
-            meshRef.current.rotation.y = -state.clock.elapsedTime * 0.3;
+            // Slow, majestic rotation
+            meshRef.current.rotation.y = -state.clock.elapsedTime * 0.05;
         }
     });
 
+    // Helper for the wireframe box look - Horizontal Rings Only
+    const HexPrism = ({ radius, height }: { radius: number, height: number }) => {
+        return (
+            <group>
+                {/* Top Hexagon Ring */}
+                <mesh position={[0, height / 2, 0]} rotation={[Math.PI / 2, 0, 0]}>
+                    <ringGeometry args={[radius - 0.1, radius, 6]} />
+                    <meshBasicMaterial color="#00f3ff" side={THREE.DoubleSide} />
+                </mesh>
+                {/* Bottom Hexagon Ring */}
+                <mesh position={[0, -height / 2, 0]} rotation={[Math.PI / 2, 0, 0]}>
+                    <ringGeometry args={[radius - 0.1, radius, 6]} />
+                    <meshBasicMaterial color="#00f3ff" side={THREE.DoubleSide} />
+                </mesh>
+            </group>
+        )
+    }
+
     return (
-        <mesh ref={meshRef} position={[0, -2, 0]} receiveShadow>
-            <primitive object={createHexagonGeometry(18, 0.8)} />
-            <meshStandardMaterial
-                color="#1e293b"
-                metalness={0.8}
-                roughness={0.2}
-                emissive="#0f172a"
-                emissiveIntensity={0.3}
-            />
-        </mesh>
+        <group ref={meshRef} position={[0, -2, 0]}>
+            {/* Main Platform Structure - DARKER */}
+            <mesh receiveShadow>
+                <primitive object={createHexagonGeometry(18, 1)} />
+                <meshStandardMaterial
+                    color="#050914" // Very dark blue/black
+                    metalness={0.8}
+                    roughness={0.4}
+                    envMapIntensity={0.5}
+                />
+            </mesh>
+
+            {/* Glowing Horizontal Hex Rings ("Blue lines up") */}
+            <group position={[0, 2, 0]}>{/* Raised up above the platform */}
+                <HexPrism radius={17} height={4} />
+            </group>
+
+            {/* Neon Circuit Pattern - Concentric Hex Rings on the floor */}
+            {[14, 10, 6].map((radius, i) => (
+                <mesh key={i} position={[0, 0.51, 0]} rotation={[0, i * 0.5, 0]}>
+                    <ringGeometry args={[radius, radius + 0.2, 6]} />
+                    <meshBasicMaterial
+                        color="#0077aa" // Darker cyan for the floor patterns
+                        side={THREE.DoubleSide}
+                        transparent
+                        opacity={0.3}
+                    />
+                </mesh>
+            ))}
+
+            {/* Inner Glow Core */}
+            <mesh position={[0, 0.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
+                <circleGeometry args={[4, 32]} />
+                <meshBasicMaterial color="#00f3ff" transparent opacity={0.15} />
+            </mesh>
+        </group>
     );
 };
 
 
-// Mini Hexagonal Plate Component
+// Mini Hexagonal Plate Component - Satellite Nodes
 const MiniHexPlate: React.FC<{
     position: [number, number, number];
     index: number;
@@ -115,51 +159,125 @@ const MiniHexPlate: React.FC<{
     glowColor?: string;
     skillName?: string;
 }> = ({ position, index, isGlowing = false, glowColor = "#374151", skillName = "" }) => {
-    const meshRef = useRef<THREE.Mesh>(null);
+    const meshRef = useRef<THREE.Group>(null);
+    const ringRef = useRef<THREE.Mesh>(null);
 
     useFrame((state) => {
         if (meshRef.current) {
             const time = state.clock.elapsedTime;
-            meshRef.current.position.y = position[1] + Math.sin(time * 0.8 + index) * 0.7;
-            // Subtle rotation for visual interest
-            meshRef.current.rotation.y = Math.sin(time * 0.3 + index) * 0.1;
+            // Float animation with index offset
+            meshRef.current.position.y = position[1] + Math.sin(time * 0.8 + index) * 0.5;
+
+            // Gentle rotation
+            meshRef.current.rotation.y = Math.sin(time * 0.2 + index * 0.5) * 0.1;
+
+            if (ringRef.current && isGlowing) {
+                ringRef.current.rotation.z += 0.02;
+            }
         }
     });
 
+    // Dark tech base color
+    const baseColor = "#0f172a";
+    // Active neon color or default subtle blue
+    const neonColor = isGlowing ? glowColor : "#1e293b";
+
     return (
-        <group position={[position[0], position[1], position[2]]}>
-            <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.8}>
-                <mesh ref={meshRef} castShadow>
-                    <primitive object={createHexagonGeometry(3, 0.5)} />
-                    <meshStandardMaterial
-                        color={isGlowing ? glowColor : "#374151"}
-                        metalness={0.7}
-                        roughness={0.3}
-                        emissive={isGlowing ? glowColor : "#1f2937"}
-                        emissiveIntensity={isGlowing ? 0.8 : 0.4}
-                    />
+        <group ref={meshRef} position={[position[0], position[1], position[2]]}>
+            {/* Main Hex Body */}
+            <mesh castShadow receiveShadow>
+                <primitive object={createHexagonGeometry(3, 0.4)} />
+                <meshStandardMaterial
+                    color={baseColor}
+                    metalness={0.8}
+                    roughness={0.3}
+                />
+            </mesh>
+
+            {/* Glowing Border/Rim */}
+            <mesh position={[0, 0.05, 0]}>
+                <primitive object={createHexagonGeometry(3.1, 0.1)} />
+                <meshStandardMaterial
+                    color={neonColor}
+                    emissive={neonColor}
+                    emissiveIntensity={isGlowing ? 2 : 0.5}
+                    toneMapped={false}
+                />
+            </mesh>
+
+            {/* Top Pattern - Tech Lines */}
+            <mesh position={[0, 0.21, 0]} rotation={[0, Math.PI / 6, 0]}>
+                <ringGeometry args={[1.5, 1.6, 6]} />
+                <meshBasicMaterial color={isGlowing ? glowColor : "#334155"} transparent opacity={0.6} side={THREE.DoubleSide} />
+            </mesh>
+
+            {/* Floating Selection Ring (Holographic) */}
+            {isGlowing && (
+                <mesh ref={ringRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+                    <ringGeometry args={[3.5, 3.6, 32]} />
+                    <meshBasicMaterial color={glowColor} transparent opacity={0.6} side={THREE.DoubleSide} />
                 </mesh>
-            </Float>
-            {/* Skill Name Popup - Visible when hexagon is glowing */}
+            )}
+
+            {/* Skill Name Label */}
             {isGlowing && (
                 <Html
-                    position={[0, 3, 0]}
+                    position={[0, 5, 0]}
                     center
                     style={{
-                        background: 'rgba(0, 0, 0, 0.8)',
-                        padding: '8px 16px',
-                        borderRadius: '8px',
-                        color: 'white',
-                        fontSize: '14px',
-                        fontWeight: 'bold',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)',
-                        backdropFilter: 'blur(4px)',
-                        border: '1px solid rgba(255, 255, 255, 0.2)',
-                        transform: 'translate3d(-50%, -50%, 0)',
-                        whiteSpace: 'nowrap'
+                        pointerEvents: 'none',
+                        width: '300px',
+                        textAlign: 'center',
                     }}
                 >
-                    {skillName}
+                    <div className="relative inline-block group">
+                        {/* Glitch/HUD Container - Dynamic Color */}
+                        <div
+                            className="relative px-6 py-3 bg-black/80 backdrop-blur-xl clip-path-polygon-[10%_0,100%_0,100%_70%,90%_100%,0_100%,0_30%]"
+                            style={{
+                                border: `1px solid ${glowColor}`,
+                                boxShadow: `0 0 10px ${glowColor}20` // Subtle glow
+                            }}
+                        >
+
+                            {/* Corner Decors - Dynamic Color */}
+                            <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2" style={{ borderColor: glowColor }}></div>
+                            <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2" style={{ borderColor: glowColor }}></div>
+                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2" style={{ borderColor: glowColor }}></div>
+                            <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2" style={{ borderColor: glowColor }}></div>
+
+                            {/* Text Content - Dynamic Gradient */}
+                            <span
+                                className="text-2xl font-bold bg-clip-text text-transparent font-['Orbitron'] tracking-widest uppercase"
+                                style={{
+                                    backgroundImage: `linear-gradient(to right, ${glowColor}, #ffffff, ${glowColor})`,
+                                    filter: `drop-shadow(0 0 5px ${glowColor})`
+                                }}
+                            >
+                                {skillName}
+                            </span>
+
+                            {/* Scanning Line Animation - Dynamic Color via style injection or just keeping it subtle cyan/white? 
+                                Let's make it match but transparent 
+                            */}
+                            <div
+                                className="absolute inset-0 animate-scan-fast pointer-events-none"
+                                style={{
+                                    background: `linear-gradient(to bottom, transparent, ${glowColor}10, transparent)`
+                                }}
+                            ></div>
+                        </div>
+
+                        {/* Connecting Line to Coin - Dynamic Color */}
+                        <div
+                            className="absolute left-1/2 bottom-0 w-[1px] h-8 transform -translate-x-1/2 translate-y-full"
+                            style={{ background: `linear-gradient(to bottom, ${glowColor}, transparent)` }}
+                        ></div>
+                        <div
+                            className="absolute left-1/2 bottom-0 w-2 h-2 rounded-full transform -translate-x-1/2 translate-y-8 blur-[2px]"
+                            style={{ backgroundColor: glowColor }}
+                        ></div>
+                    </div>
                 </Html>
             )}
         </group>
@@ -184,86 +302,140 @@ const MiniHexPlate: React.FC<{
 //     );
 // };
 
-// Tech Coin Component - Revolving around itself with logos on both sides
+// Tech Coin Component - Premium Sci-Fi Token
 const TechCoin: React.FC<{
     skill: TechSkill;
     position: [number, number, number];
     index: number;
     onHover?: (isHovered: boolean) => void;
 }> = ({ skill, position, index, onHover }) => {
-    const meshRef = useRef<THREE.Mesh>(null);
-    const groupRef = useRef<THREE.Group>(null);
+    const coinRef = useRef<THREE.Group>(null);
+    const orbitRef = useRef<THREE.Group>(null);
     const [hovered, setHovered] = useState(false);
 
     // Load the logo as a texture
     const texture = useTexture(skill.logo);
 
+    // Animate
     useFrame((state) => {
-        if (groupRef.current) {
-            const time = state.clock.elapsedTime;
-            // Float animation
-            groupRef.current.position.y = position[1] * 2 + Math.sin(time * 0.8 + index) * 0.4;
+        const time = state.clock.elapsedTime;
 
-            if (meshRef.current) {
-                // Coin revolves around itself (X-axis rotation like a spinning coin)
-                meshRef.current.rotation.x = time * 1.5 + index;
-            }
+        if (coinRef.current) {
+            // Float animation synced with socket
+            coinRef.current.position.y = position[1] + 1.5 + Math.sin(time * 0.8 + index) * 0.5;
+
+            // Coin spin - faster when hovered
+            coinRef.current.rotation.y += hovered ? 0.05 : 0.01;
+
+            // Tilt slightly
+            coinRef.current.rotation.x = Math.sin(time * 0.5) * 0.1;
+        }
+
+        if (orbitRef.current) {
+            // Orbital rings rotation
+            orbitRef.current.rotation.z = time * 0.5;
+            orbitRef.current.rotation.x = time * 0.3;
         }
     });
 
     return (
-        <group ref={groupRef} position={[position[0], 0, position[2]]}>
-            {/* Coin Base */}
-            <mesh
-                ref={meshRef}
+        <group>
+            {/* The Floating Coin Token */}
+            <group
+                ref={coinRef}
+                position={[position[0], position[1] + 1.5, position[2]]}
                 onPointerOver={(e) => {
                     e.stopPropagation();
                     setHovered(true);
                     onHover && onHover(true);
+                    document.body.style.cursor = 'pointer';
                 }}
                 onPointerOut={(e) => {
                     e.stopPropagation();
                     setHovered(false);
                     onHover && onHover(false);
+                    document.body.style.cursor = 'auto';
                 }}
-                castShadow
-                scale={hovered ? 1.2 : 1}
             >
-                <cylinderGeometry args={[1.1, 1.1, 0.1, 32]} />
-                <meshStandardMaterial
-                    map={texture}
-                    color={hovered ? skill.color : "#FFFFFF"}
-                    metalness={0.6}
-                    roughness={0.5}
-                    emissive={hovered ? skill.color : "#000000"}
-                    emissiveIntensity={hovered ? 0.5 : 0.0}
-                />
-            </mesh>
-
-            {/* Proficiency Ring - Only visible on hover or always? Let's show on hover for cleaner look, or maybe always for info?
-                Let's show it always but glow more on hover.
-             */}
-            <group rotation={[0, 0, 0]}> {/* Adjust rotation if needed relative to coin, but coin spins. 
-                Wait, if the coin spins, the ring should probably NOT spin with it, or it looks weird if the ring is unfinished.
-                Better to keep the ring separate from the spinning mesh.
-            */}
-                {/* <ProficiencyRing proficiency={skill.proficiency} color={skill.color} /> */}
-            </group>
-
-            {/* Glow Effect */}
-            {hovered && (
-                <mesh position={[0, 0, 0]} scale={[1.3, 1.3, 1.3]}>
-                    <cylinderGeometry args={[0.8, 0.8, 0.1, 32]} />
+                {/* Coin Edge/Rim - Metal with grooves */}
+                <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
+                    <cylinderGeometry args={[1.2, 1.2, 0.2, 64]} />
                     <meshStandardMaterial
-                        color={skill.color}
-                        transparent
-                        opacity={0.3}
-                        emissive={skill.color}
-                        emissiveIntensity={1}
-                        depthWrite={false}
+                        color="#ffffff"
+                        metalness={1}
+                        roughness={0.1}
+                        envMapIntensity={2}
                     />
                 </mesh>
-            )}
+
+                {/* Coin Face Front - Black Glass backing */}
+                <mesh position={[0, 0, 0.11]} rotation={[0, 0, 0]}>
+                    <circleGeometry args={[1.1, 64]} />
+                    <meshPhysicalMaterial
+                        color="#000000"
+                        metalness={0.8}
+                        roughness={0.1}
+                        clearcoat={1}
+                    />
+                </mesh>
+
+                {/* Logo Decal - Front */}
+                <mesh position={[0, 0, 0.12]} rotation={[0, 0, 0]}>
+                    <circleGeometry args={[0.9, 64]} />
+                    <meshBasicMaterial
+                        map={texture}
+                        transparent
+                        opacity={0.9}
+                    />
+                </mesh>
+
+                {/* Coin Face Back - Same as front */}
+                <mesh position={[0, 0, -0.11]} rotation={[0, Math.PI, 0]}>
+                    <circleGeometry args={[1.1, 64]} />
+                    <meshPhysicalMaterial
+                        color="#000000"
+                        metalness={0.8}
+                        roughness={0.1}
+                        clearcoat={1}
+                    />
+                </mesh>
+                <mesh position={[0, 0, -0.12]} rotation={[0, Math.PI, 0]}>
+                    <circleGeometry args={[0.9, 64]} />
+                    <meshBasicMaterial
+                        map={texture}
+                        transparent
+                        opacity={0.9}
+                    />
+                </mesh>
+
+                {/* Glow Aura when Hovered */}
+                {hovered && (
+                    <mesh>
+                        <sphereGeometry args={[1.4, 32, 32]} />
+                        <meshBasicMaterial
+                            color={skill.color}
+                            transparent
+                            opacity={0.15}
+                            depthWrite={false}
+                            side={THREE.BackSide} /* Inverted sphere for internal glow feel */
+                        />
+                    </mesh>
+                )}
+
+                {/* Holographic Selection Ring - Orbital */}
+                {hovered && (
+                    <group ref={orbitRef}>
+                        <mesh rotation={[Math.PI / 2, 0, 0]}>
+                            <torusGeometry args={[1.6, 0.02, 16, 100]} />
+                            <meshBasicMaterial color={skill.color} transparent opacity={0.8} />
+                        </mesh>
+                        <mesh rotation={[0, Math.PI / 2, 0]}>
+                            <torusGeometry args={[1.8, 0.02, 16, 100]} />
+                            <meshBasicMaterial color={skill.color} transparent opacity={0.5} />
+                        </mesh>
+                    </group>
+                )}
+            </group>
         </group>
     );
 };
