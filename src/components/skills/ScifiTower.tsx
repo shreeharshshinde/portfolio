@@ -14,7 +14,15 @@ export function DeepSpace9() {
     try {
       scene.traverse((child: THREE.Object3D) => {
         if (child instanceof THREE.Mesh) {
-          (child.material as THREE.MeshStandardMaterial).color.set('#374151')
+          // Premium Sci-Fi Material
+          child.material = new THREE.MeshStandardMaterial({
+            color: '#0f172a', // Darker Slate/Black
+            metalness: 0.9,
+            roughness: 0.2,
+            envMapIntensity: 1.5,
+          });
+          child.castShadow = true;
+          child.receiveShadow = true;
         }
       })
       setModelLoaded(true);

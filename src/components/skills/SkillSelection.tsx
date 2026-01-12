@@ -81,71 +81,142 @@ const createHexagonGeometry = (radius: number, height: number) => {
     return geometry;
 };
 
-// Base Hexagonal Plate Component - Spacebase Platform
+// Base Hexagonal Plate Component - Futuristic Space Station Platform
 const BaseHexPlate: React.FC = () => {
-    const meshRef = useRef<THREE.Group>(null);
+    const groupRef = useRef<THREE.Group>(null);
+    const outerRingRef = useRef<THREE.Group>(null);
+    const innerRingRef = useRef<THREE.Group>(null);
+    const coreRef = useRef<THREE.Mesh>(null);
 
     useFrame((state) => {
-        if (meshRef.current) {
-            // Slow, majestic rotation
-            meshRef.current.rotation.y = -state.clock.elapsedTime * 0.05;
+        const t = state.clock.elapsedTime;
+        
+        if (groupRef.current) {
+            // Very slow base rotation
+            groupRef.current.rotation.y = -t * 0.02;
+        }
+        
+        if (outerRingRef.current) {
+            // Counter-rotation for mechanical feel
+            outerRingRef.current.rotation.z = t * 0.05;
+        }
+
+        if (innerRingRef.current) {
+            // Pulse breathing effect for the energy rings
+            innerRingRef.current.scale.setScalar(1 + Math.sin(t * 2) * 0.01);
+        }
+
+        if (coreRef.current) {
+             // Core pulsing opacity
+             const material = coreRef.current.material as THREE.MeshBasicMaterial;
+             material.opacity = 0.3 + Math.sin(t * 3) * 0.15;
         }
     });
 
-    // Helper for the wireframe box look - Horizontal Rings Only
-    const HexPrism = ({ radius, height }: { radius: number, height: number }) => {
-        return (
-            <group>
-                {/* Top Hexagon Ring */}
-                <mesh position={[0, height / 2, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                    <ringGeometry args={[radius - 0.1, radius, 6]} />
-                    <meshBasicMaterial color="#00f3ff" side={THREE.DoubleSide} />
-                </mesh>
-                {/* Bottom Hexagon Ring */}
-                <mesh position={[0, -height / 2, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                    <ringGeometry args={[radius - 0.1, radius, 6]} />
-                    <meshBasicMaterial color="#00f3ff" side={THREE.DoubleSide} />
-                </mesh>
-            </group>
-        )
-    }
+    // Helper for hexagonal segments
+    const HexSegment = ({ radius, width, color, opacity = 1, transparent = false }: any) => (
+        <mesh rotation={[Math.PI / 2, 0, 0]}>
+            <ringGeometry args={[radius, radius + width, 6]} />
+            <meshBasicMaterial 
+                color={color} 
+                side={THREE.DoubleSide} 
+                transparent={transparent} 
+                opacity={opacity} 
+            />
+        </mesh>
+    );
 
     return (
-        <group ref={meshRef} position={[0, -2, 0]}>
-            {/* Main Platform Structure - DARKER - Interstellar Docker Module */}
-            <mesh receiveShadow>
-                <primitive object={createHexagonGeometry(18, 1)} />
+        <group ref={groupRef} position={[0, -2, 0]}>
+            {/* 1. MAIN HULL: Dark Metal Base with chamfered look */}
+            <mesh receiveShadow position={[0, -0.5, 0]}>
+                <cylinderGeometry args={[18, 16, 1.5, 6]} />
                 <meshStandardMaterial
-                    color="#020617" // Deep Space Black/Blue
+                    color="#020617" // Deep Space Black
                     metalness={0.9}
-                    roughness={0.2}
-                    envMapIntensity={1}
+                    roughness={0.3}
+                    envMapIntensity={2.0}
                 />
             </mesh>
 
-            {/* Glowing Horizontal Hex Rings ("Blue lines up") - Cyan/Holographic */}
-            <group position={[0, 2, 0]}>
-                <HexPrism radius={17} height={4} />
+            {/* 2. SECONDARY HULL: Slightly wider, thinner top plate for tech details */}
+            <mesh receiveShadow position={[0, 0.26, 0]}>
+                <cylinderGeometry args={[18.5, 18.5, 0.1, 6]} />
+                <meshStandardMaterial
+                    color="#1e293b" // Dark Slate
+                    metalness={1.0}
+                    roughness={0.15}
+                />
+            </mesh>
+
+            {/* 3. CENTER REACTOR CORE */}
+            <mesh ref={coreRef} position={[0, 0.35, 0]} rotation={[Math.PI/2, 0, 0]}>
+                <circleGeometry args={[5, 32]} />
+                <meshBasicMaterial color="#06b6d4" transparent opacity={0.4} side={THREE.DoubleSide} />
+            </mesh>
+            {/* Core Rim */}
+            <mesh position={[0, 0.36, 0]} rotation={[Math.PI/2, 0, 0]}>
+                <ringGeometry args={[5, 5.5, 32]} />
+                <meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={2} />
+            </mesh>
+
+            {/* 4. HOLOGRAPHIC GRID OVERLAY */}
+            <gridHelper 
+                args={[40, 40, 0x0891b2, 0x0891b2]} 
+                position={[0, 0.3, 0]} 
+                scale={[1, 0, 1] as any} // Flatten grid helper manually via scale if needed, or just use it as is? gridHelper is XZ plane by default.
+            > 
+             {/* Note: gridHelper basic usage. We might need to adjust opacity manually if possible, or use a custom line segments implementation for transparency. 
+                 Standard grid helper colors are solid. Let's use custom lines instead for 'futuristic' look. 
+             */}
+            </gridHelper>
+            {/* Let's try a custom hexagonal grid ring instead of generic square grid */}
+             <group position={[0, 0.4, 0]}>
+                {[6, 9, 12, 15].map((r, i) => (
+                    <mesh key={i} rotation={[Math.PI/2, 0, 0]}>
+                        <ringGeometry args={[r, r + 0.05, 6]} />
+                        <meshBasicMaterial color="#0891b2" transparent opacity={0.3} side={THREE.DoubleSide} />
+                    </mesh>
+                ))}
+             </group>
+
+
+            {/* 5. ROTATING OUTER MECHANISM (The "Gear" look) */}
+            <group ref={outerRingRef} position={[0, 0, 0]}>
+                 {/* Interrupted Ring Segments */}
+                 {[0, 60, 120, 180, 240, 300].map((angle, i) => (
+                    <group key={i} rotation={[0, angle * (Math.PI/180), 0]}>
+                        <mesh position={[19, 0, 0]}>
+                            <boxGeometry args={[1, 0.2, 4]} />
+                            <meshStandardMaterial color="#334155" metalness={0.8} />
+                        </mesh>
+                        <mesh position={[19, 0.2, 0]}>
+                             <boxGeometry args={[0.2, 0.2, 3]} />
+                             <meshBasicMaterial color="#00f3ff" /> {/* Cyan lights */}
+                        </mesh>
+                    </group>
+                 ))}
+                 
+                 {/* Outer Glow Halo */}
+                 <mesh rotation={[Math.PI/2, 0, 0]} position={[0, -0.2, 0]}>
+                    <ringGeometry args={[19.5, 20, 64]} />
+                    <meshBasicMaterial color="#00f3ff" transparent opacity={0.1} side={THREE.DoubleSide} />
+                 </mesh>
             </group>
 
-            {/* Neon Circuit Pattern - Concentric Hex Rings on the floor */}
-            {[14, 10, 6].map((radius, i) => (
-                <mesh key={i} position={[0, 0.51, 0]} rotation={[0, i * 0.5, 0]}>
-                    <ringGeometry args={[radius, radius + 0.2, 6]} />
-                    <meshBasicMaterial
-                        color="#0891b2" // Cyan
-                        side={THREE.DoubleSide}
-                        transparent
-                        opacity={0.4}
-                    />
+            {/* 6. INNER ENERGY RINGS */}
+            <group ref={innerRingRef} position={[0, 0.3, 0]}>
+                <HexSegment radius={10} width={0.2} color="#00f3ff" transparent opacity={0.6} />
+                <HexSegment radius={14} width={0.1} color="#3b82f6" transparent opacity={0.4} />
+            </group>
+            
+            {/* Vertical Pillars connecting layers */}
+            {[0, 60, 120, 180, 240, 300].map((angle, i) => (
+                <mesh key={i} position={[Math.sin(angle * Math.PI/180)*17, 0.5, Math.cos(angle * Math.PI/180)*17]}>
+                     <cylinderGeometry args={[0.2, 0.2, 1, 8]} />
+                     <meshStandardMaterial color="#64748b" metalness={1} />
                 </mesh>
             ))}
-
-            {/* Inner Glow Core - Reactor */}
-            <mesh position={[0, 0.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
-                <circleGeometry args={[4, 32]} />
-                <meshBasicMaterial color="#06b6d4" transparent opacity={0.2} />
-            </mesh>
         </group>
     );
 };
@@ -503,8 +574,15 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
                 castShadow
             />
 
-            {/* Nebula background for the 3D scene */}
-            <Nebula />
+            {/* Nebula background - Layered for depth */}
+            <group rotation={[0, 0, Math.PI / 6]}>
+                {/* Background Base Layer - Deep and slow */}
+                <Nebula scale={45} speed={0.4} opacity={0.3} />
+                {/* Mid Layer - More active */}
+                <Nebula scale={35} speed={0.7} opacity={0.2} />
+                {/* Inner Volumetric Layer - Fast and bright */}
+                <Nebula scale={25} speed={1.2} opacity={0.15} />
+            </group>
 
             {/* Cosmic particles */}
             <CosmicParticles />
@@ -565,38 +643,55 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
     );
 };
 
+import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocessing';
+
+// ... existing imports
+
 export const SkillsSection: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>("Languages");
+    const [typedText, setTypedText] = useState("");
+    const fullText = "// INITIALIZING KNOWLEDGE BASE VISUALIZATION...";
+
+    React.useEffect(() => {
+        let currentIndex = 0;
+        const interval = setInterval(() => {
+            if (currentIndex <= fullText.length) {
+                setTypedText(fullText.slice(0, currentIndex));
+                currentIndex++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 50);
+        return () => clearInterval(interval);
+    }, []);
 
     return (
         <div className="relative w-full h-screen bg-black overflow-hidden">
-            {/* Animated Background Elements - REMOVED to let 3D Nebula shine */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                {/* Subtle vignette */}
-                <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/40 to-black/80"></div>
-            </div>
+            {/* ... (background overlays removed) */}
 
-            {/* Grid Pattern Overlay */}
-            <div className="absolute inset-0 opacity-30" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+            {/* Grid Pattern Overlay - with slight pulse */}
+            <div className="absolute inset-0 opacity-20 animate-pulse-slow" style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
             }}></div>
 
             {/* Header Section - Sci-Fi Title */}
             <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none">
                 <div className="flex flex-col items-center">
                     <span className="text-orange-500 tracking-[0.5em] text-xs font-mono uppercase mb-2 animate-pulse">System Diagnostic</span>
-                    <h2 className="text-5xl md:text-6xl font-bold text-white font-['Orbitron'] tracking-widest uppercase relative inline-block">
+                    <h2 className="text-5xl md:text-6xl font-bold text-white font-['Orbitron'] tracking-widest uppercase relative inline-block drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
                         Technical Skills
                         {/* Decorative lines */}
-                        <div className="absolute -left-12 top-1/2 w-8 h-[2px] bg-orange-500/50"></div>
-                        <div className="absolute -right-12 top-1/2 w-8 h-[2px] bg-orange-500/50"></div>
+                        <div className="absolute -left-16 top-1/2 w-12 h-[1px] bg-gradient-to-r from-transparent to-orange-500"></div>
+                        <div className="absolute -right-16 top-1/2 w-12 h-[1px] bg-gradient-to-l from-transparent to-orange-500"></div>
                     </h2>
-                    <p className="text-sm md:text-md text-cyan-400/60 font-mono tracking-wider mt-4">
-                        // INITIALIZING KNOWLEDGE BASE VISUALIZATION...
+                    <p className="text-sm md:text-md text-cyan-400 font-mono tracking-wider mt-4 h-6">
+                        {typedText}
+                        <span className="animate-pulse">_</span>
                     </p>
                 </div>
             </div>
 
+            {/* ... (Categories Buttons - unchanged conceptually but ensuring they are there) */}
             {/* Category Filter Buttons - Mobile (Bottom Horizontal Scroll) */}
             <div className="absolute bottom-8 left-0 right-0 z-20 md:hidden px-4">
                 <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide no-scrollbar">
@@ -605,7 +700,7 @@ export const SkillsSection: React.FC = () => {
                             key={category.name}
                             onClick={() => setSelectedCategory(category.name)}
                             className={`px-4 py-2 font-mono text-xs uppercase tracking-wider transition-all duration-300 border relative overflow-hidden backdrop-blur-md ${selectedCategory === category.name
-                                ? `border-orange-500 text-white bg-orange-500/20`
+                                ? `border-orange-500 text-white bg-orange-500/20 shadow-[0_0_15px_rgba(249,115,22,0.5)]`
                                 : 'border-white/10 text-white/50 hover:text-white hover:border-white/30 bg-black/40'
                                 }`}
                             style={{
@@ -624,14 +719,17 @@ export const SkillsSection: React.FC = () => {
                     {categories.slice(0, Math.ceil(categories.length / 2)).map((category) => (
                         <div key={category.name} className="relative group">
                             {/* Connector Line */}
-                            <div className={`absolute top-1/2 -right-8 w-6 h-[1px] transition-all duration-300 ${
-                                selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10 group-hover:bg-white/30'
+                            <div className={`absolute top-1/2 -right-12 w-10 h-[1px] transition-all duration-300 ${
+                                selectedCategory === category.name ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)]' : 'bg-white/10 group-hover:bg-white/30'
+                            }`}></div>
+                            <div className={`absolute top-1/2 -right-2 w-1 h-1 rounded-full transition-all duration-300 ${
+                                selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10'
                             }`}></div>
                             
                             <button
                                 onClick={() => setSelectedCategory(category.name)}
                                 className={`w-40 py-3 text-right pr-4 font-mono text-xs uppercase tracking-widest transition-all duration-300 border-r-2 ${selectedCategory === category.name
-                                    ? `border-orange-500 text-white bg-gradient-to-l from-orange-500/20 to-transparent`
+                                    ? `border-orange-500 text-white bg-gradient-to-l from-orange-500/20 to-transparent shadow-[0_0_20px_rgba(249,115,22,0.2)]`
                                     : 'border-white/10 text-white/40 hover:text-white hover:border-white/40 hover:bg-white/5'
                                     }`}
                             >
@@ -648,14 +746,17 @@ export const SkillsSection: React.FC = () => {
                     {categories.slice(Math.ceil(categories.length / 2)).map((category) => (
                         <div key={category.name} className="relative group">
                             {/* Connector Line */}
-                            <div className={`absolute top-1/2 -left-8 w-6 h-[1px] transition-all duration-300 ${
-                                selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10 group-hover:bg-white/30'
+                            <div className={`absolute top-1/2 -left-12 w-10 h-[1px] transition-all duration-300 ${
+                                selectedCategory === category.name ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)]' : 'bg-white/10 group-hover:bg-white/30'
+                            }`}></div>
+                            <div className={`absolute top-1/2 -left-2 w-1 h-1 rounded-full transition-all duration-300 ${
+                                selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10'
                             }`}></div>
 
                             <button
                                 onClick={() => setSelectedCategory(category.name)}
                                 className={`w-40 py-3 text-left pl-4 font-mono text-xs uppercase tracking-widest transition-all duration-300 border-l-2 ${selectedCategory === category.name
-                                    ? `border-orange-500 text-white bg-gradient-to-r from-orange-500/20 to-transparent`
+                                    ? `border-orange-500 text-white bg-gradient-to-r from-orange-500/20 to-transparent shadow-[0_0_20px_rgba(249,115,22,0.2)]`
                                     : 'border-white/10 text-white/40 hover:text-white hover:border-white/40 hover:bg-white/5'
                                     }`}
                             >
@@ -670,26 +771,26 @@ export const SkillsSection: React.FC = () => {
             <Canvas
                 camera={{ position: [20, 15, 30], fov: 45 }}
                 shadows
-                gl={{ antialias: true }}
-                onCreated={({ gl }) => {
-                    gl.setClearColor('#0a0a0a');
-                    gl.shadowMap.enabled = true;
-                    gl.shadowMap.type = 2;
-                    gl.toneMapping = THREE.ACESFilmicToneMapping;
-                    gl.toneMappingExposure = 1.2;
-                }}
+                gl={{ antialias: false, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.5 }} // disabling antialias for postprocessing performance usually, but can keep on if GPU good.
+                dpr={[1, 2]} // Quality for high DPI
             >
                 <Suspense fallback={null}>
                     <HexagonalScene selectedCategory={selectedCategory} />
                     {/* Enhanced Stars - Denser and deeper */}
                     <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+                    
+                    {/* Post Processing Effects for Cinematic Look */}
+                    <EffectComposer>
+                        <Bloom luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} intensity={1.5} />
+                        <Noise opacity={0.05} />
+                        <Vignette eskil={false} offset={0.1} darkness={1.1} />
+                    </EffectComposer>
                 </Suspense>
             </Canvas>
 
             {/* Floating Elements */}
-            <div className="absolute top-20 left-10 w-2 h-2 bg-orange-400 rounded-full animate-ping"></div>
-            <div className="absolute top-40 right-20 w-3 h-3 bg-amber-400 rounded-full animate-pulse"></div>
-            <div className="absolute bottom-20 left-20 w-2 h-2 bg-white rounded-full animate-bounce"></div>
+            <div className="absolute top-20 left-10 w-1 h-1 bg-orange-400 rounded-full animate-ping"></div>
+            <div className="absolute bottom-20 right-20 w-1 h-1 bg-cyan-400 rounded-full animate-pulse"></div>
         </div>
     );
 };

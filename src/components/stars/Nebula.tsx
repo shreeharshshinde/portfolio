@@ -2,17 +2,33 @@ import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-export const Nebula: React.FC = () => {
+interface NebulaProps {
+    color1?: string;
+    color2?: string;
+    scale?: number;
+    speed?: number;
+    opacity?: number;
+}
+
+export const Nebula: React.FC<NebulaProps> = ({
+    color1 = "#020617",
+    color2 = "#0f172a",
+    scale = 20,
+    speed = 1,
+    opacity = 0.5
+}) => {
     const nebulaRef = useRef<THREE.Mesh>(null);
     const particlesRef = useRef<THREE.Points>(null);
 
     // Create a large sphere for the nebula
-    const geometry = new THREE.SphereGeometry(20, 64, 64);
+    const geometry = new THREE.SphereGeometry(scale, 64, 64);
 
     // Create a custom shader material for the nebula
     const nebulaMaterial = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: 0 },
+            // For now, I'll just use the scale/speed/opacity props to differentiate layers
+            uOpacity: { value: opacity },
             color1: { value: new THREE.Color(0x020617) }, // Deepest space blue/black
             color2: { value: new THREE.Color(0x0f172a) }, // Slate
             color3: { value: new THREE.Color(0x00f3ff) }, // Neon Blue (Brighter)
@@ -101,6 +117,7 @@ export const Nebula: React.FC = () => {
                 // Add some transparency and glow with enhanced effects
                 float alpha = 0.1 + abs(combinedNoise) * 0.2; // More transparent
                 alpha *= smoothstep(0.0, 1.0, vNormal.z * 0.5 + 0.5);
+                alpha *= uOpacity;
                 
                 // Add pulsing effect for more dynamic appearance
                 alpha *= 0.8 + 0.2 * sin(time * 1.5);
