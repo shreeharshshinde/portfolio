@@ -18,61 +18,61 @@ interface TechSkill {
 }
 
 const techSkills: TechSkill[] = [
-    // Languages
-    { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", category: "Languages", color: "#ED8B00", proficiency: 75 },
+    // Languages - Blue/Cyan
+    { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg", category: "Languages", color: "#06b6d4", proficiency: 75 },
     { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", category: "Languages", color: "#3776AB", proficiency: 88 },
     { name: "C++", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg", category: "Languages", color: "#00599C", proficiency: 70 },
     { name: "Go", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg", category: "Languages", color: "#00ADD8", proficiency: 70 },
     { name: "JavaScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", category: "Languages", color: "#F7DF1E", proficiency: 95 },
     { name: "TypeScript", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", category: "Languages", color: "#3178C6", proficiency: 90 },
 
-    // Databases
+    // Databases - Emerald/Teal
     { name: "MySQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg", category: "Databases", color: "#4479A1", proficiency: 80 },
     { name: "PostgreSQL", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", category: "Databases", color: "#336791", proficiency: 75 },
     { name: "Drizzle ORM", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", category: "Databases", color: "#C5F74F", proficiency: 70 },
 
-    // Frameworks
-    { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg", category: "Frameworks", color: "#FFFFFF", proficiency: 85 },
+    // Frameworks - Amber/Orange
+    { name: "Next.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg", category: "Frameworks", color: "#ffffff", proficiency: 85 },
     { name: "Spring Boot", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg", category: "Frameworks", color: "#6DB33F", proficiency: 80 },
-    { name: "Flask", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg", category: "Frameworks", color: "#FFFFFF", proficiency: 82 },
+    { name: "Flask", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg", category: "Frameworks", color: "#ffffff", proficiency: 82 },
     { name: "FastAPI", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg", category: "Frameworks", color: "#009688", proficiency: 75 },
     { name: "Streamlit", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/streamlit/streamlit-original.svg", category: "Frameworks", color: "#FF4B4B", proficiency: 70 },
 
-    // DevOps
+    // DevOps - Slate/Gray
     { name: "Docker", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg", category: "DevOps", color: "#2496ED", proficiency: 78 },
     { name: "Git", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", category: "DevOps", color: "#F05032", proficiency: 90 },
-    { name: "GitHub", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", category: "DevOps", color: "#181717", proficiency: 85 },
+    { name: "GitHub", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg", category: "DevOps", color: "#ffffff", proficiency: 85 },
     { name: "AWS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg", category: "DevOps", color: "#232F3E", proficiency: 70 },
     { name: "Jenkins", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg", category: "DevOps", color: "#D24939", proficiency: 65 },
     { name: "Kubernetes", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-original.svg", category: "DevOps", color: "#326CE5", proficiency: 60 },
 
-    // Libraries
+    // Libraries - Indigo/Purple
     { name: "NumPy", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg", category: "Libraries", color: "#013243", proficiency: 85 },
     { name: "Pandas", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg", category: "Libraries", color: "#150458", proficiency: 80 },
     { name: "Scikit-learn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg", category: "Libraries", color: "#F7931E", proficiency: 75 },
     { name: "OpenCV", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg", category: "Libraries", color: "#5C3EE8", proficiency: 70 },
     { name: "TensorFlow", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg", category: "Libraries", color: "#FF8F00", proficiency: 65 },
 
-    // Frontend (additional)
+    // Frontend - Sky/Cyan
     { name: "React", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "Frontend", color: "#61DAFB", proficiency: 95 },
-    { name: "Three.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg", category: "Frontend", color: "#FFFFFF", proficiency: 85 },
+    { name: "Three.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/threejs/threejs-original.svg", category: "Frontend", color: "#ffffff", proficiency: 85 },
     { name: "Tailwind", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", category: "Frontend", color: "#06B6D4", proficiency: 92 },
     { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", category: "Frontend", color: "#F24E1E", proficiency: 80 },
-    { name: "Shadcn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "Frontend", color: "#FFFFFF", proficiency: 75 },
-
-    // Backend (additional)
+    { name: "Shadcn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "Frontend", color: "#ffffff", proficiency: 75 },
+    
+    // Backend - Node
     { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", category: "Backend", color: "#339933", proficiency: 85 },
 ];
 
 const categories = [
-    // { name: "All", color: "from-orange-400 to-amber-500" },
-    { name: "Languages", color: "from-orange-400 to-red-500" },
-    { name: "Frameworks", color: "from-amber-400 to-orange-500" },
-    { name: "Databases", color: "from-yellow-400 to-amber-500" },
-    { name: "DevOps", color: "from-red-400 to-orange-500" },
-    { name: "Libraries", color: "from-white to-gray-400" },
-    { name: "Frontend", color: "from-orange-300 to-amber-400" },
-    // { name: "Backend", color: "from-teal-400 to-cyan-500" }
+    // { name: "All", color: "from-cyan-500 to-blue-600" },
+    { name: "Languages", color: "from-cyan-400 to-blue-600" }, // Cooper Station Blue
+    { name: "Frameworks", color: "from-amber-400 to-orange-600" }, // Endurance/Space Suit Orange
+    { name: "Databases", color: "from-emerald-400 to-teal-600" }, // Data Green
+    { name: "DevOps", color: "from-slate-400 to-gray-600" }, // TARS/CASE Metal
+    { name: "Libraries", color: "from-indigo-400 to-purple-600" }, // Deep Space
+    { name: "Frontend", color: "from-sky-400 to-cyan-500" }, // Ice Planet
+    // { name: "Backend", color: "from-violet-500 to-fuchsia-600" }
 ];
 
 // Hexagonal geometry helper
@@ -112,19 +112,19 @@ const BaseHexPlate: React.FC = () => {
 
     return (
         <group ref={meshRef} position={[0, -2, 0]}>
-            {/* Main Platform Structure - DARKER */}
+            {/* Main Platform Structure - DARKER - Interstellar Docker Module */}
             <mesh receiveShadow>
                 <primitive object={createHexagonGeometry(18, 1)} />
                 <meshStandardMaterial
-                    color="#050914" // Very dark blue/black
-                    metalness={0.8}
-                    roughness={0.4}
-                    envMapIntensity={0.5}
+                    color="#020617" // Deep Space Black/Blue
+                    metalness={0.9}
+                    roughness={0.2}
+                    envMapIntensity={1}
                 />
             </mesh>
 
-            {/* Glowing Horizontal Hex Rings ("Blue lines up") */}
-            <group position={[0, 2, 0]}>{/* Raised up above the platform */}
+            {/* Glowing Horizontal Hex Rings ("Blue lines up") - Cyan/Holographic */}
+            <group position={[0, 2, 0]}>
                 <HexPrism radius={17} height={4} />
             </group>
 
@@ -133,18 +133,18 @@ const BaseHexPlate: React.FC = () => {
                 <mesh key={i} position={[0, 0.51, 0]} rotation={[0, i * 0.5, 0]}>
                     <ringGeometry args={[radius, radius + 0.2, 6]} />
                     <meshBasicMaterial
-                        color="#0077aa" // Darker cyan for the floor patterns
+                        color="#0891b2" // Cyan
                         side={THREE.DoubleSide}
                         transparent
-                        opacity={0.3}
+                        opacity={0.4}
                     />
                 </mesh>
             ))}
 
-            {/* Inner Glow Core */}
+            {/* Inner Glow Core - Reactor */}
             <mesh position={[0, 0.5, 0]} rotation={[Math.PI / 2, 0, 0]}>
                 <circleGeometry args={[4, 32]} />
-                <meshBasicMaterial color="#00f3ff" transparent opacity={0.15} />
+                <meshBasicMaterial color="#06b6d4" transparent opacity={0.2} />
             </mesh>
         </group>
     );
@@ -178,8 +178,8 @@ const MiniHexPlate: React.FC<{
     });
 
     // Dark tech base color
-    const baseColor = "#0f172a";
-    // Active neon color or default subtle blue
+    const baseColor = "#020617"; // Deep dark
+    // Active neon color
     const neonColor = isGlowing ? glowColor : "#1e293b";
 
     return (
@@ -189,8 +189,8 @@ const MiniHexPlate: React.FC<{
                 <primitive object={createHexagonGeometry(3, 0.4)} />
                 <meshStandardMaterial
                     color={baseColor}
-                    metalness={0.8}
-                    roughness={0.3}
+                    metalness={0.9}
+                    roughness={0.2}
                 />
             </mesh>
 
@@ -200,7 +200,7 @@ const MiniHexPlate: React.FC<{
                 <meshStandardMaterial
                     color={neonColor}
                     emissive={neonColor}
-                    emissiveIntensity={isGlowing ? 2 : 0.5}
+                    emissiveIntensity={isGlowing ? 3 : 0.5}
                     toneMapped={false}
                 />
             </mesh>
@@ -215,11 +215,11 @@ const MiniHexPlate: React.FC<{
             {isGlowing && (
                 <mesh ref={ringRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
                     <ringGeometry args={[3.5, 3.6, 32]} />
-                    <meshBasicMaterial color={glowColor} transparent opacity={0.6} side={THREE.DoubleSide} />
+                    <meshBasicMaterial color={glowColor} transparent opacity={0.8} side={THREE.DoubleSide} />
                 </mesh>
             )}
 
-            {/* Skill Name Label */}
+            {/* Skill Name Label - PREMIUM HUD */}
             {isGlowing && (
                 <Html
                     position={[0, 5, 0]}
@@ -231,52 +231,39 @@ const MiniHexPlate: React.FC<{
                     }}
                 >
                     <div className="relative inline-block group">
-                        {/* Glitch/HUD Container - Dynamic Color */}
+                        {/* Glitch/HUD Container - Glassmorphism */}
                         <div
-                            className="relative px-6 py-3 bg-black/80 backdrop-blur-xl clip-path-polygon-[10%_0,100%_0,100%_70%,90%_100%,0_100%,0_30%]"
+                            className="relative px-8 py-4 bg-black/40 backdrop-blur-xl clip-path-polygon-[10%_0,100%_0,100%_70%,90%_100%,0_100%,0_30%]"
                             style={{
-                                border: `1px solid ${glowColor}`,
-                                boxShadow: `0 0 10px ${glowColor}20` // Subtle glow
+                                border: `1px solid ${glowColor}80`,
+                                boxShadow: `0 0 20px ${glowColor}30`,
                             }}
                         >
+                            {/* Corner Decors - Top Left/Bottom Right only for asymmetry */}
+                            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2" style={{ borderColor: glowColor }}></div>
+                            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2" style={{ borderColor: glowColor }}></div>
 
-                            {/* Corner Decors - Dynamic Color */}
-                            <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2" style={{ borderColor: glowColor }}></div>
-                            <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2" style={{ borderColor: glowColor }}></div>
-                            <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2" style={{ borderColor: glowColor }}></div>
-                            <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2" style={{ borderColor: glowColor }}></div>
+                            {/* Digital Scan Line */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-[1px] w-full animate-scan-fast opacity-30"></div>
 
-                            {/* Text Content - Dynamic Gradient */}
-                            <span
-                                className="text-2xl font-bold bg-clip-text text-transparent font-['Orbitron'] tracking-widest uppercase"
-                                style={{
-                                    backgroundImage: `linear-gradient(to right, ${glowColor}, #ffffff, ${glowColor})`,
-                                    filter: `drop-shadow(0 0 5px ${glowColor})`
-                                }}
-                            >
-                                {skillName}
-                            </span>
-
-                            {/* Scanning Line Animation - Dynamic Color via style injection or just keeping it subtle cyan/white? 
-                                Let's make it match but transparent 
-                            */}
-                            <div
-                                className="absolute inset-0 animate-scan-fast pointer-events-none"
-                                style={{
-                                    background: `linear-gradient(to bottom, transparent, ${glowColor}10, transparent)`
-                                }}
-                            ></div>
+                            {/* Text Content - Orbitron Bold */}
+                            <div className="flex flex-col items-center">
+                                <span className="text-[10px] text-white/60 tracking-[0.3em] mb-1 font-mono uppercase">System Node</span>
+                                <span
+                                    className="text-3xl font-bold text-white font-['Orbitron'] tracking-wider uppercase"
+                                    style={{
+                                        textShadow: `0 0 10px ${glowColor}`,
+                                    }}
+                                >
+                                    {skillName}
+                                </span>
+                            </div>
                         </div>
 
-                        {/* Connecting Line to Coin - Dynamic Color */}
-                        <div
-                            className="absolute left-1/2 bottom-0 w-[1px] h-8 transform -translate-x-1/2 translate-y-full"
-                            style={{ background: `linear-gradient(to bottom, ${glowColor}, transparent)` }}
-                        ></div>
-                        <div
-                            className="absolute left-1/2 bottom-0 w-2 h-2 rounded-full transform -translate-x-1/2 translate-y-8 blur-[2px]"
-                            style={{ backgroundColor: glowColor }}
-                        ></div>
+                        {/* Connection Line */}
+                        <div className="absolute left-1/2 bottom-0 w-[1px] h-8 transform -translate-x-1/2 translate-y-full bg-gradient-to-b from-transparent to-transparent"
+                             style={{ backgroundImage: `linear-gradient(to bottom, ${glowColor}, transparent)` }}>
+                        </div>
                     </div>
                 </Html>
             )}
@@ -357,26 +344,34 @@ const TechCoin: React.FC<{
                     document.body.style.cursor = 'auto';
                 }}
             >
-                {/* Coin Edge/Rim - Metal with grooves */}
+                {/* Coin Edge/Rim - Dark Titanium */}
                 <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>
                     <cylinderGeometry args={[1.2, 1.2, 0.2, 64]} />
                     <meshStandardMaterial
-                        color="#ffffff"
+                        color="#1e293b" // Slate 800
                         metalness={1}
-                        roughness={0.1}
+                        roughness={0.2}
                         envMapIntensity={2}
                     />
                 </mesh>
 
-                {/* Coin Face Front - Black Glass backing */}
+                {/* Coin Face Front - Holographic Black Glass backing */}
                 <mesh position={[0, 0, 0.11]} rotation={[0, 0, 0]}>
                     <circleGeometry args={[1.1, 64]} />
                     <meshPhysicalMaterial
                         color="#000000"
-                        metalness={0.8}
-                        roughness={0.1}
+                        metalness={0.9}
+                        roughness={0.05}
                         clearcoat={1}
+                        transparent
+                        opacity={0.9}
                     />
+                </mesh>
+
+                {/* Glowing Ring Insert */}
+                <mesh rotation={[Math.PI / 2, 0, 0]}>
+                     <torusGeometry args={[1.2, 0.02, 16, 100]} />
+                     <meshBasicMaterial color={hovered ? skill.color : "#334155"} />
                 </mesh>
 
                 {/* Logo Decal - Front */}
@@ -385,7 +380,7 @@ const TechCoin: React.FC<{
                     <meshBasicMaterial
                         map={texture}
                         transparent
-                        opacity={0.9}
+                        opacity={hovered ? 1 : 0.8}
                     />
                 </mesh>
 
@@ -394,9 +389,11 @@ const TechCoin: React.FC<{
                     <circleGeometry args={[1.1, 64]} />
                     <meshPhysicalMaterial
                         color="#000000"
-                        metalness={0.8}
-                        roughness={0.1}
+                        metalness={0.9}
+                        roughness={0.05}
                         clearcoat={1}
+                        transparent
+                        opacity={0.9}
                     />
                 </mesh>
                 <mesh position={[0, 0, -0.12]} rotation={[0, Math.PI, 0]}>
@@ -404,20 +401,20 @@ const TechCoin: React.FC<{
                     <meshBasicMaterial
                         map={texture}
                         transparent
-                        opacity={0.9}
+                        opacity={hovered ? 1 : 0.8}
                     />
                 </mesh>
 
-                {/* Glow Aura when Hovered */}
+                {/* Glow Aura when Hovered - Enhanced */}
                 {hovered && (
                     <mesh>
-                        <sphereGeometry args={[1.4, 32, 32]} />
+                        <sphereGeometry args={[1.6, 32, 32]} />
                         <meshBasicMaterial
                             color={skill.color}
                             transparent
-                            opacity={0.15}
+                            opacity={0.1}
                             depthWrite={false}
-                            side={THREE.BackSide} /* Inverted sphere for internal glow feel */
+                            side={THREE.BackSide}
                         />
                     </mesh>
                 )}
@@ -426,12 +423,12 @@ const TechCoin: React.FC<{
                 {hovered && (
                     <group ref={orbitRef}>
                         <mesh rotation={[Math.PI / 2, 0, 0]}>
-                            <torusGeometry args={[1.6, 0.02, 16, 100]} />
-                            <meshBasicMaterial color={skill.color} transparent opacity={0.8} />
+                            <torusGeometry args={[1.8, 0.01, 16, 100]} />
+                            <meshBasicMaterial color={skill.color} transparent opacity={0.6} />
                         </mesh>
                         <mesh rotation={[0, Math.PI / 2, 0]}>
-                            <torusGeometry args={[1.8, 0.02, 16, 100]} />
-                            <meshBasicMaterial color={skill.color} transparent opacity={0.5} />
+                            <torusGeometry args={[2.0, 0.01, 16, 100]} />
+                            <meshBasicMaterial color={skill.color} transparent opacity={0.4} />
                         </mesh>
                     </group>
                 )}
@@ -573,13 +570,10 @@ export const SkillsSection: React.FC = () => {
 
     return (
         <div className="relative w-full h-screen bg-black overflow-hidden">
-            {/* Animated Background Elements */}
-            <div className="absolute inset-0 overflow-hidden">
-                {/* Nebula-like background elements */}
-                <div className="absolute -top-1/2 -right-1/2 w-[200%] h-[200%] bg-gradient-radial from-orange-900/10 via-black to-transparent rounded-full animate-pulse"></div>
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-5 animate-pulse"></div>
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-5 animate-pulse" style={{ animationDelay: '2s' }}></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white rounded-full mix-blend-soft-light filter blur-3xl opacity-5 animate-pulse" style={{ animationDelay: '4s' }}></div>
+            {/* Animated Background Elements - REMOVED to let 3D Nebula shine */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {/* Subtle vignette */}
+                <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/40 to-black/80"></div>
             </div>
 
             {/* Grid Pattern Overlay */}
@@ -587,27 +581,36 @@ export const SkillsSection: React.FC = () => {
                 backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
             }}></div>
 
-            {/* Header Section */}
-            <div className="absolute top-5 left-1/2 -translate-x-1/2 text-center z-10">
-                <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-slate-400 to-slate-200 bg-clip-text text-transparent mb-4 drop-shadow-lg">
-                    Technical Skills
-                </h2>
-                <p className="text-lg text-gray-300 mb-6">
-                    Explore my expertise through interactive Space Base
-                </p>
+            {/* Header Section - Sci-Fi Title */}
+            <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none">
+                <div className="flex flex-col items-center">
+                    <span className="text-orange-500 tracking-[0.5em] text-xs font-mono uppercase mb-2 animate-pulse">System Diagnostic</span>
+                    <h2 className="text-5xl md:text-6xl font-bold text-white font-['Orbitron'] tracking-widest uppercase relative inline-block">
+                        Technical Skills
+                        {/* Decorative lines */}
+                        <div className="absolute -left-12 top-1/2 w-8 h-[2px] bg-orange-500/50"></div>
+                        <div className="absolute -right-12 top-1/2 w-8 h-[2px] bg-orange-500/50"></div>
+                    </h2>
+                    <p className="text-sm md:text-md text-cyan-400/60 font-mono tracking-wider mt-4">
+                        // INITIALIZING KNOWLEDGE BASE VISUALIZATION...
+                    </p>
+                </div>
             </div>
 
             {/* Category Filter Buttons - Mobile (Bottom Horizontal Scroll) */}
             <div className="absolute bottom-8 left-0 right-0 z-20 md:hidden px-4">
-                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide no-scrollbar text-sm">
+                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide no-scrollbar">
                     {categories.map((category) => (
                         <button
                             key={category.name}
                             onClick={() => setSelectedCategory(category.name)}
-                            className={`px-4 py-2 rounded-lg font-semibold whitespace-nowrap transition-all duration-300 ${selectedCategory === category.name
-                                ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
-                                : 'bg-gray-800/80 text-gray-300 border border-gray-700/50'
+                            className={`px-4 py-2 font-mono text-xs uppercase tracking-wider transition-all duration-300 border relative overflow-hidden backdrop-blur-md ${selectedCategory === category.name
+                                ? `border-orange-500 text-white bg-orange-500/20`
+                                : 'border-white/10 text-white/50 hover:text-white hover:border-white/30 bg-black/40'
                                 }`}
+                            style={{
+                                clipPath: 'polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%)'
+                            }}
                         >
                             {category.name}
                         </button>
@@ -616,37 +619,49 @@ export const SkillsSection: React.FC = () => {
             </div>
 
             {/* Category Filter Buttons - Desktop Left */}
-            <div className="hidden md:block absolute left-6 top-1/2 transform -translate-y-1/2 z-10">
-                <div className="flex flex-col gap-3">
+            <div className="hidden md:block absolute left-8 top-1/2 transform -translate-y-1/2 z-10 space-y-4">
+                <div className="space-y-4">
                     {categories.slice(0, Math.ceil(categories.length / 2)).map((category) => (
-                        <button
-                            key={category.name}
-                            onClick={() => setSelectedCategory(category.name)}
-                            className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${selectedCategory === category.name
-                                ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
-                                : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50'
-                                }`}
-                        >
-                            {category.name}
-                        </button>
+                        <div key={category.name} className="relative group">
+                            {/* Connector Line */}
+                            <div className={`absolute top-1/2 -right-8 w-6 h-[1px] transition-all duration-300 ${
+                                selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10 group-hover:bg-white/30'
+                            }`}></div>
+                            
+                            <button
+                                onClick={() => setSelectedCategory(category.name)}
+                                className={`w-40 py-3 text-right pr-4 font-mono text-xs uppercase tracking-widest transition-all duration-300 border-r-2 ${selectedCategory === category.name
+                                    ? `border-orange-500 text-white bg-gradient-to-l from-orange-500/20 to-transparent`
+                                    : 'border-white/10 text-white/40 hover:text-white hover:border-white/40 hover:bg-white/5'
+                                    }`}
+                            >
+                                {category.name}
+                            </button>
+                        </div>
                     ))}
                 </div>
             </div>
 
             {/* Category Filter Buttons - Desktop Right */}
-            <div className="hidden md:block absolute right-6 top-1/2 transform -translate-y-1/2 z-10">
-                <div className="flex flex-col gap-3">
+            <div className="hidden md:block absolute right-8 top-1/2 transform -translate-y-1/2 z-10">
+                 <div className="space-y-4">
                     {categories.slice(Math.ceil(categories.length / 2)).map((category) => (
-                        <button
-                            key={category.name}
-                            onClick={() => setSelectedCategory(category.name)}
-                            className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${selectedCategory === category.name
-                                ? `bg-gradient-to-r ${category.color} text-white shadow-lg`
-                                : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700/50'
-                                }`}
-                        >
-                            {category.name}
-                        </button>
+                        <div key={category.name} className="relative group">
+                            {/* Connector Line */}
+                            <div className={`absolute top-1/2 -left-8 w-6 h-[1px] transition-all duration-300 ${
+                                selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10 group-hover:bg-white/30'
+                            }`}></div>
+
+                            <button
+                                onClick={() => setSelectedCategory(category.name)}
+                                className={`w-40 py-3 text-left pl-4 font-mono text-xs uppercase tracking-widest transition-all duration-300 border-l-2 ${selectedCategory === category.name
+                                    ? `border-orange-500 text-white bg-gradient-to-r from-orange-500/20 to-transparent`
+                                    : 'border-white/10 text-white/40 hover:text-white hover:border-white/40 hover:bg-white/5'
+                                    }`}
+                            >
+                                {category.name}
+                            </button>
+                        </div>
                     ))}
                 </div>
             </div>
@@ -666,7 +681,8 @@ export const SkillsSection: React.FC = () => {
             >
                 <Suspense fallback={null}>
                     <HexagonalScene selectedCategory={selectedCategory} />
-                    <Stars radius={60} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
+                    {/* Enhanced Stars - Denser and deeper */}
+                    <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
                 </Suspense>
             </Canvas>
 

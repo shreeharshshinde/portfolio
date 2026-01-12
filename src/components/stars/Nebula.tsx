@@ -5,19 +5,19 @@ import * as THREE from 'three';
 export const Nebula: React.FC = () => {
     const nebulaRef = useRef<THREE.Mesh>(null);
     const particlesRef = useRef<THREE.Points>(null);
-    
+
     // Create a large sphere for the nebula
     const geometry = new THREE.SphereGeometry(20, 64, 64);
-    
+
     // Create a custom shader material for the nebula
     const nebulaMaterial = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: 0 },
-            color1: { value: new THREE.Color(0x4a00e0) }, // Deep purple
-            color2: { value: new THREE.Color(0x8e2de2) }, // Purple
-            color3: { value: new THREE.Color(0x00c9ff) }, // Cyan
-            color4: { value: new THREE.Color(0xff00c8) }, // Magenta
-            color5: { value: new THREE.Color(0x00ff9d) }, // Teal
+            color1: { value: new THREE.Color(0x020617) }, // Deepest space blue/black
+            color2: { value: new THREE.Color(0x0f172a) }, // Slate
+            color3: { value: new THREE.Color(0x00f3ff) }, // Neon Blue (Brighter)
+            color4: { value: new THREE.Color(0xd97706) }, // Amber (Accents)
+            color5: { value: new THREE.Color(0x3b82f6) }, // Bright Blue (added for neon feel)
         },
         vertexShader: `
             varying vec2 vUv;
@@ -85,20 +85,21 @@ export const Nebula: React.FC = () => {
                 float timeMod3 = sin(time * 0.4 + 1.0) * 0.5 + 0.5;
                 
                 // Mix colors in a more complex way for vibrant transitions
+                // Mix colors - darker base
                 vec3 colorA = mix(color1, color2, timeMod1);
                 vec3 colorB = mix(color3, color4, timeMod2);
                 vec3 colorC = mix(color2, color5, timeMod3);
                 
-                // Final color mixing based on noise and position
-                vec3 color = mix(colorA, colorB, combinedNoise * 0.5 + 0.5);
-                color = mix(color, colorC, sin(time * 0.6) * 0.5 + 0.5);
+                // Final color mixing - favor the dark base colors
+                vec3 color = mix(colorA, colorB, combinedNoise * 0.4 + 0.3); // Less intense brights
+                color = mix(color, colorC, sin(time * 0.6) * 0.3 + 0.3);
                 
                 // Add some position-based variation
                 float positionFactor = (vPosition.x + vPosition.y + vPosition.z) / 60.0;
-                color = mix(color, mix(color1, color5, positionFactor), 0.2);
+                color = mix(color, mix(color1, color5, positionFactor), 0.4);
                 
                 // Add some transparency and glow with enhanced effects
-                float alpha = 0.15 + abs(combinedNoise) * 0.25;
+                float alpha = 0.1 + abs(combinedNoise) * 0.2; // More transparent
                 alpha *= smoothstep(0.0, 1.0, vNormal.z * 0.5 + 0.5);
                 
                 // Add pulsing effect for more dynamic appearance
@@ -112,36 +113,36 @@ export const Nebula: React.FC = () => {
         blending: THREE.AdditiveBlending,
         depthWrite: false,
     });
-    
+
     // Create particles for the nebula
     const particleCount = 100;
     const particlePositions = new Float32Array(particleCount * 3);
     const particleSizes = new Float32Array(particleCount);
-    
+
     for (let i = 0; i < particleCount; i++) {
         const i3 = i * 3;
-        
+
         // Position particles in a sphere
         const radius = 8 + Math.random() * 2;
         const theta = Math.random() * Math.PI * 2;
         const phi = Math.acos(2 * Math.random() - 1);
-        
+
         particlePositions[i3] = radius * Math.sin(phi) * Math.cos(theta);
         particlePositions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
         particlePositions[i3 + 2] = radius * Math.cos(phi);
-        
+
         // Random sizes
         particleSizes[i] = Math.random() * 0.2 + 0.05;
     }
-    
+
     const particleGeometry = new THREE.BufferGeometry();
     particleGeometry.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
     particleGeometry.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1));
-    
+
     const particleMaterial = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: 0 },
-            color: { value: new THREE.Color(0xffffff) },
+            color: { value: new THREE.Color(0xa5f3fc) }, // Very light cyan
         },
         vertexShader: `
             attribute float size;
@@ -180,10 +181,10 @@ export const Nebula: React.FC = () => {
         blending: THREE.AdditiveBlending,
         depthWrite: false,
     });
-    
+
     useFrame((state) => {
         const time = state.clock.getElapsedTime();
-        
+
         if (nebulaRef.current) {
             const material = nebulaRef.current.material as THREE.ShaderMaterial;
             material.uniforms.time.value = time;
@@ -191,13 +192,13 @@ export const Nebula: React.FC = () => {
             nebulaRef.current.rotation.x = time * 0.02;
             nebulaRef.current.rotation.y = time * 0.01;
         }
-        
+
         if (particlesRef.current) {
             const material = particlesRef.current.material as THREE.ShaderMaterial;
             material.uniforms.time.value = time;
         }
     });
-    
+
     return (
         <>
             <mesh ref={nebulaRef} geometry={geometry} material={nebulaMaterial} />
