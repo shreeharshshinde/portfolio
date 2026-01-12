@@ -163,7 +163,7 @@ const BaseHexPlate: React.FC = () => {
             {/* 4. HOLOGRAPHIC GRID OVERLAY */}
             <gridHelper 
                 args={[40, 40, 0x0891b2, 0x0891b2]} 
-                position={[0, 0.3, 0]} 
+                position={[0, -1, 0]} 
                 scale={[1, 0, 1] as any} // Flatten grid helper manually via scale if needed, or just use it as is? gridHelper is XZ plane by default.
             > 
              {/* Note: gridHelper basic usage. We might need to adjust opacity manually if possible, or use a custom line segments implementation for transparency. 
@@ -175,7 +175,7 @@ const BaseHexPlate: React.FC = () => {
                 {[6, 9, 12, 15].map((r, i) => (
                     <mesh key={i} rotation={[Math.PI/2, 0, 0]}>
                         <ringGeometry args={[r, r + 0.05, 6]} />
-                        <meshBasicMaterial color="#0891b2" transparent opacity={0.3} side={THREE.DoubleSide} />
+                        <meshBasicMaterial color="#0891b2" transparent opacity={0.8} side={THREE.DoubleSide} />
                     </mesh>
                 ))}
              </group>
