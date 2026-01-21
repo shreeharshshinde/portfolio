@@ -414,6 +414,11 @@ const TechCoin: React.FC<{
                     onHover && onHover(false);
                     document.body.style.cursor = 'auto';
                 }}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setHovered(!hovered);
+                    onHover && onHover(!hovered);
+                }}
             >
                 {/* Coin Edge/Rim - Dark Titanium */}
                 <mesh rotation={[Math.PI / 2, 0, 0]} castShadow>

@@ -42,6 +42,7 @@ export const ProjectsSection: React.FC = () => {
                                 className={`group relative bg-black/40 backdrop-blur-sm border border-white/5 overflow-hidden transition-all duration-300 ${isHovered ? 'border-orange-500/40 shadow-[0_0_30px_rgba(249,115,22,0.15)]' : ''}`}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
+                                onClick={() => setHoveredIndex(hoveredIndex === index ? null : index)}
                             >
                                 {/* Scanline overlay */}
                                 <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px] pointer-events-none opacity-20"></div>
