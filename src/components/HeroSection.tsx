@@ -8,15 +8,19 @@ const AutoRotator = () => {
     useFrame((state) => {
         // Slowly rotate the camera around the center
         const t = state.clock.getElapsedTime() * 0.05;
-        state.camera.position.x = Math.sin(t) * 12;
-        state.camera.position.z = Math.cos(t) * 12;
+        // Adjust radius based on screen width - push back on mobile to fit screen
+        const isMobile = window.innerWidth < 768;
+        const radius = isMobile ? 20 : 12;
+
+        state.camera.position.x = Math.sin(t) * radius;
+        state.camera.position.z = Math.cos(t) * radius;
         state.camera.lookAt(0, 0, 0);
     });
     return null;
 };
 
 export const HeroSection: React.FC = () => (
-    <>
+    <div className="relative w-full h-screen overflow-hidden">
         <Canvas className="pointer-events-none" camera={{ position: [0, 2, 12], fov: 45 }}>
             <Suspense fallback={null}>
                 <color attach="background" args={['#000000']} />
@@ -34,10 +38,10 @@ export const HeroSection: React.FC = () => (
             </Suspense>
         </Canvas>
 
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center z-10 pointer-events-none">
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center z-10 pointer-events-none px-4">
             {/* Minimal Text Container */}
             <div className="pointer-events-auto">
-                <h1 className="text-7xl md:text-9xl font-bold text-white tracking-tighter mb-2 drop-shadow-2xl opacity-90 mix-blend-overlay">
+                <h1 className="text-6xl md:text-9xl font-bold text-white tracking-tighter mb-2 drop-shadow-2xl opacity-90 mix-blend-overlay">
                     SHREEHARSH
                 </h1>
                 <h2 className="text-4xl md:text-6xl font-light text-orange-100/80 tracking-[0.2em] mb-12 uppercase mix-blend-screen">
@@ -58,5 +62,5 @@ export const HeroSection: React.FC = () => (
                 </div>
             </div>
         </div>
-    </>
+    </div>
 );
