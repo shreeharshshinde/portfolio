@@ -301,40 +301,30 @@ const MiniHexPlate: React.FC<{
                         textAlign: 'center',
                     }}
                 >
-                    <div className="relative inline-block group">
-                        {/* Glitch/HUD Container - Glassmorphism */}
-                        <div
-                            className="relative px-8 py-4 bg-black/40 backdrop-blur-xl clip-path-polygon-[10%_0,100%_0,100%_70%,90%_100%,0_100%,0_30%]"
+                    <div className="relative flex flex-col items-center justify-center">
+                        <span
+                            className="text-2xl font-bold font-['Orbitron'] tracking-widest uppercase"
                             style={{
-                                border: `1px solid ${glowColor}80`,
-                                boxShadow: `0 0 20px ${glowColor}30`,
+                                color: '#ffffff',
+                                textShadow: `
+                                    0 0 5px ${glowColor},
+                                    0 0 10px ${glowColor},
+                                    0 0 20px ${glowColor}
+                                `,
+                                WebkitTextStroke: `0.5px ${glowColor}`,
+                                letterSpacing: '0.2em'
                             }}
                         >
-                            {/* Corner Decors - Top Left/Bottom Right only for asymmetry */}
-                            <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2" style={{ borderColor: glowColor }}></div>
-                            <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2" style={{ borderColor: glowColor }}></div>
-
-                            {/* Digital Scan Line */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-[1px] w-full animate-scan-fast opacity-30"></div>
-
-                            {/* Text Content - Orbitron Bold */}
-                            <div className="flex flex-col items-center">
-                                <span className="text-[10px] text-white/60 tracking-[0.3em] mb-1 font-mono uppercase">System Node</span>
-                                <span
-                                    className="text-3xl font-bold text-white font-['Orbitron'] tracking-wider uppercase"
-                                    style={{
-                                        textShadow: `0 0 10px ${glowColor}`,
-                                    }}
-                                >
-                                    {skillName}
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Connection Line */}
-                        <div className="absolute left-1/2 bottom-0 w-[1px] h-8 transform -translate-x-1/2 translate-y-full bg-gradient-to-b from-transparent to-transparent"
-                            style={{ backgroundImage: `linear-gradient(to bottom, ${glowColor}, transparent)` }}>
-                        </div>
+                            {skillName}
+                        </span>
+                        {/* Subtle underline for anchor effect */}
+                        <div 
+                            className="h-[1px] w-full mt-1 rounded-full"
+                            style={{
+                                background: `linear-gradient(90deg, transparent, ${glowColor}, transparent)`,
+                                boxShadow: `0 0 5px ${glowColor}`
+                            }}
+                        />
                     </div>
                 </Html>
             )}
