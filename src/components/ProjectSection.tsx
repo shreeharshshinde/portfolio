@@ -1,13 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { projects } from '../data/projects';
 import { Github, ExternalLink, Database, FolderOpen } from 'lucide-react';
 
 export const ProjectsSection: React.FC = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.innerWidth >= 768) return; // Mobile only logic
+
+            const center = window.innerHeight / 2;
+            let minDistance = Infinity;
+            let closestIndex = -1;
+
+            cardRefs.current.forEach((card, index) => {
+                if (card) {
+                    const rect = card.getBoundingClientRect();
+                    const cardCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(center - cardCenter);
+
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                }
+            });
+
+            if (closestIndex !== -1 && minDistance < window.innerHeight / 3) { // Only highlight if reasonably close to center
+                setHoveredIndex(closestIndex);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     return (
         <div className="relative min-h-screen bg-black text-orange-50 font-mono py-20 overflow-hidden">
-
             {/* Background Grid */}
             <div
                 className="absolute inset-0 opacity-10 pointer-events-none"
@@ -39,6 +69,7 @@ export const ProjectsSection: React.FC = () => {
                         return (
                             <div
                                 key={index}
+                                ref={(el) => { cardRefs.current[index] = el; }}
                                 className={`group relative bg-black/40 backdrop-blur-sm border border-white/5 overflow-hidden transition-all duration-300 ${isHovered ? 'border-orange-500/40 shadow-[0_0_30px_rgba(249,115,22,0.15)]' : ''}`}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}

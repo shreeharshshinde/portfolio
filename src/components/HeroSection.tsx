@@ -10,7 +10,7 @@ const AutoRotator = () => {
         const t = state.clock.getElapsedTime() * 0.05;
         // Adjust radius based on screen width - push back on mobile to fit screen
         const isMobile = window.innerWidth < 768;
-        const radius = isMobile ? 20 : 12;
+        const radius = isMobile ? 14 : 12; // Mobile radius 14 (closer/larger)
 
         state.camera.position.x = Math.sin(t) * radius;
         state.camera.position.z = Math.cos(t) * radius;

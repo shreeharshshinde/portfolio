@@ -670,15 +670,28 @@ export const SkillsSection: React.FC = () => {
             }}></div>
 
             {/* Header Section - Sci-Fi Title */}
-            <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none w-full">
-                <div className="flex flex-col items-center">
-                    <span className="text-orange-500 tracking-[0.5em] text-xs font-mono uppercase mb-2 animate-pulse">System Diagnostic</span>
-                    <h2 className="text-5xl md:text-6xl font-bold text-white font-['Orbitron'] tracking-widest uppercase relative inline-block drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+            {/* Header Section - Sci-Fi Title */}
+            <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none w-full px-4">
+                 <div className="flex flex-col items-center relative">
+                    <div className="flex items-center gap-2 text-orange-500/60 mb-2">
+                        {/* Re-using Database icon if imported, or import it. It seems mapped to Lucide in other files. Assuming it exists or I might valid need to add import if missing. 
+                           Wait, 'Database' was not imported in SkillSelection.tsx line 1-10 check.
+                           Let's check imports.
+                           
+                           It is NOT imported. I need to add import. 
+                           However, Step 411 output doesn't show top imports. 
+                           I will assume I need to add it or use a generic span if I can't easier edit imports in this single block.
+                           Actually, I can do a multi-replace or just replace the header and assume I'll fix import next if it breaks.
+                           BETTER: I'll use a text span for "SYSTEM" like ProjectSection has "DATABASE ACCESS" but with an icon. 
+                           Let's replace the whole header block.
+                        */}
+                        <span className="tracking-[0.3em] text-xs">// KNOWLEDGE BASE</span>
+                    </div>
+                    <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter mb-4 mix-blend-screen uppercase">
                         Technical Skills
-                        {/* Decorative lines */}
-                        <div className="absolute -left-16 top-1/2 w-12 h-[1px] bg-gradient-to-r from-transparent to-orange-500"></div>
-                        <div className="absolute -right-16 top-1/2 w-12 h-[1px] bg-gradient-to-l from-transparent to-orange-500"></div>
                     </h2>
+                    <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
+                    
                     <p className="text-sm md:text-md text-cyan-400 font-mono tracking-wider mt-4 h-6">
                         {typedText}
                         <span className="animate-pulse">_</span>
