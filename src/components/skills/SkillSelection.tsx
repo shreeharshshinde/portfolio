@@ -59,7 +59,7 @@ const techSkills: TechSkill[] = [
     { name: "Tailwind", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", category: "Frontend", color: "#06B6D4", proficiency: 92 },
     { name: "Figma", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg", category: "Frontend", color: "#F24E1E", proficiency: 80 },
     { name: "Shadcn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", category: "Frontend", color: "#ffffff", proficiency: 75 },
-    
+
     // Backend - Node
     { name: "Node.js", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", category: "Backend", color: "#339933", proficiency: 85 },
 ];
@@ -90,12 +90,12 @@ const BaseHexPlate: React.FC = () => {
 
     useFrame((state) => {
         const t = state.clock.elapsedTime;
-        
+
         if (groupRef.current) {
             // Very slow base rotation
             groupRef.current.rotation.y = -t * 0.02;
         }
-        
+
         if (outerRingRef.current) {
             // Counter-rotation for mechanical feel
             outerRingRef.current.rotation.z = t * 0.05;
@@ -107,9 +107,9 @@ const BaseHexPlate: React.FC = () => {
         }
 
         if (coreRef.current) {
-             // Core pulsing opacity
-             const material = coreRef.current.material as THREE.MeshBasicMaterial;
-             material.opacity = 0.3 + Math.sin(t * 3) * 0.15;
+            // Core pulsing opacity
+            const material = coreRef.current.material as THREE.MeshBasicMaterial;
+            material.opacity = 0.3 + Math.sin(t * 3) * 0.15;
         }
     });
 
@@ -117,11 +117,11 @@ const BaseHexPlate: React.FC = () => {
     const HexSegment = ({ radius, width, color, opacity = 1, transparent = false }: any) => (
         <mesh rotation={[Math.PI / 2, 0, 0]}>
             <ringGeometry args={[radius, radius + width, 6]} />
-            <meshBasicMaterial 
-                color={color} 
-                side={THREE.DoubleSide} 
-                transparent={transparent} 
-                opacity={opacity} 
+            <meshBasicMaterial
+                color={color}
+                side={THREE.DoubleSide}
+                transparent={transparent}
+                opacity={opacity}
             />
         </mesh>
     );
@@ -150,58 +150,58 @@ const BaseHexPlate: React.FC = () => {
             </mesh>
 
             {/* 3. CENTER REACTOR CORE */}
-            <mesh ref={coreRef} position={[0, 0.35, 0]} rotation={[Math.PI/2, 0, 0]}>
+            <mesh ref={coreRef} position={[0, 0.35, 0]} rotation={[Math.PI / 2, 0, 0]}>
                 <circleGeometry args={[5, 32]} />
                 <meshBasicMaterial color="#06b6d4" transparent opacity={0.4} side={THREE.DoubleSide} />
             </mesh>
             {/* Core Rim */}
-            <mesh position={[0, 0.36, 0]} rotation={[Math.PI/2, 0, 0]}>
+            <mesh position={[0, 0.36, 0]} rotation={[Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[5, 5.5, 32]} />
                 <meshStandardMaterial color="#22d3ee" emissive="#22d3ee" emissiveIntensity={2} />
             </mesh>
 
             {/* 4. HOLOGRAPHIC GRID OVERLAY */}
-            <gridHelper 
-                args={[40, 40, 0x0891b2, 0x0891b2]} 
-                position={[0, -1, 0]} 
+            <gridHelper
+                args={[40, 40, 0x0891b2, 0x0891b2]}
+                position={[0, -1, 0]}
                 scale={[1, 0, 1] as any} // Flatten grid helper manually via scale if needed, or just use it as is? gridHelper is XZ plane by default.
-            > 
-             {/* Note: gridHelper basic usage. We might need to adjust opacity manually if possible, or use a custom line segments implementation for transparency. 
+            >
+                {/* Note: gridHelper basic usage. We might need to adjust opacity manually if possible, or use a custom line segments implementation for transparency. 
                  Standard grid helper colors are solid. Let's use custom lines instead for 'futuristic' look. 
              */}
             </gridHelper>
             {/* Let's try a custom hexagonal grid ring instead of generic square grid */}
-             <group position={[0, 0.4, 0]}>
+            <group position={[0, 0.4, 0]}>
                 {[6, 9, 12, 15].map((r, i) => (
-                    <mesh key={i} rotation={[Math.PI/2, 0, 0]}>
+                    <mesh key={i} rotation={[Math.PI / 2, 0, 0]}>
                         <ringGeometry args={[r, r + 0.05, 6]} />
                         <meshBasicMaterial color="#0891b2" transparent opacity={0.8} side={THREE.DoubleSide} />
                     </mesh>
                 ))}
-             </group>
+            </group>
 
 
             {/* 5. ROTATING OUTER MECHANISM (The "Gear" look) */}
             <group ref={outerRingRef} position={[0, 0, 0]}>
-                 {/* Interrupted Ring Segments */}
-                 {[0, 60, 120, 180, 240, 300].map((angle, i) => (
-                    <group key={i} rotation={[0, angle * (Math.PI/180), 0]}>
+                {/* Interrupted Ring Segments */}
+                {[0, 60, 120, 180, 240, 300].map((angle, i) => (
+                    <group key={i} rotation={[0, angle * (Math.PI / 180), 0]}>
                         <mesh position={[19, 0, 0]}>
                             <boxGeometry args={[1, 0.2, 4]} />
                             <meshStandardMaterial color="#334155" metalness={0.8} />
                         </mesh>
                         <mesh position={[19, 0.2, 0]}>
-                             <boxGeometry args={[0.2, 0.2, 3]} />
-                             <meshBasicMaterial color="#00f3ff" /> {/* Cyan lights */}
+                            <boxGeometry args={[0.2, 0.2, 3]} />
+                            <meshBasicMaterial color="#00f3ff" /> {/* Cyan lights */}
                         </mesh>
                     </group>
-                 ))}
-                 
-                 {/* Outer Glow Halo */}
-                 <mesh rotation={[Math.PI/2, 0, 0]} position={[0, -0.2, 0]}>
+                ))}
+
+                {/* Outer Glow Halo */}
+                <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, -0.2, 0]}>
                     <ringGeometry args={[19.5, 20, 64]} />
                     <meshBasicMaterial color="#00f3ff" transparent opacity={0.1} side={THREE.DoubleSide} />
-                 </mesh>
+                </mesh>
             </group>
 
             {/* 6. INNER ENERGY RINGS */}
@@ -209,12 +209,12 @@ const BaseHexPlate: React.FC = () => {
                 <HexSegment radius={10} width={0.2} color="#00f3ff" transparent opacity={0.6} />
                 <HexSegment radius={14} width={0.1} color="#3b82f6" transparent opacity={0.4} />
             </group>
-            
+
             {/* Vertical Pillars connecting layers */}
             {[0, 60, 120, 180, 240, 300].map((angle, i) => (
-                <mesh key={i} position={[Math.sin(angle * Math.PI/180)*17, 0.5, Math.cos(angle * Math.PI/180)*17]}>
-                     <cylinderGeometry args={[0.2, 0.2, 1, 8]} />
-                     <meshStandardMaterial color="#64748b" metalness={1} />
+                <mesh key={i} position={[Math.sin(angle * Math.PI / 180) * 17, 0.5, Math.cos(angle * Math.PI / 180) * 17]}>
+                    <cylinderGeometry args={[0.2, 0.2, 1, 8]} />
+                    <meshStandardMaterial color="#64748b" metalness={1} />
                 </mesh>
             ))}
         </group>
@@ -333,7 +333,7 @@ const MiniHexPlate: React.FC<{
 
                         {/* Connection Line */}
                         <div className="absolute left-1/2 bottom-0 w-[1px] h-8 transform -translate-x-1/2 translate-y-full bg-gradient-to-b from-transparent to-transparent"
-                             style={{ backgroundImage: `linear-gradient(to bottom, ${glowColor}, transparent)` }}>
+                            style={{ backgroundImage: `linear-gradient(to bottom, ${glowColor}, transparent)` }}>
                         </div>
                     </div>
                 </Html>
@@ -441,8 +441,8 @@ const TechCoin: React.FC<{
 
                 {/* Glowing Ring Insert */}
                 <mesh rotation={[Math.PI / 2, 0, 0]}>
-                     <torusGeometry args={[1.2, 0.02, 16, 100]} />
-                     <meshBasicMaterial color={hovered ? skill.color : "#334155"} />
+                    <torusGeometry args={[1.2, 0.02, 16, 100]} />
+                    <meshBasicMaterial color={hovered ? skill.color : "#334155"} />
                 </mesh>
 
                 {/* Logo Decal - Front */}
@@ -577,11 +577,11 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
             {/* Nebula background - Layered for depth */}
             <group rotation={[0, 0, Math.PI / 6]}>
                 {/* Background Base Layer - Deep and slow */}
-                <Nebula scale={45} speed={0.4} opacity={0.3} />
-                {/* Mid Layer - More active */}
-                <Nebula scale={35} speed={0.7} opacity={0.2} />
-                {/* Inner Volumetric Layer - Fast and bright */}
-                <Nebula scale={25} speed={1.2} opacity={0.15} />
+                <Nebula scale={45} opacity={0.3} />
+                {/* Layer 2 - Medium, dense, slightly faster */}
+                <Nebula scale={35} opacity={0.2} />
+                {/* Layer 3 - Small, erratic, fast */}
+                <Nebula scale={25} opacity={0.15} />
             </group>
 
             {/* Cosmic particles */}
@@ -719,13 +719,11 @@ export const SkillsSection: React.FC = () => {
                     {categories.slice(0, Math.ceil(categories.length / 2)).map((category) => (
                         <div key={category.name} className="relative group">
                             {/* Connector Line */}
-                            <div className={`absolute top-1/2 -right-12 w-10 h-[1px] transition-all duration-300 ${
-                                selectedCategory === category.name ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)]' : 'bg-white/10 group-hover:bg-white/30'
-                            }`}></div>
-                            <div className={`absolute top-1/2 -right-2 w-1 h-1 rounded-full transition-all duration-300 ${
-                                selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10'
-                            }`}></div>
-                            
+                            <div className={`absolute top-1/2 -right-12 w-10 h-[1px] transition-all duration-300 ${selectedCategory === category.name ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)]' : 'bg-white/10 group-hover:bg-white/30'
+                                }`}></div>
+                            <div className={`absolute top-1/2 -right-2 w-1 h-1 rounded-full transition-all duration-300 ${selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10'
+                                }`}></div>
+
                             <button
                                 onClick={() => setSelectedCategory(category.name)}
                                 className={`w-40 py-3 text-right pr-4 font-mono text-xs uppercase tracking-widest transition-all duration-300 border-r-2 ${selectedCategory === category.name
@@ -742,16 +740,14 @@ export const SkillsSection: React.FC = () => {
 
             {/* Category Filter Buttons - Desktop Right */}
             <div className="hidden md:block absolute right-8 top-1/2 transform -translate-y-1/2 z-10">
-                 <div className="space-y-4">
+                <div className="space-y-4">
                     {categories.slice(Math.ceil(categories.length / 2)).map((category) => (
                         <div key={category.name} className="relative group">
                             {/* Connector Line */}
-                            <div className={`absolute top-1/2 -left-12 w-10 h-[1px] transition-all duration-300 ${
-                                selectedCategory === category.name ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)]' : 'bg-white/10 group-hover:bg-white/30'
-                            }`}></div>
-                            <div className={`absolute top-1/2 -left-2 w-1 h-1 rounded-full transition-all duration-300 ${
-                                selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10'
-                            }`}></div>
+                            <div className={`absolute top-1/2 -left-12 w-10 h-[1px] transition-all duration-300 ${selectedCategory === category.name ? 'bg-orange-500 shadow-[0_0_10px_rgba(249,115,22,0.8)]' : 'bg-white/10 group-hover:bg-white/30'
+                                }`}></div>
+                            <div className={`absolute top-1/2 -left-2 w-1 h-1 rounded-full transition-all duration-300 ${selectedCategory === category.name ? 'bg-orange-500' : 'bg-white/10'
+                                }`}></div>
 
                             <button
                                 onClick={() => setSelectedCategory(category.name)}
@@ -778,7 +774,7 @@ export const SkillsSection: React.FC = () => {
                     <HexagonalScene selectedCategory={selectedCategory} />
                     {/* Enhanced Stars - Denser and deeper */}
                     <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-                    
+
                     {/* Post Processing Effects for Cinematic Look */}
                     <EffectComposer>
                         <Bloom luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} intensity={1.5} />

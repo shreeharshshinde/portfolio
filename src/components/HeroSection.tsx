@@ -13,7 +13,7 @@ export const HeroSection: React.FC = () => (
 
                 {/* Visual Effects */}
                 <BlackHole />
-                <SpaceDust count={8000} />
+                <SpaceDust count={5000} />
                 <Stars />
 
                 {/* Lighting */}

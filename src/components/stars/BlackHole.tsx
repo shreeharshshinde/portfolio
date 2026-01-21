@@ -131,10 +131,10 @@ const BlackHole: React.FC = () => {
             </mesh>
 
             {/* Soft Glow Billboard behind */}
-            <mesh position={[0, 0, -1]}>
+            {/* <mesh position={[0, 0, -1]}>
                 <planeGeometry args={[15, 15]} />
                 <meshBasicMaterial color="#cc4400" transparent opacity={0.05} blending={THREE.AdditiveBlending} depthWrite={false} />
-            </mesh>
+            </mesh> */}
         </group>
     );
 };
