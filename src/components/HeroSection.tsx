@@ -7,7 +7,7 @@ import { OrbitControls } from '@react-three/drei';
 
 export const HeroSection: React.FC = () => (
     <>
-        <Canvas camera={{ position: [0, 2, 12], fov: 45 }}>
+        <Canvas className="pointer-events-none" camera={{ position: [0, 2, 12], fov: 45 }}>
             <Suspense fallback={null}>
                 <color attach="background" args={['#000000']} />
 

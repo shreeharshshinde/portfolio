@@ -632,13 +632,18 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
                 })}
             </group>
 
-            {/* Perfect Camera Controls - Zoomed out */}
-            <OrbitControls
-                enablePan={true}
-                enableZoom={true}
-                enableRotate={true}
-                target={[0, 0, 0]}
-            />
+            {/* Perfect Camera Controls - Zoomed out
+                On mobile, we disable interaction to allow page scrolling
+            */}
+            {/* @ts-ignore */}
+            {window.innerWidth > 768 && (
+                <OrbitControls
+                    enablePan={true}
+                    enableZoom={true}
+                    enableRotate={true}
+                    target={[0, 0, 0]}
+                />
+            )}
         </>
     );
 };
@@ -764,8 +769,9 @@ export const SkillsSection: React.FC = () => {
             </div>
 
             {/* 3D Canvas with Perfect Camera Angle - Zoomed Out */}
+            {/* @ts-ignore */}
             <Canvas
-                camera={{ position: [20, 15, 30], fov: 45 }}
+                camera={{ position: window.innerWidth < 768 ? [14, 10, 20] : [20, 15, 30], fov: 45 }}
                 shadows
                 gl={{ antialias: false, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.5 }} // disabling antialias for postprocessing performance usually, but can keep on if GPU good.
                 dpr={[1, 2]} // Quality for high DPI
