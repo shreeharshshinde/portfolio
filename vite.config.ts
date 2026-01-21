@@ -6,14 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom'],
-          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
-          'vendor-utils': ['maath', 'lucide-react'],
-        },
-      },
-    },
+    outDir: 'dist',
+    sourcemap: false,
   },
 })
