@@ -509,10 +509,14 @@ const TechCoin: React.FC<{
 };
 
 // Main Scene Component
-const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCategory }) => {
+const HexagonalScene: React.FC<{ selectedCategory: string; interactiveMode: boolean }> = ({ selectedCategory, interactiveMode }) => {
     const groupRef = useRef<THREE.Group>(null);
     const buildingRef = useRef<THREE.Group>(null);
     const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+
+    // Mobile check
+    const isMobile = window.innerWidth < 768;
+    const canInteract = !isMobile || interactiveMode;
 
     useFrame((state) => {
         if (buildingRef.current) {
@@ -520,8 +524,21 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
         }
 
         if (groupRef.current) {
-            // Very subtle rotation for the entire group
-            groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.02) * 0.05;
+           // If OrbitControls is NOT acting, we apply our own gentle rotation logic
+           // or we rely on the component's existing logic.
+           // Existing logic:
+           // groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.02) * 0.05;
+           // This is just a sway.
+           
+           // If we are in non-interactive mode (mobile default), we might want a constant spin?
+           if (!canInteract) {
+              groupRef.current.rotation.y += 0.005; 
+           } else {
+              // Sway when interactive/desktop to not fight OrbitControls? 
+              // Actually OrbitControls rotates the CAMERA, not the group.
+              // So we can keep the sway on the group + OrbitControls on camera.
+              groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.02) * 0.05;
+           }
         }
     });
 
@@ -560,47 +577,28 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
 
     return (
         <>
-            {/* Environment and Lighting */}
+            {/* ... (Environment, Lights, etc - UNCHANGED) */}
             <Environment preset="city" />
             <ambientLight intensity={0.2} />
             <directionalLight position={[10, 10, 5]} intensity={1} castShadow />
             <pointLight position={[-10, -10, -10]} intensity={0.5} color="#d97706" />
             <pointLight position={[10, 10, 10]} intensity={0.5} color="#f59e0b" />
-            <spotLight
-                position={[0, 15, 0]}
-                angle={0.3}
-                penumbra={1}
-                intensity={0.8}
-                castShadow
-            />
+            <spotLight position={[0, 15, 0]} angle={0.3} penumbra={1} intensity={0.8} castShadow />
 
-            {/* Nebula background - Layered for depth */}
             <group rotation={[0, 0, Math.PI / 6]}>
-                {/* Background Base Layer - Deep and slow */}
                 <Nebula scale={45} opacity={0.3} />
-                {/* Layer 2 - Medium, dense, slightly faster */}
                 <Nebula scale={35} opacity={0.2} />
-                {/* Layer 3 - Small, erratic, fast */}
                 <Nebula scale={25} opacity={0.15} />
             </group>
 
-            {/* Cosmic particles */}
             <CosmicParticles />
-
-
-            {/* Base Hexagonal Plate */}
             <BaseHexPlate />
-
-            {/* Central Building Model */}
             <DeepSpace9 />
 
-            {/* Mini Hexagonal Plates */}
             <group ref={groupRef}>
                 {miniPlatePositions.map((position, index) => {
                     const skill = filteredSkills[index];
-                    // Check if position is valid
                     if (!skill || !position || !Array.isArray(position) || position.length < 3) return null;
-
                     const isGlowing = hoveredSkill === skill.name;
                     return (
                         <MiniHexPlate
@@ -614,12 +612,9 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
                     );
                 })}
 
-                {/* Tech Coins with gap */}
                 {filteredSkills.map((skill, index) => {
                     const position = miniPlatePositions[index];
-                    // Check if position is valid
                     if (!position || !Array.isArray(position) || position.length < 3) return null;
-
                     return (
                         <TechCoin
                             key={skill.name}
@@ -632,16 +627,15 @@ const HexagonalScene: React.FC<{ selectedCategory: string }> = ({ selectedCatego
                 })}
             </group>
 
-            {/* Perfect Camera Controls - Zoomed out
-                On mobile, we disable interaction to allow page scrolling
-            */}
-            {/* @ts-ignore */}
-            {window.innerWidth > 768 && (
+            {/* Camera Controls */}
+            {canInteract && (
                 <OrbitControls
                     enablePan={true}
                     enableZoom={true}
                     enableRotate={true}
                     target={[0, 0, 0]}
+                    autoRotate={true}
+                    autoRotateSpeed={0.5} // Gentle auto-rotate when idle even in interactive mode
                 />
             )}
         </>
@@ -655,6 +649,7 @@ import { EffectComposer, Bloom, Vignette, Noise } from '@react-three/postprocess
 export const SkillsSection: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>("Languages");
     const [typedText, setTypedText] = useState("");
+    const [interactiveMode, setInteractiveMode] = useState(false);
     const fullText = "// INITIALIZING KNOWLEDGE BASE VISUALIZATION...";
 
     React.useEffect(() => {
@@ -680,7 +675,7 @@ export const SkillsSection: React.FC = () => {
             }}></div>
 
             {/* Header Section - Sci-Fi Title */}
-            <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none">
+            <div className="absolute top-10 left-1/2 -translate-x-1/2 text-center z-10 pointer-events-none w-full">
                 <div className="flex flex-col items-center">
                     <span className="text-orange-500 tracking-[0.5em] text-xs font-mono uppercase mb-2 animate-pulse">System Diagnostic</span>
                     <h2 className="text-5xl md:text-6xl font-bold text-white font-['Orbitron'] tracking-widest uppercase relative inline-block drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
@@ -696,10 +691,24 @@ export const SkillsSection: React.FC = () => {
                 </div>
             </div>
 
+            {/* Playground Mode Toggle (Mobile/Tablet primarily) */}
+            <div className="absolute bottom-36 left-1/2 -translate-x-1/2 z-30 md:hidden">
+                 <button
+                    onClick={() => setInteractiveMode(!interactiveMode)}
+                    className={`px-6 py-2 rounded-full border border-white/20 backdrop-blur-md text-xs font-mono uppercase tracking-widest transition-all duration-300 ${
+                        interactiveMode 
+                        ? 'bg-orange-500/20 text-orange-400 border-orange-500/50 shadow-[0_0_15px_rgba(249,115,22,0.3)]' 
+                        : 'bg-black/40 text-white/60 hover:bg-white/10'
+                    }`}
+                >
+                    {interactiveMode ? 'DISABLE 3D' : 'ENABLE 3D'}
+                </button>
+            </div>
+
             {/* ... (Categories Buttons - unchanged conceptually but ensuring they are there) */}
             {/* Category Filter Buttons - Mobile (Bottom Horizontal Scroll) */}
-            <div className="absolute bottom-8 left-0 right-0 z-20 md:hidden px-4">
-                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide no-scrollbar">
+            <div className="absolute bottom-6 left-0 right-0 z-20 md:hidden px-4">
+                <div className="flex flex-wrap justify-center gap-2">
                     {categories.map((category) => (
                         <button
                             key={category.name}
@@ -777,7 +786,7 @@ export const SkillsSection: React.FC = () => {
                 dpr={[1, 2]} // Quality for high DPI
             >
                 <Suspense fallback={null}>
-                    <HexagonalScene selectedCategory={selectedCategory} />
+                    <HexagonalScene selectedCategory={selectedCategory} interactiveMode={interactiveMode} />
                     {/* Enhanced Stars - Denser and deeper */}
                     <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
 

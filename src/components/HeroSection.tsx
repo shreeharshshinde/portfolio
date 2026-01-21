@@ -1,9 +1,19 @@
 import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars } from './stars/Stars';
 import BlackHole from './stars/BlackHole';
 import SpaceDust from './stars/SpaceDust';
-import { OrbitControls } from '@react-three/drei';
+
+const AutoRotator = () => {
+    useFrame((state) => {
+        // Slowly rotate the camera around the center
+        const t = state.clock.getElapsedTime() * 0.05;
+        state.camera.position.x = Math.sin(t) * 12;
+        state.camera.position.z = Math.cos(t) * 12;
+        state.camera.lookAt(0, 0, 0);
+    });
+    return null;
+};
 
 export const HeroSection: React.FC = () => (
     <>
@@ -19,15 +29,8 @@ export const HeroSection: React.FC = () => (
                 {/* Lighting */}
                 <ambientLight intensity={0.5} />
 
-                {/* Camera Controls - restricted for cinematic feel */}
-                <OrbitControls
-                    enableZoom={false}
-                    enablePan={false}
-                    autoRotate
-                    autoRotateSpeed={0.5}
-                    maxPolarAngle={Math.PI / 1.5}
-                    minPolarAngle={Math.PI / 3}
-                />
+                {/* Auto Rotation - Non-interactive */}
+                <AutoRotator />
             </Suspense>
         </Canvas>
 

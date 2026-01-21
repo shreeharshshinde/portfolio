@@ -6,10 +6,34 @@ import {
   Twitter,
   Wifi
 } from "lucide-react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useThree } from "@react-three/fiber";
 import { Suspense } from "react";
 import { BlackHoleGLB } from "./stars/BlackHoleGLB";
 import { OrbitControls } from "@react-three/drei";
+
+const ResponsiveCamera = () => {
+  const { camera } = useThree();
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width < 768) {
+        camera.position.set(0, 2, 26); // Mobile: Farther away to scale down
+      } else if (width < 1024) {
+        camera.position.set(0, 2, 18); // Tablet
+      } else {
+        camera.position.set(0, 2, 12); // Desktop
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial set
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, [camera]);
+
+  return null;
+};
 
 export const ContactSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -54,6 +78,7 @@ export const ContactSection: React.FC = () => {
       {/* Blackhole Background */}
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
         <Canvas camera={{ position: [0, 2, 12], fov: 40 }}>
+          <ResponsiveCamera />
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={1} />
           <Suspense fallback={null}>
