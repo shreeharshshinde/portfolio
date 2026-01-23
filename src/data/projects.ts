@@ -1,5 +1,5 @@
 
-import { Shield, Brain, BarChart3, Code, type LucideIcon } from 'lucide-react';
+import { Shield, Brain, Code, type LucideIcon } from 'lucide-react';
 
 export interface Project {
     title: string;
