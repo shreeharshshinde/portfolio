@@ -22,8 +22,9 @@ void main() {
     // Explicit safety check to prevent division by zero
     baseRadius = max(baseRadius, 0.1);
     
-    // Orbit Speed
-    float orbitSpeed = 40.0 * aSpeed / pow(baseRadius, 1.5);
+    // Orbit Speed - Slower, more majestic
+    // Was 40.0, now 25.0
+    float orbitSpeed = 25.0 * aSpeed / pow(baseRadius, 1.5);
     float angle = uTime * orbitSpeed + aRandom * 6.28;
     
     // Chaos
@@ -35,14 +36,15 @@ void main() {
     // Apply new positions
     pos.x = cos(angle) * effectiveRadius;
     pos.z = sin(angle) * effectiveRadius;
-    pos.y = chaosHeight + sin(uTime * 0.5 + aRandom * 10.0) * 0.2;
+    
+    // Smoother vertical float (slower & smaller amplitude)
+    // Was uTime * 0.5 and * 0.2
+    pos.y = chaosHeight + sin(uTime * 0.2 + aRandom * 10.0) * 0.15;
 
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPosition;
     
     // Point size attenuation with safety clamp
-    // If z is positive (behind camera), this can be weird, but usually handled by clipping.
-    // Clamp z to be at least slightly negative to avoid divide by zero.
     float zDist = max(-mvPosition.z, 0.1);
     gl_PointSize = aScale * (150.0 / zDist);
     
@@ -71,7 +73,7 @@ void main() {
 }
 `;
 
-const SpaceDust: React.FC<{ count?: number }> = ({ count = 2000 }) => {
+const SpaceDust: React.FC<{ count?: number }> = ({ count = 5000 }) => {
     const pointsRef = useRef<THREE.Points>(null);
     const startTimeRef = useRef<number | null>(null);
 
