@@ -8,5 +8,14 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          three: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/cannon', 'maath'],
+          ui: ['lucide-react'],
+        },
+      },
+    },
   },
 })

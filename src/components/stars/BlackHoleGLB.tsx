@@ -4,7 +4,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 export function BlackHoleGLB() {
-    const { scene } = useGLTF('/assets/black_hole.glb');
+    const { scene } = useGLTF('/assets/black_hole_draco.glb');
     const ref = useRef<THREE.Group>(null);
 
     useFrame((_state, delta) => {
@@ -20,4 +20,4 @@ export function BlackHoleGLB() {
     );
 }
 
-useGLTF.preload('/assets/black_hole.glb');
+useGLTF.preload('/assets/black_hole_draco.glb');

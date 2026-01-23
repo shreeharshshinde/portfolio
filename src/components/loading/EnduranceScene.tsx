@@ -4,26 +4,10 @@ import { useGLTF, Stars } from '@react-three/drei';
 import * as THREE from 'three';
 
 export const EnduranceScene: React.FC = () => {
-    const endurance = useGLTF('/assets/interstellar__endurance_high_fidelity.glb');
-    // const planet = useGLTF('/assets/neptune.glb');
+    const endurance = useGLTF('/assets/endurance_draco.glb');
 
     const enduranceRef = useRef<THREE.Group>(null);
-    const planetRef = useRef<THREE.Group>(null);
     const starsRef = useRef<THREE.Group>(null);
-
-    // Fix Neptune Material to prevent shiny reflections
-    // if (planet) {
-    //     planet.scene.traverse((child) => {
-    //         if ((child as THREE.Mesh).isMesh) {
-    //             const mesh = child as THREE.Mesh;
-    //             // Make it matte to absorb light naturally rather than reflect it
-    //             if (mesh.material) {
-    //                 (mesh.material as THREE.MeshStandardMaterial).roughness = 1.0;
-    //                 (mesh.material as THREE.MeshStandardMaterial).metalness = 0.0;
-    //             }
-    //         }
-    //     });
-    // }
 
     const startTimeRef = useRef<number | null>(null);
 
@@ -32,11 +16,6 @@ export const EnduranceScene: React.FC = () => {
             startTimeRef.current = state.clock.getElapsedTime();
         }
         const time = state.clock.getElapsedTime() - startTimeRef.current;
-
-        // Planet rotation - very slow
-        if (planetRef.current) {
-            planetRef.current.rotation.y = time * 2.25;
-        }
 
         // Stars rotation - slow majestic background movement
         if (starsRef.current) {
@@ -91,10 +70,7 @@ export const EnduranceScene: React.FC = () => {
                 <Stars radius={100} depth={50} count={10000} factor={4} saturation={0} fade speed={1} />
             </group>
 
-            {/* Planet - Background */}
-            {/* <group ref={planetRef} position={[0, 2, -15]} scale={[0.7, 0.7, 0.7]}>
-                <primitive object={planet.scene} />
-            </group> */}
+
 
             {/* Endurance - Foreground */}
             <group ref={enduranceRef} position={[-20, -5, 10]} scale={[0.07, 0.07, 0.07]} rotation={[0, Math.PI / 2, 0]}>
@@ -105,5 +81,4 @@ export const EnduranceScene: React.FC = () => {
 };
 
 // Preload assets
-useGLTF.preload('/assets/interstellar__endurance_high_fidelity.glb');
-// useGLTF.preload('/assets/neptune.glb');
+useGLTF.preload('/assets/endurance_draco.glb');
