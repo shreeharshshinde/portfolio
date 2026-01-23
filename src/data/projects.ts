@@ -1,5 +1,5 @@
 
-import { Shield, Brain, BarChart3, type LucideIcon } from 'lucide-react';
+import { Shield, Brain, BarChart3, Code, type LucideIcon } from 'lucide-react';
 
 export interface Project {
     title: string;
@@ -12,6 +12,15 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+    {
+        title: "InspectAI",
+        description: "An AI-assisted developer tool using Python to analyze code, generate review feedback, and help catch issues early in the development workflow.",
+        technologies: ["Python", "FastAPI", "LLMs", "Static Analysis", "Jira API"],
+        link: "https://github.com/shreeharshshinde/InspectAI",
+        category: "AI & Developer Tools",
+        gradient: "from-orange-500 to-amber-600",
+        icon: Code
+    },
     {
         title: "ERAWA",
         description: "A gamified web platform using Next.js to educate children on sensitive topics like Child Abuse, Child Labour, and more.",
@@ -30,13 +39,13 @@ export const projects: Project[] = [
         gradient: "from-purple-500 to-violet-600",
         icon: Brain
     },
-    {
-        title: "Olympic Data Analysis",
-        description: "An interactive Streamlit web app to analyze and visualize 120 years of Olympic data, from 1896 to 2016.",
-        technologies: ["Python", "Streamlit", "Pandas", "Plotly"],
-        link: "https://github.com/shreeharshshinde/olympic-analysis",
-        category: "Data Science",
-        gradient: "from-emerald-500 to-teal-600",
-        icon: BarChart3
-    }
+    // {
+    //     title: "Olympic Data Analysis",
+    //     description: "An interactive Streamlit web app to analyze and visualize 120 years of Olympic data, from 1896 to 2016.",
+    //     technologies: ["Python", "Streamlit", "Pandas", "Plotly"],
+    //     link: "https://github.com/shreeharshshinde/olympic-analysis",
+    //     category: "Data Science",
+    //     gradient: "from-emerald-500 to-teal-600",
+    //     icon: BarChart3
+    // }
 ];
