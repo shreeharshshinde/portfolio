@@ -19,10 +19,8 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ onComplete }) => {
         audioRef.current = new Audio('/assets/Hanz_Zimmer_-_No_Time_for_Caution_Interstellar_O.S.T._(mp3.pm).mp3');
         audioRef.current.loop = true;
         audioRef.current.volume = 0.2; // Default to low volume
-        audioRef.current.currentTime = 30; // Start at 30s as requested
 
-        // Attempt autoplay immediately
-        audioRef.current.play().catch(e => console.log("Autoplay blocked (will start on interaction):", e));
+        // Removed autoplay - waiting for user interaction
 
         return () => {
             // Only cleanup if we are NOT completing successfully (e.g. unmount)

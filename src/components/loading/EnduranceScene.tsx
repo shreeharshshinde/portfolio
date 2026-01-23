@@ -25,8 +25,13 @@ export const EnduranceScene: React.FC = () => {
     //     });
     // }
 
+    const startTimeRef = useRef<number | null>(null);
+
     useFrame((state) => {
-        const time = state.clock.getElapsedTime();
+        if (startTimeRef.current === null) {
+            startTimeRef.current = state.clock.getElapsedTime();
+        }
+        const time = state.clock.getElapsedTime() - startTimeRef.current;
 
         // Planet rotation - very slow
         if (planetRef.current) {
