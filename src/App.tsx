@@ -1,12 +1,14 @@
-import React, { useState, useRef, useEffect, type RefObject } from 'react';
+import React, { useState, useRef, useEffect, Suspense, type RefObject } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
-import { AboutSection } from './components/AboutSection';
-import { SkillsSection } from './components/skills/SkillSelection';
-import { ProjectsSection } from './components/ProjectSection';
-import { ContactSection } from './components/ContactSection';
-import { Footer } from './components/Footer';
 import { LoadingScreen } from './components/loading/LoadingScreen';
+
+// Lazy load heavy sections
+const AboutSection = React.lazy(() => import('./components/AboutSection').then(module => ({ default: module.AboutSection })));
+const SkillsSection = React.lazy(() => import('./components/skills/SkillSelection').then(module => ({ default: module.SkillsSection })));
+const ProjectsSection = React.lazy(() => import('./components/ProjectSection').then(module => ({ default: module.ProjectsSection })));
+const ContactSection = React.lazy(() => import('./components/ContactSection').then(module => ({ default: module.ContactSection })));
+const Footer = React.lazy(() => import('./components/Footer').then(module => ({ default: module.Footer })));
 
 
 export interface NavLink {
@@ -89,20 +91,30 @@ const App: React.FC = () => {
                     <HeroSection />
                 </section>
                 <section id="about" ref={aboutRef}>
-                    <AboutSection />
+                    <Suspense fallback={<div className="h-screen bg-black flex items-center justify-center text-white/20">Loading Mission Data...</div>}>
+                        <AboutSection />
+                    </Suspense>
                 </section>
                 <section id="skills" ref={skillsRef} className="min-h-screen relative">
-                    <SkillsSection />
+                    <Suspense fallback={<div className="h-screen bg-black" />}>
+                        <SkillsSection />
+                    </Suspense>
                 </section>
                 <section id="projects" ref={projectsRef}>
-                    <ProjectsSection />
+                    <Suspense fallback={<div className="h-screen bg-black" />}>
+                        <ProjectsSection />
+                    </Suspense>
                 </section>
                 <section id="contact" ref={contactRef}>
-                    <ContactSection />
+                    <Suspense fallback={<div className="h-screen bg-black" />}>
+                        <ContactSection />
+                    </Suspense>
                 </section>
             </main>
 
-            <Footer />
+            <Suspense fallback={null}>
+                <Footer />
+            </Suspense>
         </div>
     );
 };

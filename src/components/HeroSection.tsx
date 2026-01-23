@@ -1,40 +1,47 @@
 import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { Stars } from './stars/Stars';
 import BlackHole from './stars/BlackHole';
 import SpaceDust from './stars/SpaceDust';
-import { OrbitControls } from '@react-three/drei';
+
+const AutoRotator = () => {
+    useFrame((state) => {
+        // Slowly rotate the camera around the center
+        const t = state.clock.getElapsedTime() * 0.05;
+        // Adjust radius based on screen width - push back on mobile to fit screen
+        const isMobile = window.innerWidth < 768;
+        const radius = isMobile ? 14 : 12; // Mobile radius 14 (closer/larger)
+
+        state.camera.position.x = Math.sin(t) * radius;
+        state.camera.position.z = Math.cos(t) * radius;
+        state.camera.lookAt(0, 0, 0);
+    });
+    return null;
+};
 
 export const HeroSection: React.FC = () => (
-    <>
-        <Canvas camera={{ position: [0, 2, 12], fov: 45 }}>
+    <div className="relative w-full h-screen overflow-hidden">
+        <Canvas className="pointer-events-none" camera={{ position: [0, 2, 12], fov: 45 }}>
             <Suspense fallback={null}>
                 <color attach="background" args={['#000000']} />
 
                 {/* Visual Effects */}
                 <BlackHole />
-                <SpaceDust count={8000} />
+                <SpaceDust count={5000} />
                 <Stars />
 
                 {/* Lighting */}
                 <ambientLight intensity={0.5} />
 
-                {/* Camera Controls - restricted for cinematic feel */}
-                <OrbitControls
-                    enableZoom={false}
-                    enablePan={false}
-                    autoRotate
-                    autoRotateSpeed={0.5}
-                    maxPolarAngle={Math.PI / 1.5}
-                    minPolarAngle={Math.PI / 3}
-                />
+                {/* Auto Rotation - Non-interactive */}
+                <AutoRotator />
             </Suspense>
         </Canvas>
 
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center z-10 pointer-events-none">
+        <div className="absolute inset-0 flex flex-col justify-center items-center text-center z-10 pointer-events-none px-4">
             {/* Minimal Text Container */}
             <div className="pointer-events-auto">
-                <h1 className="text-7xl md:text-9xl font-bold text-white tracking-tighter mb-2 drop-shadow-2xl opacity-90 mix-blend-overlay">
+                <h1 className="text-6xl md:text-9xl font-bold text-white tracking-tighter mb-2 drop-shadow-2xl opacity-90 mix-blend-overlay">
                     SHREEHARSH
                 </h1>
                 <h2 className="text-4xl md:text-6xl font-light text-orange-100/80 tracking-[0.2em] mb-12 uppercase mix-blend-screen">
@@ -55,5 +62,5 @@ export const HeroSection: React.FC = () => (
                 </div>
             </div>
         </div>
-    </>
+    </div>
 );

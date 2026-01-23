@@ -3,18 +3,12 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
 interface NebulaProps {
-    color1?: string;
-    color2?: string;
     scale?: number;
-    speed?: number;
     opacity?: number;
 }
 
 export const Nebula: React.FC<NebulaProps> = ({
-    color1 = "#020617",
-    color2 = "#0f172a",
     scale = 20,
-    speed = 1,
     opacity = 0.5
 }) => {
     const nebulaRef = useRef<THREE.Mesh>(null);
