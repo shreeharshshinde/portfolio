@@ -16,7 +16,7 @@ export function AboutSection() {
       role: "OPEN SOURCE",
       subtitle: "CONTRIBUTOR",
       icon: <Globe className="w-5 h-5" />,
-      technologies: ["Maplibre GL JS", "Astropy", "OpenStreetMap"]
+      technologies: ["Maplibre GL JS", "KubeFlow", "Astropy", "CNCF"]
     },
     {
       role: "FULL STACK",
