@@ -9,7 +9,7 @@ const SkillsSection = React.lazy(() => import('./components/skills/SkillSelectio
 const ProjectsSection = React.lazy(() => import('./components/ProjectSection').then(module => ({ default: module.ProjectsSection })));
 const ContactSection = React.lazy(() => import('./components/ContactSection').then(module => ({ default: module.ContactSection })));
 const Footer = React.lazy(() => import('./components/Footer').then(module => ({ default: module.Footer })));
-
+const AnalyticsDashboard = React.lazy(() => import('./components/analytics/AnalyticsDashboard').then(module => ({ default: module.AnalyticsDashboard })));
 
 export interface NavLink {
     id: string;
@@ -20,6 +20,7 @@ export interface NavLink {
 const App: React.FC = () => {
     const [activeSection, setActiveSection] = useState<string>('home');
     const [isLoading, setIsLoading] = useState(true);
+    const [currentView, setCurrentView] = useState<'main' | 'analytics'>('main');
 
     const homeRef = useRef<HTMLDivElement>(null);
     const aboutRef = useRef<HTMLDivElement>(null);
@@ -54,6 +55,13 @@ const App: React.FC = () => {
         };
 
         window.addEventListener('scroll', handleManualScroll);
+        
+        const queryParams = new URLSearchParams(window.location.search);
+        if (queryParams.get('view') === 'analytics' || window.location.pathname === '/analytics') {
+            setCurrentView('analytics');
+            setIsLoading(false);
+        }
+
         return () => window.removeEventListener('scroll', handleManualScroll);
     }, []);
 
@@ -81,6 +89,14 @@ const App: React.FC = () => {
 
     if (isLoading) {
         return <LoadingScreen onComplete={handleLoadingComplete} />;
+    }
+
+    if (currentView === 'analytics') {
+        return (
+            <Suspense fallback={<div className="h-screen bg-[#050505] flex items-center justify-center font-mono text-orange-500 animate-pulse tracking-widest text-xs">INITIALIZING...</div>}>
+                <AnalyticsDashboard />
+            </Suspense>
+        );
     }
 
     return (

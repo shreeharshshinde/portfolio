@@ -1,34 +1,17 @@
 import { Eye } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import { trackVisit } from '../lib/analytics';
 
 export const ViewsCounter: React.FC = () => {
     const [views, setViews] = useState<number | null>(null);
 
     useEffect(() => {
-        const fetchViews = async () => {
-            try {
-                // Fetch to counterapi.dev to increment and get the current view count
-                const namespace = 'shreeharsh_portfolio';
-                const name = 'global_views';
-                const response = await fetch(`https://api.counterapi.dev/v1/${namespace}/${name}/up`);
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setViews(data.count);
-                    localStorage.setItem('cached_portfolio_views', data.count.toString());
-                } else {
-                    throw new Error('API request failed');
-                }
-            } catch (error) {
-                console.warn("Could not fetch global views. Falling back to local cache.");
-                const cached = localStorage.getItem('cached_portfolio_views');
-                const nextCount = cached ? parseInt(cached) + 1 : 1337; // cool starting number if no data
-                setViews(nextCount);
-                localStorage.setItem('cached_portfolio_views', nextCount.toString());
-            }
+        const initializeTracking = async () => {
+            const count = await trackVisit();
+            setViews(count);
         };
 
-        fetchViews();
+        initializeTracking();
     }, []);
 
     return (
