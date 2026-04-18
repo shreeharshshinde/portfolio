@@ -43,21 +43,24 @@ export const ViewsCounter: React.FC = () => {
             <div className="absolute top-0 left-0 w-1 h-1 bg-white/50 group-hover:bg-orange-400/80 transition-colors"></div>
             <div className="absolute bottom-0 right-0 w-1 h-1 bg-white/50 group-hover:bg-orange-400/80 transition-colors"></div>
 
-            <div className="relative z-10 flex items-center gap-3 px-3 py-1.5 bg-black/60 backdrop-blur-sm rounded-sm">
+            <div className="relative z-10 flex items-center gap-3 px-3 py-1.5 bg-[#0a0a0a]/80 backdrop-blur-md rounded-sm border border-orange-500/20 shadow-[inset_0_0_10px_rgba(0,0,0,0.8)]">
                 <div className="flex items-center justify-center relative">
                     {views === null ? (
-                        <div className="w-3 h-3 border-2 border-orange-500/30 border-t-orange-400 rounded-full animate-spin"></div>
+                        <div className="w-4 h-4 border-2 border-orange-500/30 border-t-orange-400 rounded-full animate-spin"></div>
                     ) : (
-                        <Eye size={14} className="text-orange-400 group-hover:text-orange-300 transition-colors drop-shadow-[0_0_2px_rgba(249,115,22,0.8)]" />
+                        <Eye size={18} className="text-orange-400 group-hover:text-orange-300 transition-colors drop-shadow-[0_0_5px_rgba(249,115,22,1)]" />
                     )}
                 </div>
 
-                <div className="flex flex-col">
-                    <span className="text-[8px] tracking-[0.2em] text-white/40 uppercase leading-none mb-1 group-hover:text-white/60 transition-colors">
-                        VISITORS
-                    </span>
-                    <span className="text-xs font-mono text-white font-bold leading-none tracking-wider group-hover:text-orange-100 transition-colors">
-                        {views === null ? '----' : views.toLocaleString().padStart(6, '0')}
+                <div className="flex items-center justify-center pt-0.5">
+                    <span 
+                        className="text-lg text-orange-400 leading-none tracking-[0.15em] transition-all duration-300 pointer-events-none select-none"
+                        style={{ 
+                            fontFamily: '"Share Tech Mono", monospace',
+                            textShadow: '0 0 5px rgba(249,115,22,0.8), 0 0 10px rgba(249,115,22,0.6)' 
+                        }}
+                    >
+                        {views === null ? '------' : views.toString().padStart(6, '0')}
                     </span>
                 </div>
             </div>
