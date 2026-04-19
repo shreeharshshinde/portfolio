@@ -1,6 +1,7 @@
 # Shreeharsh Shinde - Personal Portfolio
 
-<img width="2838" height="1586" alt="image" src="https://github.com/user-attachments/assets/cd0b7a46-0472-4805-9620-c17751422808" />
+<img alt="image" src="https://github.com/user-attachments/assets/ed1c28e9-a497-4db6-8d56-e82d4127c194" />
+
 <img width="2793" height="1555" alt="image" src="https://github.com/user-attachments/assets/fc66758a-963a-43e5-8e62-5e37664ce2ab" />
 
 
