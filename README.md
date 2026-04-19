@@ -2,7 +2,8 @@
 
 <img alt="image" src="https://github.com/user-attachments/assets/ed1c28e9-a497-4db6-8d56-e82d4127c194" />
 
-<img width="2793" height="1555" alt="image" src="https://github.com/user-attachments/assets/fc66758a-963a-43e5-8e62-5e37664ce2ab" />
+<img alt="image" src="https://github.com/user-attachments/assets/cc953c84-1a3a-465a-8590-c4efb1ffcf16" />
+
 
 
 Welcome to the source code for my personal portfolio website. This project is a showcase of my skills in modern front-end development, featuring a clean design, smooth animations, and interactive 3D elements.
