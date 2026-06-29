@@ -1,8 +1,8 @@
-import React, { Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Stars } from './stars/Stars';
+import React, { Suspense } from 'react';
 import BlackHole from './stars/BlackHole';
 import SpaceDust from './stars/SpaceDust';
+import { Stars } from './stars/Stars';
 
 const AutoRotator = () => {
     useFrame((state) => {
@@ -27,7 +27,7 @@ export const HeroSection: React.FC = () => (
 
                 {/* Visual Effects */}
                 <BlackHole />
-                <SpaceDust count={8000} />
+                <SpaceDust count={20000} />
                 <Stars />
 
                 {/* Lighting */}
