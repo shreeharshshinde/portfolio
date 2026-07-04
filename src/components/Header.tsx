@@ -3,6 +3,7 @@ import type { RefObject } from 'react';
 import type { NavLink } from '../App';
 import logo from '/assets/articuno.png'
 import { Menu, X } from 'lucide-react';
+import { ViewsCounter } from './ViewsCounter';
 
 interface HeaderProps {
     navLinks: NavLink[];
@@ -65,48 +66,52 @@ export const Header: React.FC<HeaderProps> = ({ navLinks, activeSection, setActi
                     </div>
                 </div>
 
-                {/* Desktop Navigation - HUD Style */}
-                <nav className="hidden md:flex items-center gap-1">
-                    {navLinks.map((link) => (
-                        <button
-                            key={link.id}
-                            onClick={() => handleNavClick(link)}
-                            className={`relative px-5 py-2 text-xs font-medium tracking-[0.2em] uppercase transition-all duration-300 group overflow-hidden ${activeSection === link.id
-                                ? 'text-orange-400'
-                                : 'text-white/60 hover:text-white'
-                                }`}
-                        >
-                            <span className="relative z-10 flex items-center gap-2">
-                                {activeSection === link.id && <span className="text-[10px] animate-pulse">►</span>}
-                                {link.title}
-                            </span>
+                <div className="flex items-center gap-4">
+                    {/* Desktop Navigation - HUD Style */}
+                    <nav className="hidden md:flex items-center gap-1">
+                        {navLinks.map((link) => (
+                            <button
+                                key={link.id}
+                                onClick={() => handleNavClick(link)}
+                                className={`relative px-5 py-2 text-xs font-medium tracking-[0.2em] uppercase transition-all duration-300 group overflow-hidden ${activeSection === link.id
+                                    ? 'text-orange-400'
+                                    : 'text-white/60 hover:text-white'
+                                    }`}
+                            >
+                                <span className="relative z-10 flex items-center gap-2">
+                                    {activeSection === link.id && <span className="text-[10px] animate-pulse">►</span>}
+                                    {link.title}
+                                </span>
 
-                            {/* Hover/Active Background Effect */}
-                            <div className={`absolute inset-0 bg-white/5 transform transition-transform duration-300 origin-left ${activeSection === link.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                                }`}></div>
+                                {/* Hover/Active Background Effect */}
+                                <div className={`absolute inset-0 bg-white/5 transform transition-transform duration-300 origin-left ${activeSection === link.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                                    }`}></div>
 
-                            {/* Bottom Border Accent */}
-                            <div className={`absolute bottom-0 left-0 h-[1px] bg-orange-500/50 transition-all duration-300 ${activeSection === link.id ? 'w-full' : 'w-0 group-hover:w-full'
-                                }`}></div>
-                        </button>
-                    ))}
+                                {/* Bottom Border Accent */}
+                                <div className={`absolute bottom-0 left-0 h-[1px] bg-orange-500/50 transition-all duration-300 ${activeSection === link.id ? 'w-full' : 'w-0 group-hover:w-full'
+                                    }`}></div>
+                            </button>
+                        ))}
 
-                    {/* Trailing Decoration */}
-                    <div className="w-12 h-px bg-gradient-to-r from-white/20 to-transparent ml-4"></div>
-                </nav>
+                        {/* Trailing Decoration */}
+                        <div className="w-12 h-px bg-gradient-to-r from-white/20 to-transparent ml-4 hidden md:block"></div>
+                    </nav>
 
-                {/* Mobile Menu Button - Sci-Fi Trigger */}
-                <button
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="md:hidden relative w-10 h-10 flex items-center justify-center border border-white/20 rounded-sm hover:bg-white/5 transition-colors"
-                >
-                    {isMobileMenuOpen ? <X size={20} className="text-orange-400" /> : <Menu size={20} className="text-white/80" />}
-                    {/* Corner ticks */}
-                    <div className="absolute top-0 left-0 w-0.5 h-0.5 bg-white/50"></div>
-                    <div className="absolute top-0 right-0 w-0.5 h-0.5 bg-white/50"></div>
-                    <div className="absolute bottom-0 left-0 w-0.5 h-0.5 bg-white/50"></div>
-                    <div className="absolute bottom-0 right-0 w-0.5 h-0.5 bg-white/50"></div>
-                </button>
+                    <ViewsCounter />
+
+                    {/* Mobile Menu Button - Sci-Fi Trigger */}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        className="md:hidden relative w-10 h-10 flex items-center justify-center border border-white/20 rounded-sm hover:bg-white/5 transition-colors"
+                    >
+                        {isMobileMenuOpen ? <X size={20} className="text-orange-400" /> : <Menu size={20} className="text-white/80" />}
+                        {/* Corner ticks */}
+                        <div className="absolute top-0 left-0 w-0.5 h-0.5 bg-white/50"></div>
+                        <div className="absolute top-0 right-0 w-0.5 h-0.5 bg-white/50"></div>
+                        <div className="absolute bottom-0 left-0 w-0.5 h-0.5 bg-white/50"></div>
+                        <div className="absolute bottom-0 right-0 w-0.5 h-0.5 bg-white/50"></div>
+                    </button>
+                </div>
             </div>
 
             {/* Mobile Menu - Data Panel Slide Down */}
