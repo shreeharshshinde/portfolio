@@ -1,4 +1,3 @@
-import image from '/assets/self.jpg';
 import { Terminal, Cpu, Globe, Database } from 'lucide-react';
 
 // AboutSection.tsx
@@ -75,7 +74,7 @@ export function AboutSection() {
                   <div className="relative w-48 h-48 mb-6 group-hover:scale-105 transition-transform duration-500">
                     <div className="absolute inset-0 rounded-full border-2 border-orange-500/30 border-dashed animate-spin-slow"></div>
                     <div className="w-full h-full rounded-full overflow-hidden border-2 border-white/20">
-                      <img src={image} alt="Profile" className="w-full h-full object-cover filter sepia-[0.4] contrast-125 hover:filter-none transition-all duration-500" />
+                      <img src="/assets/self.png" alt="Profile" className="w-full h-full object-cover filter sepia-[0.4] contrast-125 hover:filter-none transition-all duration-500" />
                     </div>
                   </div>
 
