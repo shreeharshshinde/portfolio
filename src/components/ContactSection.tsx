@@ -84,7 +84,7 @@ export const ContactSection: React.FC = () => {
           <Suspense fallback={null}>
             <BlackHoleGLB />
           </Suspense>
-          <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.8} />
+          <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} autoRotate autoRotateSpeed={0.8} />
         </Canvas>
       </div>
 
