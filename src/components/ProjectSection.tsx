@@ -65,12 +65,13 @@ export const ProjectsSection: React.FC = () => {
                     {projects.map((project, index) => {
                         const Icon = project.icon;
                         const isHovered = hoveredIndex === index;
+                        const t = project.theme;
 
                         return (
                             <div
                                 key={index}
                                 ref={(el) => { cardRefs.current[index] = el; }}
-                                className={`group relative bg-black/40 backdrop-blur-sm border border-white/5 overflow-hidden transition-all duration-300 ${isHovered ? 'border-orange-500/40 shadow-[0_0_30px_rgba(249,115,22,0.15)]' : ''}`}
+                                className={`group relative bg-black/40 backdrop-blur-sm border border-white/5 overflow-hidden transition-all duration-300 ${isHovered ? `${t.cardBorderHover} ${t.cardShadowHover}` : ''}`}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
                                 onClick={() => setHoveredIndex(hoveredIndex === index ? null : index)}
@@ -81,7 +82,7 @@ export const ProjectsSection: React.FC = () => {
                                 {/* Header Bar */}
                                 <div className="bg-white/5 border-b border-white/5 p-4 flex justify-between items-center relative">
                                     <div className="flex items-center gap-3">
-                                        <div className={`p-1.5 rounded-sm ${isHovered ? 'bg-orange-500/20 text-orange-400' : 'bg-white/5 text-gray-500'} transition-colors`}>
+                                        <div className={`p-1.5 rounded-sm ${isHovered ? t.iconBgText : 'bg-white/5 text-gray-500'} transition-colors`}>
                                             <Icon size={20} />
                                         </div>
                                         <span className="text-xs tracking-widest text-gray-400 uppercase">FILE_0{index + 1}</span>
@@ -89,25 +90,25 @@ export const ProjectsSection: React.FC = () => {
                                     <div className="flex gap-1">
                                         <div className="w-2 h-2 rounded-full bg-red-500/20"></div>
                                         <div className="w-2 h-2 rounded-full bg-yellow-500/20"></div>
-                                        <div className={`w-2 h-2 rounded-full ${isHovered ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]' : 'bg-green-500/20'} transition-all`}></div>
+                                        <div className={`w-2 h-2 rounded-full ${isHovered ? t.ledGlow : 'bg-green-500/20'} transition-all`}></div>
                                     </div>
 
-                                    {/* Animated bar on hvoer */}
-                                    <div className={`absolute bottom-0 left-0 h-0.5 bg-orange-500 transition-all duration-500 ${isHovered ? 'w-full' : 'w-0'}`}></div>
+                                    {/* Animated bar on hover */}
+                                    <div className={`absolute bottom-0 left-0 h-0.5 ${t.barBg} transition-all duration-500 ${isHovered ? 'w-full' : 'w-0'}`}></div>
                                 </div>
 
                                 {/* Content */}
                                 <div className="p-8 relative">
                                     <div className="mb-6">
-                                        <span className={`inline-block px-2 py-0.5 text-[10px] tracking-wider border ${isHovered ? 'border-orange-500 text-orange-400' : 'border-gray-700 text-gray-600'} transition-colors mb-4`}>
+                                        <span className={`inline-block px-2 py-0.5 text-[10px] tracking-wider border ${isHovered ? t.categoryBadge : 'border-gray-700 text-gray-600'} transition-colors mb-4`}>
                                             {project.category.toUpperCase()}
                                         </span>
-                                        <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-orange-200 transition-colors uppercase tracking-tight">
+                                        <h3 className={`text-2xl font-bold text-white mb-2 ${t.titleHover} transition-colors uppercase tracking-tight`}>
                                             {project.title}
                                         </h3>
                                     </div>
 
-                                    <p className="text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/10 pl-4">
+                                    <p className={`text-gray-400 text-sm leading-relaxed mb-8 border-l-2 border-white/10 ${t.descBorderHover} pl-4 transition-colors`}>
                                         {project.description}
                                     </p>
 
@@ -118,7 +119,7 @@ export const ProjectsSection: React.FC = () => {
                                         </div>
                                         <div className="flex flex-wrap gap-2">
                                             {project.technologies.map((tech, i) => (
-                                                <span key={i} className="text-xs bg-white/5 px-2 py-1 text-gray-400 border border-transparent group-hover:border-orange-500/20 transition-colors">
+                                                <span key={i} className={`text-xs bg-white/5 px-2 py-1 text-gray-400 border border-transparent ${t.techBorderHover} transition-colors`}>
                                                     {tech}
                                                 </span>
                                             ))}
@@ -128,7 +129,7 @@ export const ProjectsSection: React.FC = () => {
                                     {/* Footer Link */}
                                     <div className="pt-6 border-t border-white/5 flex justify-between items-center">
                                         <span className="text-[10px] text-gray-600 tracking-widest">SECURE CONNECTION</span>
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-orange-400 text-xs font-bold tracking-wider hover:text-white transition-colors group/link">
+                                        <a href={project.link} target="_blank" rel="noopener noreferrer" className={`flex items-center gap-2 ${t.linkText} text-xs font-bold tracking-wider transition-colors group/link`}>
                                             ACCESS REPO <ExternalLink size={12} className="group-hover/link:translate-x-1 transition-transform" />
                                         </a>
                                     </div>
