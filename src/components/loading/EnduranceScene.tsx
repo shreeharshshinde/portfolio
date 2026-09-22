@@ -19,8 +19,8 @@ export const EnduranceScene: React.FC = () => {
 
         // Stars rotation - slow majestic background movement
         if (starsRef.current) {
-            starsRef.current.rotation.y = time * 0.2; // Rotate stars slowly
-            starsRef.current.rotation.x = time * 0.06; // Slight tilt rotation
+            starsRef.current.rotation.y = time * 0.5; // Rotate stars noticeably
+            starsRef.current.rotation.x = time * 0.15; // Slight tilt rotation
         }
 
         // Endurance movement
@@ -65,9 +65,9 @@ export const EnduranceScene: React.FC = () => {
             <directionalLight position={[10, 10, 5]} intensity={2} color="#ffaa88" />
             <directionalLight position={[-10, 0, -5]} intensity={0.5} color="#4455ff" />
 
-            {/* Rotating Starfield */}
+            {/* Rotating Starfield - Brighter and faster */}
             <group ref={starsRef}>
-                <Stars radius={100} depth={50} count={10000} factor={4} saturation={0} fade speed={1} />
+                <Stars radius={100} depth={50} count={10000} factor={10} saturation={0} fade speed={3} />
             </group>
 
 
