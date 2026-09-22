@@ -6,6 +6,7 @@ import { Stars } from '@react-three/drei';
 import { Nebula } from '../stars/Nebula';
 import { CosmicParticles } from '../stars/CosmicParticles';
 import { DeepSpace9 } from './ScifiTower';
+// import { Gyroscope } from './Gyroscope';
 
 
 
@@ -113,18 +114,9 @@ const BaseHexPlate: React.FC = () => {
         }
     });
 
-    // Helper for hexagonal segments
-    const HexSegment = ({ radius, width, color, opacity = 1, transparent = false }: any) => (
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-            <ringGeometry args={[radius, radius + width, 6]} />
-            <meshBasicMaterial
-                color={color}
-                side={THREE.DoubleSide}
-                transparent={transparent}
-                opacity={opacity}
-            />
-        </mesh>
-    );
+
+
+
 
     return (
         <group ref={groupRef} position={[0, -2, 0]}>
@@ -204,11 +196,10 @@ const BaseHexPlate: React.FC = () => {
                 </mesh>
             </group>
 
-            {/* 6. INNER ENERGY RINGS */}
-            <group ref={innerRingRef} position={[0, 0.3, 0]}>
-                <HexSegment radius={10} width={0.2} color="#00f3ff" transparent opacity={0.6} />
-                <HexSegment radius={14} width={0.1} color="#3b82f6" transparent opacity={0.4} />
-            </group>
+            {/* 6. GYROSCOPE RINGS (Core Reactor) */}
+            {/* <group position={[0, 4, 0]}>
+                <Gyroscope />
+            </group> */}
 
             {/* Vertical Pillars connecting layers */}
             {[0, 60, 120, 180, 240, 300].map((angle, i) => (
