@@ -73,28 +73,6 @@ const HolographicGrid: React.FC = () => {
     );
 };
 
-// Orbiting ring around the scene center
-const OrbitalRing: React.FC<{ color: string; radius: number; speed: number; tilt: number }> = ({
-    color,
-    radius,
-    speed,
-    tilt,
-}) => {
-    const ringRef = useRef<THREE.Mesh>(null);
-
-    useFrame((state) => {
-        if (ringRef.current) {
-            ringRef.current.rotation.z = state.clock.getElapsedTime() * speed;
-        }
-    });
-
-    return (
-        <mesh ref={ringRef} rotation={[tilt, 0, 0]}>
-            <torusGeometry args={[radius, 0.012, 8, 120]} />
-            <meshBasicMaterial color={new THREE.Color(color)} transparent opacity={0.3} />
-        </mesh>
-    );
-};
 
 export const ProjectSceneBackground: React.FC<{ accentColor: string }> = ({ accentColor }) => {
     return (
@@ -108,10 +86,6 @@ export const ProjectSceneBackground: React.FC<{ accentColor: string }> = ({ acce
 
             <FloatingParticles />
             <HolographicGrid />
-
-            <OrbitalRing color={accentColor} radius={8} speed={0.12} tilt={Math.PI / 4} />
-            <OrbitalRing color={accentColor} radius={5.5} speed={-0.18} tilt={Math.PI / 3} />
-            <OrbitalRing color="#ffffff" radius={11} speed={0.07} tilt={Math.PI / 6} />
         </>
     );
 };
