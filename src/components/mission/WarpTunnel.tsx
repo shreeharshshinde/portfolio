@@ -21,14 +21,27 @@ export const WarpTunnel: React.FC<WarpTunnelProps> = ({ active }) => {
     }, []);
 
     useFrame((_, delta) => {
-        if (!active || !linesRef.current) return;
-        progressRef.current = Math.min(progressRef.current + delta * 0.6, 1);
+        if (!linesRef.current) return;
+        
+        if (active) {
+            // Fade in and accelerate
+            progressRef.current = Math.min(progressRef.current + delta * 1.5, 1);
+        } else {
+            // Fade out smoothly when inactive
+            progressRef.current = Math.max(progressRef.current - delta * 1.5, 0);
+        }
+
+        if (progressRef.current === 0 && !active) return; // Completely faded out
 
         linesRef.current.children.forEach((child, i) => {
             const streak = streaks[i];
             if (!streak) return;
             const mesh = child as THREE.Mesh;
-            mesh.position.z += streak.speed * delta * 60 * progressRef.current;
+            
+            // Speed up slightly as we exit warp
+            const currentSpeed = active ? streak.speed : streak.speed * 1.5;
+            
+            mesh.position.z += currentSpeed * delta * 60;
             if (mesh.position.z > 40) {
                 mesh.position.z -= 80;
             }
