@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
-import { Html, OrbitControls, Float } from '@react-three/drei';
+import { Html, OrbitControls, Float, Environment } from '@react-three/drei';
 import { ArrowLeft, ExternalLink, Activity, Terminal, ShieldAlert, Cpu } from 'lucide-react';
 import { projects } from '../../data/projects';
 import { ProjectSceneBackground } from './ProjectSceneBackground';
@@ -72,6 +72,9 @@ export const ProjectCanvas: React.FC = () => {
             {/* Canvas Scene */}
             <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>
                 <Suspense fallback={null}>
+                    {/* Environment map is critical for realistic glass reflections */}
+                    <Environment preset="city" />
+
                     {/* Background & Warp */}
                     <ProjectSceneBackground accentColor={project.gradient.includes('cyan') ? '#22d3ee' : project.gradient.includes('orange') ? '#f97316' : '#84cc16'} />
                     <WarpTunnel active={warping} />

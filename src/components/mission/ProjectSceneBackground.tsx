@@ -77,9 +77,9 @@ const HolographicGrid: React.FC = () => {
 export const ProjectSceneBackground: React.FC<{ accentColor: string }> = ({ accentColor }) => {
     return (
         <>
-            <ambientLight intensity={0.1} />
-            <pointLight position={[0, 5, 0]} intensity={2} color={accentColor} distance={30} />
-            <pointLight position={[15, -5, -10]} intensity={0.5} color="#4455ff" distance={50} />
+            <ambientLight intensity={0.5} />
+            <pointLight position={[0, 5, 0]} intensity={3} color={accentColor} distance={30} />
+            <pointLight position={[15, -5, -10]} intensity={1} color="#4455ff" distance={50} />
 
             {/* Starfield */}
             <Stars radius={120} depth={60} count={8000} factor={6} saturation={0} fade speed={1} />
