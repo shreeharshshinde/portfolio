@@ -6,6 +6,8 @@ import { ArrowLeft, ExternalLink, Activity, Terminal, ShieldAlert, Cpu } from 'l
 import { projects } from '../../data/projects';
 import { ProjectSceneBackground } from './ProjectSceneBackground';
 import { WarpTunnel } from './WarpTunnel';
+import { ProjectText } from './ProjectText';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
 
 export const ProjectCanvas: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
@@ -37,8 +39,15 @@ export const ProjectCanvas: React.FC = () => {
         );
     }
 
-    const accentColor = project.theme.barBg.match(/rgba\\((.*?)\\)/)?.[0] || "#ffffff";
-    const baseColor = project.gradient.split('-')[1] || "cyan";
+    const getAccentColor = (title: string) => {
+        const t = title.toLowerCase();
+        if (t === 'tileguard') return '#84cc16'; // Neon Lime Green
+        if (t === 'orion') return '#22d3ee';     // Cyan
+        if (t === 'inspectai') return '#f97316'; // Orange
+        return '#ffffff';
+    };
+    
+    const accentColor = getAccentColor(project.title);
 
     return (
         <div className="relative h-screen w-screen bg-black overflow-hidden select-none">
@@ -67,8 +76,10 @@ export const ProjectCanvas: React.FC = () => {
                     <ProjectSceneBackground accentColor={project.gradient.includes('cyan') ? '#22d3ee' : project.gradient.includes('orange') ? '#f97316' : '#84cc16'} />
                     <WarpTunnel active={warping} />
 
-                    {/* Main UI Panels - Hidden while warping */}
-                    {/* {!warping && ( ... )} (Cards removed as per user request to leave empty space) */}
+                    {/* Custom Project Visuals */}
+                    {!warping && (
+                        <ProjectText title={project.title} color={accentColor} />
+                    )}
                 </Suspense>
                 
                 {/* Free camera rotation */}
@@ -80,6 +91,7 @@ export const ProjectCanvas: React.FC = () => {
                     autoRotate={!warping}
                     autoRotateSpeed={0.5}
                 />
+
             </Canvas>
 
             {/* Warping Fullscreen Overlay Effect (White flash) */}
