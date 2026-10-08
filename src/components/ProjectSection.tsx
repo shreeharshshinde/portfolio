@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { projects } from '../data/projects';
 import { Github, ExternalLink, Database, FolderOpen, Terminal } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export const ProjectsSection: React.FC = () => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -74,14 +76,20 @@ export const ProjectsSection: React.FC = () => {
                             <div
                                 key={index}
                                 ref={(el) => { cardRefs.current[index] = el; }}
-                                className={`group flex flex-col relative bg-zinc-950/80 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden transition-all duration-500 ${
+                                className={`group flex flex-col relative bg-zinc-950/80 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden transition-all duration-500 cursor-pointer ${
                                     isHovered 
                                         ? `${t.cardBorderHover} ${t.cardShadowHover} -translate-y-2` 
                                         : 'hover:border-white/20'
                                 }`}
                                 onMouseEnter={() => setHoveredIndex(index)}
                                 onMouseLeave={() => setHoveredIndex(null)}
-                                onClick={() => setHoveredIndex(hoveredIndex === index ? null : index)}
+                                onClick={() => {
+                                    if (window.innerWidth < 768 && hoveredIndex !== index) {
+                                        setHoveredIndex(index);
+                                    } else {
+                                        navigate(`/mission/${project.title.toLowerCase().replace(/\\s+/g, '-')}`);
+                                    }
+                                }}
                             >
                                 {/* Dynamic Gradient Mesh Background on Hover */}
                                 <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-b ${t.bgMeshHover}`}></div>
@@ -152,6 +160,7 @@ export const ProjectsSection: React.FC = () => {
                                             href={project.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
                                             className={`group/btn flex items-center gap-2 px-3.5 py-1.5 rounded-md text-xs font-bold tracking-wider border transition-all duration-300 ${t.buttonStyle}`}
                                         >
                                             <span>ACCESS REPO</span> 

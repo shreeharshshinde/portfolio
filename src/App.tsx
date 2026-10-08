@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, Suspense, type RefObject } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { LoadingScreen } from './components/loading/LoadingScreen';
@@ -9,7 +10,7 @@ const SkillsSection = React.lazy(() => import('./components/skills/SkillSelectio
 const ProjectsSection = React.lazy(() => import('./components/ProjectSection').then(module => ({ default: module.ProjectsSection })));
 const ContactSection = React.lazy(() => import('./components/ContactSection').then(module => ({ default: module.ContactSection })));
 const Footer = React.lazy(() => import('./components/Footer').then(module => ({ default: module.Footer })));
-
+const ProjectCanvas = React.lazy(() => import('./components/mission/ProjectCanvas').then(module => ({ default: module.ProjectCanvas })));
 
 export interface NavLink {
     id: string;
@@ -17,10 +18,9 @@ export interface NavLink {
     ref: RefObject<HTMLDivElement | null>;
 }
 
-const App: React.FC = () => {
+const PortfolioHome: React.FC = () => {
     const [activeSection, setActiveSection] = useState<string>('home');
-    const [isLoading, setIsLoading] = useState(true);
-
+    
     const homeRef = useRef<HTMLDivElement>(null);
     const aboutRef = useRef<HTMLDivElement>(null);
     const skillsRef = useRef<HTMLDivElement>(null);
@@ -57,31 +57,10 @@ const App: React.FC = () => {
         return () => window.removeEventListener('scroll', handleManualScroll);
     }, []);
 
-    const handleLoadingComplete = (audio: HTMLAudioElement | null) => {
-        setIsLoading(false);
-        // "After some given seconds slowly fades away"
-        if (audio) {
-            // Keep playing for 5 seconds to overlap with Hero section
-            setTimeout(() => {
-                // Start fade out
-                const fadeInterval = setInterval(() => {
-                    if (audio.volume > 0.05) {
-                        // Decrease volume gradually
-                        audio.volume = Math.max(0, audio.volume - 0.05);
-                    } else {
-                        // Cleanup
-                        audio.volume = 0;
-                        audio.pause();
-                        clearInterval(fadeInterval);
-                    }
-                }, 1000); // 200ms * 16 steps (0.8 -> 0) is approx 3.2 seconds fade
-            }, 5000);
-        }
-    };
-
-    if (isLoading) {
-        return <LoadingScreen onComplete={handleLoadingComplete} />;
-    }
+    // Scroll to top on mount if returning from project
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <div className="bg-gray-950 text-white font-sans antialiased">
@@ -116,6 +95,50 @@ const App: React.FC = () => {
                 <Footer />
             </Suspense>
         </div>
+    );
+};
+
+const App: React.FC = () => {
+    const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.pathname !== '/') {
+            navigate('/');
+        }
+    }, []); // Run only once on mount
+
+    const handleLoadingComplete = (audio: HTMLAudioElement | null) => {
+        setIsLoading(false);
+        if (audio) {
+            setTimeout(() => {
+                const fadeInterval = setInterval(() => {
+                    if (audio.volume > 0.05) {
+                        audio.volume = Math.max(0, audio.volume - 0.05);
+                    } else {
+                        audio.volume = 0;
+                        audio.pause();
+                        clearInterval(fadeInterval);
+                    }
+                }, 1000);
+            }, 5000);
+        }
+    };
+
+    if (isLoading) {
+        return <LoadingScreen onComplete={handleLoadingComplete} />;
+    }
+
+    return (
+        <Routes>
+            <Route path="/" element={<PortfolioHome />} />
+            <Route path="/mission/:slug" element={
+                <Suspense fallback={<div className="h-screen w-screen bg-black" />}>
+                    <ProjectCanvas />
+                </Suspense>
+            } />
+        </Routes>
     );
 };
 
