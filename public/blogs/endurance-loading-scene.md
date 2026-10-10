@@ -1,6 +1,11 @@
-# Building the Endurance Loading Scene
-
-*Transmission Date: 2026.10.10*
+---
+title: "Building the Endurance Loading Scene"
+subtitle: "A deep dive into utilizing Three.js and React Three Fiber to create a cinematic loading sequence."
+date: "Oct 10, 2026"
+author: "Shreeharsh Shinde"
+readTime: "4 min read"
+heroImage: "/blogs/images/endurance_hero.png"
+---
 
 The first impression of a portfolio is crucial. I wanted the loading screen to be an immersive experience rather than a standard spinner. By utilizing Three.js and React Three Fiber, I created a cinematic gravity-assist maneuver inspired by the movie Interstellar.
 

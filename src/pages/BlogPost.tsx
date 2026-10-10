@@ -1,10 +1,7 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Header';
-import { Canvas } from '@react-three/fiber';
-import { Stars } from '../components/stars/Stars';
-import SpaceDust from '../components/stars/SpaceDust';
 
 const blogNavLinks = [
     { id: 'home', title: 'Home' },
@@ -15,10 +12,20 @@ const blogNavLinks = [
     { id: 'blogs', title: 'Blogs', path: '/blogs' },
 ];
 
+interface FrontMatter {
+    title: string;
+    subtitle?: string;
+    date: string;
+    author: string;
+    readTime: string;
+    heroImage?: string;
+}
+
 const BlogPost: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const [content, setContent] = useState<string>('');
+    const [meta, setMeta] = useState<FrontMatter | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
 
@@ -31,7 +38,26 @@ const BlogPost: React.FC = () => {
                 return response.text();
             })
             .then((text) => {
-                setContent(text);
+                // Parse YAML Frontmatter
+                const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+                const match = text.match(frontmatterRegex);
+                let contentBody = text;
+                let parsedMeta: any = null;
+
+                if (match) {
+                    contentBody = text.replace(frontmatterRegex, '').trim();
+                    const yamlLines = match[1].split('\n');
+                    parsedMeta = {} as any;
+                    yamlLines.forEach(line => {
+                        const [key, ...valueParts] = line.split(':');
+                        if (key && valueParts.length > 0) {
+                            parsedMeta[key.trim()] = valueParts.join(':').trim().replace(/^"|"$/g, '');
+                        }
+                    });
+                }
+
+                setContent(contentBody);
+                setMeta(parsedMeta);
                 setLoading(false);
             })
             .catch(() => {
@@ -42,59 +68,110 @@ const BlogPost: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center text-orange-400 font-mono text-sm tracking-[0.2em] uppercase">
-                <span className="animate-pulse">Decrypting Transmission...</span>
+            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white/50 font-sans text-sm tracking-widest uppercase">
+                <span className="animate-pulse">Loading story...</span>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="min-h-screen bg-gray-950 flex flex-col items-center justify-center text-red-500 font-mono text-sm tracking-[0.2em] uppercase">
-                <p className="mb-4">ERROR: Transmission not found or corrupted.</p>
-                <button onClick={() => navigate('/blogs')} className="text-white hover:text-orange-400 border border-white/20 hover:border-orange-500/50 px-6 py-2 transition-colors">
-                    Return to Archive
+            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-red-500 font-sans">
+                <p className="mb-4">ERROR: Story not found.</p>
+                <button onClick={() => navigate('/blogs')} className="text-white hover:text-gray-300 underline underline-offset-4">
+                    Return to archive
                 </button>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-950 text-white font-sans antialiased relative overflow-hidden">
+        <div className="min-h-screen bg-black text-white antialiased">
             <Header navLinks={blogNavLinks} activeSection="blogs" />
-
-            {/* Immersive 3D Background */}
-            <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
-                <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>
-                    <Suspense fallback={null}>
-                        <color attach="background" args={['#000000']} />
-                        <Stars />
-                        <SpaceDust count={3000} />
-                        <ambientLight intensity={0.2} />
-                    </Suspense>
-                </Canvas>
-            </div>
             
-            <div className="container mx-auto px-6 pt-32 pb-32 relative z-10 max-w-4xl">
-                {/* Navigation Back */}
-                <button 
-                    onClick={() => navigate('/blogs')}
-                    className="mb-12 text-xs font-mono text-orange-400 hover:text-orange-300 uppercase tracking-widest flex items-center gap-2 group transition-colors"
-                >
-                    <span className="transform group-hover:-translate-x-1 transition-transform">←</span> Back to Archive
-                </button>
+            <main className="pt-32 pb-32">
+                <article className="mx-auto max-w-5xl px-6">
+                    {/* Navigation Back */}
+                    <button 
+                        onClick={() => navigate('/blogs')}
+                        className="mb-10 text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-2 group font-sans"
+                    >
+                        <span className="transform group-hover:-translate-x-1 transition-transform">←</span> Back to blogs
+                    </button>
 
-                {/* Markdown Content rendered via Tailwind Typography */}
-                <article className="prose prose-invert prose-orange lg:prose-xl max-w-none bg-black/60 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-sm shadow-2xl relative">
-                    {/* Decorative Top Line */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500/0 via-orange-500/50 to-orange-500/0"></div>
-                    
-                    <ReactMarkdown>{content}</ReactMarkdown>
+                    {/* Medium-style Header */}
+                    {meta && (
+                        <header className="mb-12">
+                            <h1 className="text-4xl md:text-[42px] font-bold tracking-tight text-gray-100 leading-tight mb-4" style={{ fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
+                                {meta.title}
+                            </h1>
+                            {meta.subtitle && (
+                                <h2 className="text-xl md:text-2xl text-gray-400 mb-8 font-light" style={{ fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
+                                    {meta.subtitle}
+                                </h2>
+                            )}
+                            
+                            <div className="flex items-center gap-4 mb-8">
+                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white font-bold text-lg border border-gray-800">
+                                    {meta.author ? meta.author.charAt(0) : '?'}
+                                </div>
+                                <div className="flex flex-col font-sans">
+                                    <span className="text-gray-200 font-medium">{meta.author || 'Unknown'}</span>
+                                    <div className="text-sm text-gray-500 flex items-center gap-2">
+                                        <span>{meta.readTime}</span>
+                                        <span>·</span>
+                                        <span>{meta.date}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </header>
+                    )}
+
+                    {/* Hero Image */}
+                    {meta?.heroImage && (
+                        <div className="mb-12 w-full">
+                            <img 
+                                src={meta.heroImage} 
+                                alt={meta.title} 
+                                className="w-full h-auto object-cover rounded-sm border border-gray-900" 
+                            />
+                        </div>
+                    )}
+
+                    {/* Markdown Content - Medium Typography Style */}
+                    <div 
+                        className="prose prose-invert prose-lg max-w-none text-gray-300 leading-relaxed"
+                        style={{ 
+                            fontFamily: 'Charter, "Bitstream Charter", Georgia, Cambria, "Times New Roman", Times, serif',
+                            fontSize: '21px',
+                            lineHeight: '1.58',
+                            letterSpacing: '-0.003em'
+                        }}
+                    >
+                        <style>
+                            {`
+                                .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+                                    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+                                    color: #f3f4f6;
+                                    font-weight: 700;
+                                    letter-spacing: -0.02em;
+                                    margin-top: 2em;
+                                    margin-bottom: 0.5em;
+                                }
+                                .prose h2 { font-size: 26px; }
+                                .prose h3 { font-size: 22px; }
+                                .prose p { margin-bottom: 2em; color: rgba(255, 255, 255, 0.84); }
+                                .prose a { color: #fff; text-decoration-color: #fff; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+                                .prose pre { background-color: #111; border: 1px solid #222; border-radius: 4px; padding: 1.5em; }
+                                .prose code { color: #e5e7eb; background-color: #1f2937; padding: 0.2em 0.4em; border-radius: 3px; font-size: 0.85em; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+                                .prose pre code { background-color: transparent; padding: 0; }
+                                .prose strong { color: #f9fafb; font-weight: 600; }
+                            `}
+                        </style>
+                        <ReactMarkdown>{content}</ReactMarkdown>
+                    </div>
                 </article>
-            </div>
-            
-            {/* Scanlines Overlay */}
-            <div className="fixed inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.02)_50%),linear-gradient(90deg,rgba(255,0,0,0.01),rgba(0,255,0,0.01),rgba(0,0,255,0.01))] bg-[length:100%_4px,3px_100%] opacity-20 z-50"></div>
+            </main>
         </div>
     );
 };
