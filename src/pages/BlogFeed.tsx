@@ -26,7 +26,7 @@ const BlogFeed: React.FC = () => {
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <Canvas camera={{ position: [0, 0, 15], fov: 45 }}>
                     <Suspense fallback={null}>
-                        <color attach="background" args={['#020617']} />
+                        <color attach="background" args={['#000000']} />
                         <Stars />
                         <SpaceDust count={5000} />
                         <ambientLight intensity={0.5} />
