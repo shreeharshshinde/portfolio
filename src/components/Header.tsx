@@ -3,13 +3,13 @@ import type { RefObject } from 'react';
 import type { NavLink } from '../pages/Home';
 import logo from '/assets/articuno.png'
 import { Menu, X } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 interface HeaderProps {
     navLinks: NavLink[];
-    activeSection: string;
-    setActiveSection: (id: string) => void;
-    onScroll: (ref: RefObject<HTMLDivElement | null>) => void;
+    activeSection?: string;
+    setActiveSection?: (id: string) => void;
+    onScroll?: (ref: RefObject<HTMLDivElement | null>) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ navLinks, activeSection, setActiveSection, onScroll }) => {
@@ -25,13 +25,20 @@ export const Header: React.FC<HeaderProps> = ({ navLinks, activeSection, setActi
     }, []);
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleNavClick = (link: NavLink) => {
         if (link.path) {
             navigate(link.path);
-        } else if (link.ref) {
-            setActiveSection(link.id);
-            onScroll(link.ref);
+        } else {
+            if (location.pathname !== '/') {
+                // If we are not on the home page, navigate to the home page with the section hash
+                navigate(`/#${link.id}`);
+            } else if (link.ref && setActiveSection && onScroll) {
+                // We are on the home page, use smooth scroll refs
+                setActiveSection(link.id);
+                onScroll(link.ref);
+            }
         }
         setIsMobileMenuOpen(false);
     };

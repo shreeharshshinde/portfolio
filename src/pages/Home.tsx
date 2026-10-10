@@ -59,6 +59,19 @@ const Home: React.FC = () => {
         return () => window.removeEventListener('scroll', handleManualScroll);
     }, []);
 
+    useEffect(() => {
+        if (window.location.hash) {
+            const id = window.location.hash.substring(1);
+            // Give time for layout/lazy components
+            setTimeout(() => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 300);
+        }
+    }, []);
+
     const handleLoadingComplete = (audio: HTMLAudioElement | null) => {
         setIsLoading(false);
         // "After some given seconds slowly fades away"
