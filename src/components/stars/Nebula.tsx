@@ -48,6 +48,7 @@ export const Nebula: React.FC<NebulaProps> = ({
             uniform vec3 color3;
             uniform vec3 color4;
             uniform vec3 color5;
+            uniform float uOpacity;
             varying vec2 vUv;
             varying vec3 vNormal;
             varying vec3 vPosition;

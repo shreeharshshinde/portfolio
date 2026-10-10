@@ -7,7 +7,7 @@ import type { Points as PointsType } from 'three';
 export const Stars: React.FC = (props) => {
     const ref = useRef<PointsType>(null);
     const [sphere] = useState<Float32Array>(() => {
-        const result = inSphere(new Float32Array(5000), { radius: 1.5 });
+        const result = inSphere(new Float32Array(5001), { radius: 1.5 });
         return result instanceof Float32Array ? result : new Float32Array(result);
     });
 
