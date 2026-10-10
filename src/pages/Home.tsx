@@ -18,9 +18,11 @@ export interface NavLink {
     path?: string;
 }
 
+let hasCompletedInitialLoad = false;
+
 const Home: React.FC = () => {
     const [activeSection, setActiveSection] = useState<string>('home');
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(!hasCompletedInitialLoad);
 
     const homeRef = useRef<HTMLDivElement>(null);
     const aboutRef = useRef<HTMLDivElement>(null);
@@ -74,6 +76,7 @@ const Home: React.FC = () => {
 
     const handleLoadingComplete = (audio: HTMLAudioElement | null) => {
         setIsLoading(false);
+        hasCompletedInitialLoad = true;
         // "After some given seconds slowly fades away"
         if (audio) {
             // Keep playing for 5 seconds to overlap with Hero section
