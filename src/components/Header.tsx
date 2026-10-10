@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import type { RefObject } from 'react';
-import type { NavLink } from '../App';
+import type { NavLink } from '../pages/Home';
 import logo from '/assets/articuno.png'
 import { Menu, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
     navLinks: NavLink[];
@@ -23,9 +24,15 @@ export const Header: React.FC<HeaderProps> = ({ navLinks, activeSection, setActi
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    const navigate = useNavigate();
+
     const handleNavClick = (link: NavLink) => {
-        setActiveSection(link.id);
-        onScroll(link.ref);
+        if (link.path) {
+            navigate(link.path);
+        } else if (link.ref) {
+            setActiveSection(link.id);
+            onScroll(link.ref);
+        }
         setIsMobileMenuOpen(false);
     };
 
@@ -43,7 +50,7 @@ export const Header: React.FC<HeaderProps> = ({ navLinks, activeSection, setActi
                 <div className="absolute top-0 right-0 w-8 h-px bg-white/30"></div>
 
                 {/* Logo/Brand - Sci-Fi Designation style */}
-                <div className="flex items-center gap-4 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                <div className="flex items-center gap-4 group cursor-pointer" onClick={() => navigate('/')}>
                     <div className="relative w-10 h-10 overflow-hidden border border-white/20 rounded-sm group-hover:border-orange-500/50 transition-colors duration-300">
                         <div className="absolute inset-0 bg-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <img
