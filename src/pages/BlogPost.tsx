@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Header';
+import { CodeBlock } from '../components/blog/CodeBlock';
 
 const blogNavLinks = [
     { id: 'home', title: 'Home' },
@@ -162,13 +163,43 @@ const BlogPost: React.FC = () => {
                                 .prose h3 { font-size: 22px; }
                                 .prose p { margin-bottom: 2em; color: rgba(255, 255, 255, 0.84); }
                                 .prose a { color: #fff; text-decoration-color: #fff; text-decoration-thickness: 1px; text-underline-offset: 2px; }
-                                .prose pre { background-color: #111; border: 1px solid #222; border-radius: 4px; padding: 1.5em; }
-                                .prose code { color: #e5e7eb; background-color: #1f2937; padding: 0.2em 0.4em; border-radius: 3px; font-size: 0.85em; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-                                .prose pre code { background-color: transparent; padding: 0; }
+                                .prose pre { background: transparent !important; border: none !important; padding: 0 !important; margin: 0 !important; }
+                                .prose code::before, .prose code::after { content: "" !important; }
                                 .prose strong { color: #f9fafb; font-weight: 600; }
                             `}
                         </style>
-                        <ReactMarkdown>{content}</ReactMarkdown>
+                        <ReactMarkdown
+                            components={{
+                                pre({ children }) {
+                                    return <>{children}</>;
+                                },
+                                code({ className, children, ...props }) {
+                                    const match = /language-(\w+)/.exec(className || '');
+                                    const rawCode = String(children);
+                                    const isCodeBlock = Boolean(match || rawCode.includes('\n'));
+
+                                    if (isCodeBlock) {
+                                        return (
+                                            <CodeBlock
+                                                language={match ? match[1] : undefined}
+                                                value={rawCode.replace(/\n$/, '')}
+                                            />
+                                        );
+                                    }
+
+                                    return (
+                                        <code
+                                            className="bg-zinc-800/80 text-orange-200 border border-white/10 px-1.5 py-0.5 rounded font-mono text-[0.85em] inline-block font-normal align-middle"
+                                            {...props}
+                                        >
+                                            {children}
+                                        </code>
+                                    );
+                                }
+                            }}
+                        >
+                            {content}
+                        </ReactMarkdown>
                     </div>
                 </article>
             </main>
