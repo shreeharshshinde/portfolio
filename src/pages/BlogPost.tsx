@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Header } from '../components/Header';
 import { CodeBlock } from '../components/blog/CodeBlock';
+import { BlueGlitterBackground } from '../components/blog/BlueGlitterBackground';
 
 const blogNavLinks = [
     { id: 'home', title: 'Home' },
@@ -69,17 +70,19 @@ const BlogPost: React.FC = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white/50 font-sans text-sm tracking-widest uppercase">
-                <span className="animate-pulse">Loading story...</span>
+            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-white/50 font-sans text-sm tracking-widest uppercase relative overflow-hidden">
+                <BlueGlitterBackground count={1800} opacity={0.6} />
+                <span className="animate-pulse relative z-10 tracking-[0.25em]">Loading story...</span>
             </div>
         );
     }
 
     if (error) {
         return (
-            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-red-500 font-sans">
-                <p className="mb-4">ERROR: Story not found.</p>
-                <button onClick={() => navigate('/blogs')} className="text-white hover:text-gray-300 underline underline-offset-4">
+            <div className="min-h-screen bg-black flex flex-col items-center justify-center text-red-500 font-sans relative overflow-hidden">
+                <BlueGlitterBackground count={1200} opacity={0.3} />
+                <p className="mb-4 relative z-10">ERROR: Story not found.</p>
+                <button onClick={() => navigate('/blogs')} className="text-white hover:text-gray-300 underline underline-offset-4 relative z-10">
                     Return to archive
                 </button>
             </div>
@@ -87,10 +90,13 @@ const BlogPost: React.FC = () => {
     }
 
     return (
-        <div className="min-h-screen bg-black text-white antialiased">
+        <div className="min-h-screen bg-black text-white antialiased relative selection:bg-cyan-500/30 selection:text-cyan-100">
+            {/* Blue Glitter Shaders Background */}
+            <BlueGlitterBackground count={3000} opacity={1.0} />
+
             <Header navLinks={blogNavLinks} activeSection="blogs" />
             
-            <main className="pt-32 pb-32">
+            <main className="pt-32 pb-32 relative z-10">
                 <article className="mx-auto max-w-5xl px-6">
                     {/* Navigation Back */}
                     <button 
