@@ -1219,3 +1219,419 @@ Week 4 — Optimization & export:
 
 > [!TIP]
 > **The single most important tip:** Export to Three.js after every single modeling session. Seeing your work in the browser — in context, with lighting — tells you more than staring at it in Blender viewport ever will. The real-time feedback loop will make you a better modeler faster than any tutorial.
+
+---
+
+## 🎨 2D Anime Animation — Tools & Breathing Effects Guide
+
+> [!IMPORTANT]
+> Blender is not just a 3D tool — it has a **full 2D anime animation system called Grease Pencil** built in. The breathing technique *visual effects* (flame spirals, water trails, wind slashes) are achievable without any character drawing skill. Full character animation is a separate, harder challenge.
+
+---
+
+### 🎬 How ufotable Actually Makes Demon Slayer
+
+Understanding the real pipeline helps you decide what to replicate:
+
+```
+ufotable's Production Pipeline:
+  Step 1: 3D geometry (Maya) → Toon Shader → looks like 2D anime
+  Step 2: Traditional 2D key frame animation composited on top
+  Step 3: Breathing effects added in After Effects / compositing
+           → These are largely abstract geometry: spirals, streaks, patterns
+  Step 4: Color grading + film grain added
+  Step 5: Final composite → the anime you see
+
+Key insight: The breathing EFFECTS (water ripples, flame spirals, wind slashes)
+are NOT character animation — they're abstract geometric shape animation.
+This is the achievable part for the portfolio.
+```
+
+---
+
+### 🛠️ Tool Comparison — 2D Anime Animation
+
+| Tool | Cost | Best For | Web Export | Difficulty |
+|---|---|---|---|---|
+| **Blender Grease Pencil** | Free | Breathing effects, abstract animation | PNG sequence → sprite sheet | ⭐⭐ |
+| **OpenToonz** | Free | Full frame-by-frame anime animation | PNG sequence | ⭐⭐⭐ |
+| **Spine** | $69 one-time | Skeletal character rigging | JSON → Three.js runtime | ⭐⭐⭐ |
+| **Live2D Cubism** | Free tier | VTuber-style rigged illustration | Web SDK | ⭐⭐⭐⭐ |
+| **Clip Studio Paint** | ~$50 | Drawing + frame animation | PNG sequence | ⭐⭐ (drawing skill needed) |
+| **CSS + Canvas (code)** | Free | Geometric breathing effects | Native web | ⭐ |
+| **After Effects** | Subscription | Compositing + effects (like ufotable) | Lottie JSON | ⭐⭐⭐ |
+
+---
+
+### 🟠 Blender Grease Pencil — Complete Guide for Breathing Effects
+
+> [!NOTE]
+> Grease Pencil is activated by creating a new file → choosing "2D Animation" template in Blender. Everything else in Blender still works alongside it.
+
+#### Setup
+```
+1. Open Blender → Splash screen → "2D Animation" template
+2. You'll see a 2D canvas in the viewport
+3. The "Draw" tool is active by default (pencil icon)
+4. Set canvas size: Output Properties → Resolution → 1920×1080, 24fps
+
+Key Grease Pencil modes:
+  Draw Mode   → paint strokes (like drawing on paper)
+  Edit Mode   → adjust stroke shape and points
+  Sculpt Mode → push/pull strokes to reshape
+  Object Mode → animate the whole object
+```
+
+#### Render Setup for Transparent Export
+```
+Output Properties:
+  → File Format: PNG
+  → Color: RGBA (the A = transparency channel)
+  → Output path: //frames/frame_#### (saves numbered frames)
+
+Render Properties:
+  → Engine: EEVEE
+  → Background: Film → Transparent ✅ (removes black background)
+
+This gives you transparent frames — the effect floats over anything
+```
+
+---
+
+### 🔥 Breathing Effect — Flame (Rengoku)
+
+**What it looks like:** Spiraling orange-red flame ribbons, rising upward, with bright golden core and darkening edges.
+
+```
+STROKE 1 — Main flame spiral:
+1. Draw Mode → select Pencil brush
+2. Draw a loose S-curve stroke going upward
+   → Starts thick at bottom, tapers to thin at top
+3. Material: bright orange #FF4500
+   → Enable "Use Lights" OFF (cel look, no shading)
+   → Stroke color: #FF4500, Fill: none
+
+STROKE 2 — Inner glow core:
+4. Draw a thinner stroke along same path, slightly offset
+5. Material: bright yellow-white #FFE040
+   → This creates the bright inner edge of flame
+
+STROKE 3 — Outer smoke wisps:
+6. Draw 3-4 looser, more chaotic strokes around the main one
+7. Material: dark red #8B0000, opacity 0.4
+
+ANIMATION (24 frames loop):
+8. Frame 1: draw strokes in starting position
+9. Frame 6: Select all strokes → G + Z → move up slightly + rotate 5°
+10. Frame 12: Move up more + rotate 10° + scale slightly larger
+11. Frame 18: Continue spiral — strokes reach top of screen
+12. Frame 24: Fade out (opacity keyframe → 0) + new strokes appear at bottom
+
+Modifier to add:
+  → Noise modifier (Grease Pencil modifier panel)
+  → Factor: 0.05 on position → adds organic flame movement
+  → Animated: keyframe the noise offset to make it flow upward
+```
+
+**Result:** Spiraling flame that continuously rises and rotates.
+
+---
+
+### 💧 Breathing Effect — Water (Tomioka)
+
+**What it looks like:** Flowing blue ribbons that curve and ripple like actual water waves, with transparent aqua centers.
+
+```
+SETUP — Wave shape:
+1. Draw Mode → draw a horizontal sine wave stroke
+   → Start wide at left, flow right with natural curve
+   → Multiple overlapping waves at slightly different heights
+
+MATERIALS:
+  Outer ribbon: deep blue #0044AA, opacity 0.9
+  Inner shimmer: bright cyan #00CFFF, opacity 0.7, width 0.4x of outer
+  Foam edge: white #FFFFFF, opacity 0.3, very thin
+
+ANIMATION (30 frame loop — water is slower than flame):
+  Frame 1: strokes in starting position (flowing right)
+  Frame 15: Strokes shifted right by half their length (wave travels)
+  Frame 30: Back to start (seamless loop)
+
+  KEY TRICK: Use "Follow Path" → make strokes follow a curved Bezier curve
+  → The curve itself animates (moves right)
+  → Strokes appear to flow along it
+
+Modifier:
+  → Smooth modifier: Factor 0.5 → softens stroke edges = water looks smooth
+  → Thickness modifier: animate thickness fluctuating slightly = water pressure
+
+TRANSPARENCY:
+  → Enable "Blend Mode: Alpha" on the water material
+  → The center of each wave is more transparent than edges
+  → Matches the anime's semi-transparent water look
+```
+
+---
+
+### 💨 Breathing Effect — Wind (Shinazugawa)
+
+**What it looks like:** Sharp diagonal green-white slashes, fast and jagged, with motion blur streaks.
+
+```
+Wind is the most aggressive — sharp, fast, diagonal
+
+STROKES — Slash marks:
+1. Draw straight diagonal lines at 45° angle (top-left to bottom-right)
+2. Very sharp, thin strokes — no waviness
+3. Vary length: mix short (30% screen) and long (80% screen) slashes
+4. Cluster 5-7 slashes close together, slight angle variation
+
+MATERIALS:
+  Primary slash: bright green-white #98FF98, high opacity 0.95
+  Motion trail: white #FFFFFF, very thin, opacity 0.3, offset slightly
+  Edge darkening: dark green #006600, on outer edge only
+
+ANIMATION (12 frame loop — wind is the fastest):
+  Frame 1: Slashes appear (opacity 0 → 1 in 2 frames)
+  Frame 6: Slashes travel across screen diagonally
+  Frame 8: New slashes enter from opposite side
+  Frame 12: First set exits, seamless
+
+SPEED TRICK:
+  → Duplicate the slash layer
+  → Offset it by 3 frames
+  → This creates the "multiple slashes at once" feel
+
+Motion blur (fake it in Grease Pencil):
+  → Add a "ghost" copy of each slash, slightly lighter, offset backward in direction of travel
+  → Makes it look like it's moving incredibly fast
+```
+
+---
+
+### 🌊 Breathing Effect — Sound (Uzui)
+
+**What it looks like:** Expanding circular rings (like sound waves), gold and pink, with geometric diamond shapes at the peaks.
+
+```
+SOUND is unique — it's circular/radial, not linear
+
+MAIN RINGS:
+1. Add → Circle (in Draw Mode, hold Shift to draw perfect circle)
+2. Draw 3 concentric circles, starting small, expanding outward
+3. Materials:
+   Gold ring:   #FFD700, thick stroke
+   Pink ring:   #FF69B4, medium stroke
+   White pulse: #FFFFFF, thin, innermost
+
+ANIMATION (18 frame loop):
+  Frame 1: Tiny circles at center point
+  Frame 18: Circles expanded to fill screen + faded out (scale keyframe + opacity)
+
+  → This creates the "ring expanding outward from impact point" effect
+
+DIAMONDS:
+  At 8 equally spaced points around the largest ring:
+  → Draw small diamond shapes
+  → Animate: appear at frame 6, disappear at frame 16
+  → Slight rotation animation on each diamond
+
+REPEAT:
+  → Stagger 3 sets of this animation, each offset by 6 frames
+  → Gives constant pulsing rings
+```
+
+---
+
+### 🌫️ Breathing Effect — Mist (Tokito)
+
+**What it looks like:** Soft, blurry light blue wisps that drift slowly and fade in and out, barely visible, dreamlike.
+
+```
+Mist is the subtlest effect — more about absence than presence
+
+STROKES — Wisp shapes:
+1. Use the "Airbrush" type in Grease Pencil (not Pencil)
+   → This creates soft, fuzzy strokes with no hard edge
+2. Draw loose, cloud-like shapes — no specific form needed
+3. Overlap many strokes to build up soft density
+
+MATERIAL:
+  Color: ice blue #B0E0FF
+  Opacity: 0.15 (very transparent — mist barely visible)
+  Blend Mode: Add (makes overlapping areas brighter)
+
+ANIMATION (60 frame loop — mist is the slowest):
+  Frame 1–20:  Wisps drift slowly upward (G + Z, tiny amount)
+  Frame 20–40: Wisps drift slightly right
+  Frame 40–60: Wisps fade (opacity → 0) while new wisps fade in (opacity 0 → 0.15)
+
+BLUR POST-EFFECT:
+  In compositing: Add → Filter → Blur → Gaussian Blur, radius 8
+  → Makes mist look genuinely soft and atmospheric
+  → This is what separates mist from all other breathing styles
+```
+
+---
+
+### 🪨 Breathing Effect — Stone (Himejima)
+
+**What it looks like:** Slow, massive ground cracks expanding outward, dark rocks floating up, then a single devastating burst of light.
+
+```
+Stone is the most dramatic — slow build, sudden explosion
+
+GROUND CRACKS:
+1. Draw jagged lightning-bolt shapes radiating outward from center
+2. Make them look like cracking rock — irregular, angular
+3. Materials:
+   Crack lines: near-black #0A0808
+   Glowing edges: warm white #FFF8E0, very thin, on crack edges
+
+ANIMATION (48 frame loop — stone is slowest):
+  Frame 1–20: Cracks slowly expand outward (scale from center)
+  Frame 20–35: Floating debris — small dot strokes rise upward
+  Frame 36–40: FLASH — white overlay at full opacity (the decisive blow)
+  Frame 41–48: Everything fades to black, loop resets
+
+DEBRIS (floating rock particles):
+  → Draw 15-20 small irregular polygon shapes
+  → Scatter them around crack points
+  → Animate each rising at slightly different speeds
+  → Rotate slightly as they rise
+
+THE FLASH:
+  Frame 36: Add a white rectangle covering full canvas, opacity 0
+  Frame 37: Opacity → 1 (instant flash)
+  Frame 40: Opacity → 0 (flash disappears)
+  → This is the "decisive moment" of Stone Breathing — pure impact
+```
+
+---
+
+### 📤 Exporting Grease Pencil to Web (Sprite Sheet Pipeline)
+
+```
+Step 1 — Render frames:
+  Render → Render Animation (Ctrl+F12)
+  → Outputs PNG sequence to your set output folder
+  → e.g. frame_0001.png, frame_0002.png ... frame_0024.png
+
+Step 2 — Create sprite sheet:
+  Tool: TexturePacker (free version) OR free web tool: css.spritegen.com
+  → Import all frames
+  → Set layout: Horizontal strip
+  → Output: one PNG + CSS or JSON
+
+  OR manually in Photoshop/GIMP:
+  → New canvas: (frame_width × num_frames) × frame_height
+  → Paste each frame side by side
+
+Step 3 — Use in browser (CSS):
+```
+
+```css
+/* 24-frame, 1920px wide sprite sheet, each frame 80×80px */
+.flame-effect {
+    width: 80px;
+    height: 80px;
+    background-image: url('/assets/textures/flame_breathing.png');
+    background-repeat: no-repeat;
+    animation: play-flame 1s steps(24) infinite;
+}
+
+@keyframes play-flame {
+    from { background-position: 0 0; }
+    to   { background-position: -1920px 0; }  /* 24 frames × 80px */
+}
+```
+
+```
+Step 4 — Use in Canvas (JavaScript) for more control:
+```
+
+```typescript
+// Sprite sheet player — works inside Three.js canvas overlay too
+class SpritePlayer {
+    img: HTMLImageElement;
+    frameW: number;
+    frameH: number;
+    totalFrames: number;
+    currentFrame = 0;
+    fps: number;
+
+    constructor(src: string, frameW: number, frameH: number, totalFrames: number, fps = 24) {
+        this.img = new Image();
+        this.img.src = src;
+        this.frameW = frameW;
+        this.frameH = frameH;
+        this.totalFrames = totalFrames;
+        this.fps = fps;
+    }
+
+    draw(ctx: CanvasRenderingContext2D, x: number, y: number) {
+        ctx.drawImage(
+            this.img,
+            this.currentFrame * this.frameW, 0,  // source x, y
+            this.frameW, this.frameH,             // source width, height
+            x, y,                                 // dest x, y
+            this.frameW, this.frameH              // dest width, height
+        );
+        this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
+    }
+}
+```
+
+---
+
+### 🎯 Decision Framework — Which Approach to Use
+
+```
+For BREATHING EFFECTS in loading screen:
+  ✅ Blender Grease Pencil → sprite sheet → CSS animation
+     Best visual quality, matches anime style most closely
+     Extra work upfront but zero compromise on look
+
+  ✅ CSS + Canvas (pure code)
+     Faster to build, no Blender needed
+     Geometric abstraction — still looks great
+     Flame as CSS gradient animation, water as SVG path animation
+
+For HASHIRA CHARACTERS (if you want them):
+  ✅ Spine — rig existing artwork
+     Requires drawing the character first (Clip Studio Paint)
+     Best web integration — exports to Three.js runtime directly
+     
+  ✅ Silhouette approach (no drawing needed)
+     Pure CSS black shape + breathing color glow behind it
+     Simplest, works with name card approach we confirmed
+
+For CASTLE SCENE ATMOSPHERE:
+  ✅ Blender Grease Pencil overlaid as texture
+     Draw wisteria petals, smoke wisps as 2D
+     Export as looping video/sprite → apply as Three.js texture
+     Adds 2D anime feel to the 3D scene
+
+RECOMMENDED BUILD ORDER:
+  Phase 1: CSS + Canvas breathing effects (fast, good quality)
+  Phase 2: Replace with Grease Pencil sprite sheets as you create them
+  → This way loading screen works immediately, improves over time
+```
+
+---
+
+### 🎓 Grease Pencil Learning Resources
+
+| Resource | What to Learn |
+|---|---|
+| **Blender Guru — Grease Pencil intro** | Basic strokes, materials, animation |
+| **Daniel Martinez Lara** (YouTube) | Anime-style Grease Pencil animation (industry professional) |
+| **BCON talks — "Drawing in 3D"** | Advanced Grease Pencil techniques |
+| **Blender Docs → Grease Pencil** | Complete modifier reference |
+| **r/GreasePencil** | Community, help, examples |
+
+> [!TIP]
+> Search YouTube: **"Grease Pencil anime effect tutorial"** — there are specific tutorials for recreating anime breathing-style effects. These are the most directly applicable to what you need.
+
+> [!NOTE]
+> The breathing effects are the **most achievable** part. You don't need to draw Rengoku himself — just his flame spiral pattern. That's pure abstract shape animation which Grease Pencil handles brilliantly with zero character drawing skill required.
