@@ -1,13 +1,303 @@
+@import "tailwindcss";
+
+/* ─── Google Fonts are loaded in index.html ──────────────────────────────────
+   Cinzel        → ceremonial titles, ENTER tile, section headers
+   Noto Serif JP → Hashira kanji names, Japanese text
+   Inter         → body text, descriptions, UI labels
+   ──────────────────────────────────────────────────────────────────────────── */
+
+/* ─── CSS Custom Properties — Design Tokens ─────────────────────────────────── */
+:root {
+    /* Fonts */
+    --font-title:   'Cinzel', serif;
+    --font-jp:      'Noto Serif JP', serif;
+    --font-body:    'Inter', sans-serif;
+
+    /* Core Palette */
+    --color-void:       #000000;
+    --color-void-deep:  #030008;
+    --color-fog:        #0D0020;
+    --color-surface:    #0A0A0F;
+    --color-border:     rgba(255, 255, 255, 0.08);
+    --color-border-glow:rgba(255, 255, 255, 0.25);
+
+    /* Text */
+    --color-text:        #FFFFFF;
+    --color-text-muted:  rgba(255, 255, 255, 0.45);
+    --color-text-subtle: rgba(255, 255, 255, 0.20);
+
+    /* Wing accent colors (updated via JS as user scrolls) */
+    --wing-accent:  #4400AA;
+    --wing-glow:    rgba(68, 0, 170, 0.35);
+    --wing-fog:     #000005;
+
+    /* Hashira breathing colors — set dynamically */
+    --hashira-primary: #FF4500;
+    --hashira-accent:  #FFD700;
+
+    /* Timing */
+    --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-expo:   cubic-bezier(0.7, 0, 0.84, 0);
+    --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+    --duration-fast:  150ms;
+    --duration-base:  300ms;
+    --duration-slow:  600ms;
+    --duration-cinematic: 1200ms;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────────────── */
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html, body, #root {
-    width: 100%;
-    height: 100%;
-    background: #000000;
-    color: #ffffff;
+html {
+    scroll-behavior: auto; /* GSAP ScrollTrigger manages scrolling */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background: var(--color-void);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-weight: 300;
     overflow-x: hidden;
+    /* Height will be set by GSAP pin spacer */
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ─── Typography ─────────────────────────────────────────────────────────────── */
+.font-title  { font-family: var(--font-title); }
+.font-jp     { font-family: var(--font-jp); }
+.font-body   { font-family: var(--font-body); }
+
+/* Cinzel display sizes */
+.text-display-xl { font-family: var(--font-title); font-size: clamp(3rem, 8vw, 7rem); font-weight: 900; letter-spacing: 0.15em; line-height: 1; }
+.text-display-lg { font-family: var(--font-title); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; letter-spacing: 0.12em; }
+.text-display-md { font-family: var(--font-title); font-size: clamp(1.25rem, 3vw, 2.5rem); font-weight: 400; letter-spacing: 0.1em; }
+
+/* Japanese text */
+.text-jp-xl { font-family: var(--font-jp); font-size: clamp(2rem, 6vw, 5rem); font-weight: 700; }
+.text-jp-lg { font-family: var(--font-jp); font-size: clamp(1.5rem, 4vw, 3rem); font-weight: 400; }
+.text-jp-sm { font-family: var(--font-jp); font-size: 0.9rem; font-weight: 300; letter-spacing: 0.08em; }
+
+/* ─── Layout Primitives ──────────────────────────────────────────────────────── */
+
+/* The main 3D canvas — fixed, full screen, behind everything */
+.canvas-root {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+/* UI overlays sit above the canvas */
+.ui-layer {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.ui-layer > * {
+    pointer-events: auto;
+}
+
+/* Full-screen section panel */
+.scene-panel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ─── Glass / Surface Components ─────────────────────────────────────────────── */
+
+.glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px) saturate(1.5);
+    -webkit-backdrop-filter: blur(12px) saturate(1.5);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+}
+
+.glass-dark {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--color-border);
+}
+
+.glass-accent {
+    background: rgba(68, 0, 170, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(68, 0, 170, 0.3);
+}
+
+/* ─── Glow Effects ───────────────────────────────────────────────────────────── */
+
+.glow-text {
+    text-shadow:
+        0 0 20px var(--wing-accent),
+        0 0 40px var(--wing-accent),
+        0 0 80px rgba(255, 255, 255, 0.1);
+}
+
+.glow-border {
+    box-shadow:
+        0 0 0 1px var(--wing-accent),
+        0 0 20px var(--wing-glow),
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.glow-soft {
+    filter: drop-shadow(0 0 8px var(--wing-accent));
+}
+
+/* ─── Breathing Animations ────────────────────────────────────────────────────── */
+
+/* Base pulse — used by all breathing techniques */
+@keyframes breathe {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50%       { opacity: 1;   transform: scale(1.04); }
+}
+
+@keyframes breathe-glow {
+    0%, 100% { filter: drop-shadow(0 0 4px var(--hashira-primary)); }
+    50%       { filter: drop-shadow(0 0 20px var(--hashira-primary)) drop-shadow(0 0 40px var(--hashira-accent)); }
+}
+
+/* Flame — rapid flicker */
+@keyframes flame-flicker {
+    0%   { transform: scaleY(1)    rotate(-1deg); opacity: 0.9; }
+    25%  { transform: scaleY(1.05) rotate(1deg);  opacity: 1; }
+    50%  { transform: scaleY(0.97) rotate(0deg);  opacity: 0.85; }
+    75%  { transform: scaleY(1.03) rotate(-0.5deg); opacity: 0.95; }
+    100% { transform: scaleY(1)    rotate(1deg);  opacity: 0.9; }
+}
+
+/* Water — smooth undulation */
+@keyframes water-flow {
+    0%   { transform: translateY(0) scaleX(1); }
+    33%  { transform: translateY(-3px) scaleX(1.02); }
+    66%  { transform: translateY(2px) scaleX(0.98); }
+    100% { transform: translateY(0) scaleX(1); }
+}
+
+/* Mist — slow drift */
+@keyframes mist-drift {
+    0%   { transform: translateX(0) translateY(0); opacity: 0.7; }
+    50%  { transform: translateX(5px) translateY(-3px); opacity: 1; }
+    100% { transform: translateX(0) translateY(0); opacity: 0.7; }
+}
+
+/* Stone — heavy thud pulse */
+@keyframes stone-pulse {
+    0%, 90%, 100% { transform: scale(1); }
+    95%            { transform: scale(1.08); }
+}
+
+/* Wind — sharp slash */
+@keyframes wind-slash {
+    0%   { transform: translateX(-2px) skewX(-1deg); }
+    50%  { transform: translateX(2px) skewX(1deg); }
+    100% { transform: translateX(-2px) skewX(-1deg); }
+}
+
+/* Particle float — general upward drift */
+@keyframes particle-rise {
+    0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-80px) translateX(var(--drift-x, 10px)) scale(0.3); opacity: 0; }
+}
+
+/* Name card fall — for the Hashira falling sequence */
+@keyframes card-fall {
+    0%   { transform: translateY(-120%) rotate(var(--tilt, -3deg)); opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 0.8; }
+    100% { transform: translateY(120vh) rotate(var(--tilt, -3deg)); opacity: 0; }
+}
+
+/* Vortex spin — portal effect */
+@keyframes vortex {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* Reveal from void — text/element appears from darkness */
+@keyframes void-reveal {
+    0%   { opacity: 0; transform: scale(0.95) translateY(8px); filter: blur(4px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+/* Brushstroke reveal — left to right clip */
+@keyframes brushstroke {
+    0%   { clip-path: inset(0 100% 0 0); }
+    100% { clip-path: inset(0 0% 0 0); }
+}
+
+/* ─── Utility Classes ────────────────────────────────────────────────────────── */
+
+.animate-breathe        { animation: breathe 3s ease-in-out infinite; }
+.animate-breathe-glow   { animation: breathe-glow 3s ease-in-out infinite; }
+.animate-flame          { animation: flame-flicker 0.4s ease-in-out infinite; }
+.animate-water          { animation: water-flow 2.5s ease-in-out infinite; }
+.animate-mist           { animation: mist-drift 4s ease-in-out infinite; }
+.animate-stone          { animation: stone-pulse 2s ease-in-out infinite; }
+.animate-wind           { animation: wind-slash 0.6s ease-in-out infinite; }
+.animate-vortex         { animation: vortex 4s linear infinite; }
+.animate-void-reveal    { animation: void-reveal 0.8s var(--ease-out-expo) both; }
+.animate-brushstroke    { animation: brushstroke 0.6s var(--ease-out-expo) both; }
+.animate-particle-rise  { animation: particle-rise 2s ease-out infinite; }
+
+/* Staggered animation delays */
+.delay-100  { animation-delay: 100ms; }
+.delay-200  { animation-delay: 200ms; }
+.delay-300  { animation-delay: 300ms; }
+.delay-400  { animation-delay: 400ms; }
+.delay-500  { animation-delay: 500ms; }
+.delay-700  { animation-delay: 700ms; }
+.delay-1000 { animation-delay: 1000ms; }
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-void); }
+::-webkit-scrollbar-thumb {
+    background: var(--wing-accent);
+    border-radius: 2px;
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────────── */
+
+::selection {
+    background: var(--wing-accent);
+    color: #fff;
+}
+
+/* ─── Focus ──────────────────────────────────────────────────────────────────── */
+
+:focus-visible {
+    outline: 1px solid var(--wing-accent);
+    outline-offset: 3px;
+}
+
+/* ─── Performance Helpers ────────────────────────────────────────────────────── */
+
+.gpu {
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.no-select {
+    user-select: none;
+    -webkit-user-select: none;
 }
