@@ -4,18 +4,21 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  build: {
-    outDir: 'dist',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          three: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/cannon', 'maath'],
-          ui: ['lucide-react'],
+    plugins: [react(), tailwindcss()],
+    build: {
+        outDir: 'dist',
+        sourcemap: false,
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    vendor: ['react', 'react-dom'],
+                    three: ['three', '@react-three/fiber', '@react-three/drei', '@react-three/postprocessing', 'maath'],
+                    gsap: ['gsap', '@gsap/react'],
+                },
+            },
         },
-      },
     },
-  },
+    optimizeDeps: {
+        include: ['gsap', '@gsap/react'],
+    },
 })
