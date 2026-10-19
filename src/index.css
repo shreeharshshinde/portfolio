@@ -27,13 +27,13 @@
     --color-text-subtle: rgba(255, 255, 255, 0.20);
 
     /* Wing accent colors (updated via JS as user scrolls) */
-    --wing-accent:  #4400AA;
-    --wing-glow:    rgba(68, 0, 170, 0.35);
-    --wing-fog:     #000005;
+    --wing-accent:  #FF6600;
+    --wing-glow:    rgba(255, 102, 0, 0.45);
+    --wing-fog:     #1C0802;
 
     /* Hashira breathing colors — set dynamically */
     --hashira-primary: #FF4500;
-    --hashira-accent:  #FFD700;
+    --hashira-accent:  #FFAA00;
 
     /* Timing */
     --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
