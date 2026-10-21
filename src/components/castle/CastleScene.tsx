@@ -22,8 +22,8 @@ export const CastleScene: React.FC<CastleSceneProps> = ({ progress }) => {
                 camera={{
                     fov: 52,
                     near: 0.5,
-                    far: 650,
-                    position: [0, 160, -20],
+                    far: 1800,
+                    position: [0, 205, -55],
                 }}
                 dpr={[1, 1.75]}
             >
@@ -31,19 +31,11 @@ export const CastleScene: React.FC<CastleSceneProps> = ({ progress }) => {
                 <color attach="background" args={['#140502']} />
 
                 <Suspense fallback={null}>
-                    {/* Soft Diffuse Horizon Atmosphere & Balanced Lighting */}
                     <CastleAtmosphere progress={progress} />
-
-                    {/* Camera-Anchored Atmospheric Micro-Dust Particles */}
-                    <CastleParticles count={900} />
-
-                    {/* Modular Japanese Infinity Castle Architecture */}
-                    <CastleWorld />
-
-                    {/* Scroll-Driven Smooth Camera Flight */}
+                    <CastleParticles count={900} progress={progress} />
+                    <CastleWorld progress={progress} />
                     <ScrollCameraRig progress={progress} />
 
-                    {/* Balanced Post-Processing: Soft cinematic bloom without overexposure */}
                     <EffectComposer enableNormalPass={false} multisampling={0}>
                         <Bloom
                             luminanceThreshold={0.65}
