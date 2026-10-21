@@ -9,6 +9,7 @@ const CameraDustShader = {
     uniforms: {
         uTime: { value: 0 },
         uPixelRatio: { value: 1 },
+        uDoumaWeight: { value: 0 },
     },
     vertexShader: /* glsl */ `
         uniform float uTime;
@@ -49,6 +50,7 @@ const CameraDustShader = {
     `,
     fragmentShader: /* glsl */ `
         uniform float uTime;
+        uniform float uDoumaWeight;
         varying float vRandom;
         varying float vAlpha;
 
@@ -61,8 +63,10 @@ const CameraDustShader = {
             // Crisp dust mote core with soft edge falloff
             float falloff = smoothstep(0.5, 0.08, r);
 
-            // Vibrant golden-amber dust color caught by lantern light
-            vec3 dustColor = vec3(1.0, 0.65, 0.18); // #FFA62E warm radiant amber
+            // Castle warm amber dust vs Douma crystalline ice sparkle
+            vec3 castleDust = vec3(1.0, 0.65, 0.18); // #FFA62E warm radiant amber
+            vec3 doumaIce = vec3(0.55, 0.88, 1.0);   // #8CE0FF icy cyan crystalline motes
+            vec3 dustColor = mix(castleDust, doumaIce, uDoumaWeight);
 
             // Organic light sparkle / shimmer
             float sparkle = 0.65 + 0.35 * sin(uTime * 2.2 + vRandom * 50.0);
@@ -75,9 +79,10 @@ const CameraDustShader = {
 
 interface CastleParticlesProps {
     count?: number;
+    progress?: number;
 }
 
-export const CastleParticles: React.FC<CastleParticlesProps> = ({ count = 900 }) => {
+export const CastleParticles: React.FC<CastleParticlesProps> = ({ count = 900, progress = 0 }) => {
     const groupRef = useRef<THREE.Group>(null);
     const materialRef = useRef<THREE.ShaderMaterial>(null);
     const { gl, camera } = useThree();
@@ -127,6 +132,9 @@ export const CastleParticles: React.FC<CastleParticlesProps> = ({ count = 900 })
         if (materialRef.current) {
             materialRef.current.uniforms.uTime.value = state.clock.elapsedTime;
             materialRef.current.uniforms.uPixelRatio.value = gl.getPixelRatio();
+            const enterFactor = THREE.MathUtils.smoothstep(progress, 0.54, 0.575);
+            const exitFactor = 1.0 - THREE.MathUtils.smoothstep(progress, 0.698, 0.73);
+            materialRef.current.uniforms.uDoumaWeight.value = enterFactor * exitFactor;
         }
 
         // 3. Very slow drift & local boundary wrap inside the camera-relative volume
